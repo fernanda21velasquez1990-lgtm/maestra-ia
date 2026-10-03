@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAESTRA IA</title>
+<title>MAESTRA IA · V6</title>
 
 <style>
 :root{
@@ -1107,7 +1107,7 @@ footer{
 </div>
 
 <footer>
-  🌸 MAESTRA IA · Inteligencia Artificial para transformar tu día a día en el aula.
+  🌸 MAESTRA IA · V6 · Inteligencia Artificial para transformar tu día a día en el aula.
 </footer>
 
 <script>
@@ -1900,8 +1900,9 @@ function guardar(){
 }
 
 function aprobado(modulo){
-  return progreso.examenes[modulo] &&
-         progreso.examenes[modulo].mejorNota>=70;
+  const registro = progreso.examenes && progreso.examenes[modulo];
+  if(!registro) return false;
+  return Number(registro.mejorNota || 0) >= 70;
 }
 
 function leccionesCompletas(modulo){
@@ -2804,11 +2805,17 @@ function mostrarResultado(nota,correctas,total){
         ${
           aprobo
           ?
-          `<button
-             class="btn-examen"
-             onclick="abrirCurso()">
-             Ver mis módulos →
-           </button>`
+          `${examenModulo < 3
+             ? `<button
+                  class="btn-examen"
+                  onclick="abrirModulo(${examenModulo+1})">
+                  Continuar al Módulo ${examenModulo+1} →
+                </button>`
+             : `<button
+                  class="btn-examen"
+                  onclick="abrirCurso()">
+                  Ver mis módulos →
+                </button>`}`
 
           :
 
