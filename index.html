@@ -984,6 +984,37 @@ footer{
 .salon-note{font-size:14px;color:#6e675d;line-height:1.5;margin-top:10px}
 @media(max-width:760px){.salon-grid{grid-template-columns:1fr}.salon-full{grid-column:auto}.salon-hero h2{font-size:25px}}
 
+
+/* ==================================================
+   CREAR UNA EVALUACION
+================================================== */
+.eval-wrap{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
+.eval-hero{background:linear-gradient(135deg,#fff,#f0fff6);border:1px solid #ccebd8;border-radius:28px;padding:28px;box-shadow:0 12px 35px rgba(30,130,80,.08);margin-bottom:22px}
+.eval-hero h2{margin:0 0 8px;color:#15803d;font-size:30px}
+.eval-hero p{margin:0;color:#57635b;line-height:1.65}
+.eval-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.eval-card{background:#fff;border:1px solid #dfeee4;border-radius:22px;padding:20px;box-shadow:0 8px 22px rgba(40,100,60,.05)}
+.eval-card h3{margin:0 0 12px;color:#31513c}
+.eval-full{grid-column:1/-1}
+.eval-select,.eval-input,.eval-textarea{width:100%;box-sizing:border-box;border:2px solid #dcebe1;border-radius:14px;padding:12px 13px;font:inherit;background:#fff}
+.eval-textarea{min-height:100px;resize:vertical;line-height:1.5}
+.eval-select:focus,.eval-input:focus,.eval-textarea:focus{outline:none;border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
+.eval-chips{display:flex;flex-wrap:wrap;gap:10px}
+.eval-chip{border:2px solid #cfe9d7;background:#fff;border-radius:15px;padding:11px 14px;cursor:pointer;font-weight:800;color:#365b42}
+.eval-chip:hover,.eval-chip.activo{background:#dcfce7;border-color:#22c55e;color:#166534;transform:translateY(-1px)}
+.eval-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.eval-check{display:flex;gap:9px;align-items:flex-start;background:#f8fffa;border:1px solid #dcefe2;border-radius:13px;padding:11px;font-weight:700;color:#385340}
+.eval-check input{margin-top:3px;transform:scale(1.15)}
+.eval-btn{width:100%;border:0;border-radius:16px;padding:15px 18px;background:linear-gradient(90deg,#15803d,#22c55e);color:#fff;font-size:16px;font-weight:900;cursor:pointer;margin-top:18px}
+.eval-result{display:none;margin-top:22px;background:#fff;border:2px solid #86efac;border-radius:24px;padding:22px}
+.eval-result.visible{display:block}
+.eval-prompt{background:#f4fff7;border:1px solid #cfe9d7;border-radius:16px;padding:18px;white-space:pre-wrap;line-height:1.65;color:#293c30;margin:14px 0}
+.eval-actions{display:flex;flex-wrap:wrap;gap:10px}
+.eval-actions button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer}
+.eval-copy{background:#15803d;color:#fff}.eval-new{background:#dcfce7;color:#166534}.eval-home{background:#f3e8ff;color:#7e22ce}
+.eval-note{font-size:14px;color:#657069;line-height:1.5;margin-top:10px}
+@media(max-width:760px){.eval-grid{grid-template-columns:1fr}.eval-full{grid-column:auto}.eval-checks{grid-template-columns:1fr}.eval-hero h2{font-size:25px}}
+
 </style>
 </head>
 
@@ -1058,7 +1089,7 @@ footer{
         <p>Actividades, cuentos, juegos, fichas y materiales.</p>
       </div>
 
-      <div class="tarjeta" onclick="proximamente('📝 Crear una evaluación')">
+      <div class="tarjeta" onclick="abrirCreadorEvaluacion()">
         <div class="icono verde">📝</div>
         <h4>Crear una evaluación</h4>
         <p>Preguntas, rúbricas, listas de cotejo y mucho más.</p>
@@ -4503,6 +4534,202 @@ async function copiarRecursoSalon(){
     t.value=prompt;document.body.appendChild(t);t.select();
     document.execCommand("copy");t.remove();
     alert("🎨 ¡Listo! El prompt del recurso fue copiado.");
+  }
+}
+
+
+/* ==================================================
+   HERRAMIENTA: CREAR UNA EVALUACION
+================================================== */
+let tipoEvaluacionElegido="";
+
+function abrirCreadorEvaluacion(){
+  tipoEvaluacionElegido="";
+  document.body.innerHTML=`
+    <div class="eval-wrap">
+      <div style="margin-bottom:16px">
+        <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+      </div>
+
+      <section class="eval-hero">
+        <h2>📝 Crear una evaluación</h2>
+        <p>Indica qué necesitas evaluar y MAESTRA IA preparará un prompt completo para crear un instrumento claro, apropiado para el grado y fácil de revisar.</p>
+      </section>
+
+      <div class="eval-grid">
+        <section class="eval-card eval-full">
+          <h3>1. ¿Qué tipo de evaluación necesitas?</h3>
+          <div class="eval-chips">
+            <button class="eval-chip" onclick="elegirTipoEvaluacion('diagnóstica',this)">🔎 Diagnóstica</button>
+            <button class="eval-chip" onclick="elegirTipoEvaluacion('formativa',this)">🌱 Formativa</button>
+            <button class="eval-chip" onclick="elegirTipoEvaluacion('sumativa',this)">🏁 Sumativa</button>
+            <button class="eval-chip" onclick="elegirTipoEvaluacion('práctica de repaso',this)">🔁 Repaso</button>
+          </div>
+        </section>
+
+        <section class="eval-card">
+          <h3>2. Grado</h3>
+          <select id="evalGrado" class="eval-select">
+            <option value="">Selecciona</option>
+            <option>1.º grado</option><option>2.º grado</option><option>3.º grado</option>
+            <option>4.º grado</option><option>5.º grado</option><option>6.º grado</option>
+          </select>
+        </section>
+
+        <section class="eval-card">
+          <h3>3. Área</h3>
+          <select id="evalArea" class="eval-select">
+            <option value="">Selecciona</option>
+            <option>Lengua y Literatura</option><option>Matemática</option>
+            <option>Ciencias Naturales</option><option>Ciencias Sociales</option>
+            <option>Educación Física</option><option>Arte y Expresión</option>
+            <option>Orientación y Convivencia</option><option>Otra área</option>
+          </select>
+        </section>
+
+        <section class="eval-card">
+          <h3>4. Tema</h3>
+          <input id="evalTema" class="eval-input" placeholder="Ejemplo: Las fracciones">
+        </section>
+
+        <section class="eval-card">
+          <h3>5. Cantidad de preguntas</h3>
+          <select id="evalCantidad" class="eval-select">
+            <option>5</option><option selected>10</option><option>15</option><option>20</option>
+          </select>
+        </section>
+
+        <section class="eval-card eval-full">
+          <h3>6. ¿Qué aprendizaje quieres evaluar?</h3>
+          <textarea id="evalObjetivo" class="eval-textarea" placeholder="Ejemplo: Que identifiquen, representen y comparen fracciones sencillas."></textarea>
+        </section>
+
+        <section class="eval-card">
+          <h3>7. Tipos de preguntas</h3>
+          <div class="eval-checks">
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="selección múltiple" checked> Selección múltiple</label>
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="verdadero o falso"> Verdadero / falso</label>
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="respuesta breve" checked> Respuesta breve</label>
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="relación o asociación"> Relacionar</label>
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="aplicación o resolución de situaciones"> Aplicación</label>
+            <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="pregunta abierta"> Pregunta abierta</label>
+          </div>
+        </section>
+
+        <section class="eval-card">
+          <h3>8. Nivel de dificultad</h3>
+          <select id="evalDificultad" class="eval-select">
+            <option>Sencillo</option>
+            <option selected>Apropiado para el grado</option>
+            <option>Con algunos retos</option>
+            <option>Variado: sencillo, medio y reto</option>
+          </select>
+          <h3 style="margin-top:18px">¿Qué deseas incluir?</h3>
+          <div class="eval-checks">
+            <label class="eval-check"><input id="evalClave" type="checkbox" checked> Clave de respuestas</label>
+            <label class="eval-check"><input id="evalCriterios" type="checkbox" checked> Criterios de evaluación</label>
+            <label class="eval-check"><input id="evalCotejo" type="checkbox"> Lista de cotejo</label>
+            <label class="eval-check"><input id="evalRubrica" type="checkbox"> Rúbrica sencilla</label>
+          </div>
+        </section>
+
+        <section class="eval-card eval-full">
+          <h3>9. Indicaciones adicionales (opcional)</h3>
+          <textarea id="evalExtra" class="eval-textarea" placeholder="Ejemplo: lenguaje muy sencillo, para imprimir en una hoja, incluir una adaptación con instrucciones más breves."></textarea>
+          <p class="eval-note">Evita escribir nombres, diagnósticos, calificaciones anteriores u otros datos personales de estudiantes.</p>
+        </section>
+      </div>
+
+      <button class="eval-btn" onclick="generarPromptEvaluacion()">📝 Crear mi prompt de evaluación</button>
+
+      <section id="evalResultado" class="eval-result">
+        <h3 style="margin-top:0;color:#15803d">✅ Tu prompt de evaluación está listo</h3>
+        <p>Cópialo en Gemini o ChatGPT. Antes de aplicar la evaluación, resuélvela tú misma y comprueba las respuestas.</p>
+        <div id="evalPrompt" class="eval-prompt"></div>
+        <div class="eval-actions">
+          <button class="eval-copy" onclick="copiarEvaluacion()">📋 Copiar prompt</button>
+          <button class="eval-new" onclick="abrirCreadorEvaluacion()">📝 Crear otra evaluación</button>
+          <button class="eval-home" onclick="location.reload()">🏠 Volver al inicio</button>
+        </div>
+      </section>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function elegirTipoEvaluacion(valor,boton){
+  tipoEvaluacionElegido=valor;
+  boton.parentElement.querySelectorAll(".eval-chip").forEach(b=>b.classList.remove("activo"));
+  boton.classList.add("activo");
+}
+
+function generarPromptEvaluacion(){
+  const grado=document.getElementById("evalGrado").value;
+  const area=document.getElementById("evalArea").value;
+  const tema=document.getElementById("evalTema").value.trim();
+  const cantidad=document.getElementById("evalCantidad").value;
+  const objetivo=document.getElementById("evalObjetivo").value.trim();
+  const dificultad=document.getElementById("evalDificultad").value;
+  const extra=document.getElementById("evalExtra").value.trim();
+  const tipos=[...document.querySelectorAll(".tipoPregunta:checked")].map(x=>x.value);
+
+  if(!tipoEvaluacionElegido){alert("Selecciona el tipo de evaluación.");return;}
+  if(!grado){alert("Selecciona el grado.");return;}
+  if(!area){alert("Selecciona el área.");return;}
+  if(!tema){alert("Escribe el tema.");return;}
+  if(!objetivo){alert("Escribe qué aprendizaje quieres evaluar.");return;}
+  if(!tipos.length){alert("Selecciona al menos un tipo de pregunta.");return;}
+
+  const extras=[];
+  if(document.getElementById("evalClave").checked) extras.push("clave de respuestas correcta y revisable");
+  if(document.getElementById("evalCriterios").checked) extras.push("criterios de evaluación claros y observables");
+  if(document.getElementById("evalCotejo").checked) extras.push("lista de cotejo breve");
+  if(document.getElementById("evalRubrica").checked) extras.push("rúbrica sencilla con tres niveles de desempeño");
+
+  const prompt=`Actúa como apoyo para una docente de educación primaria.
+
+Crea un borrador de evaluación ${tipoEvaluacionElegido} con los siguientes datos:
+
+- Grado: ${grado}
+- Área: ${area}
+- Tema: ${tema}
+- Aprendizaje que deseo evaluar: ${objetivo}
+- Cantidad total de preguntas o ítems: ${cantidad}
+- Tipos de preguntas: ${tipos.join(", ")}
+- Dificultad: ${dificultad}
+- Elementos adicionales: ${extras.length ? extras.join(", ") : "No se solicitaron elementos adicionales."}
+- Indicaciones adicionales: ${extra || "Usa instrucciones claras, formato limpio y lenguaje apropiado para la edad."}
+
+REQUISITOS:
+1. Escribe un título y unas instrucciones sencillas para el estudiante.
+2. Mantén todas las preguntas relacionadas con el aprendizaje indicado.
+3. Distribuye los tipos de preguntas solicitados de manera equilibrada.
+4. Evita preguntas ambiguas o con información insuficiente.
+5. Adapta vocabulario y dificultad al grado.
+6. Si incluyes selección múltiple, utiliza opciones plausibles y señala la respuesta correcta únicamente en la clave docente.
+7. En preguntas abiertas, indica qué elementos esenciales se esperan en una respuesta adecuada.
+8. ${extras.length ? "Incluye al final: " + extras.join("; ") + "." : "Finaliza con recomendaciones breves para la revisión docente."}
+9. No incluyas datos personales de estudiantes.
+10. Antes de finalizar, revisa internamente que preguntas y respuestas sean coherentes.
+
+La docente resolverá, verificará y adaptará la evaluación antes de aplicarla.`;
+
+  document.getElementById("evalPrompt").textContent=prompt;
+  const box=document.getElementById("evalResultado");
+  box.classList.add("visible");
+  box.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function copiarEvaluacion(){
+  const prompt=document.getElementById("evalPrompt").textContent;
+  try{
+    await navigator.clipboard.writeText(prompt);
+    alert("📝 ¡Listo! El prompt de evaluación fue copiado.");
+  }catch(e){
+    const t=document.createElement("textarea");
+    t.value=prompt;document.body.appendChild(t);t.select();
+    document.execCommand("copy");t.remove();
+    alert("📝 ¡Listo! El prompt de evaluación fue copiado.");
   }
 }
 
