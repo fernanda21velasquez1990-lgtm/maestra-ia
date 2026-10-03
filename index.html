@@ -1568,6 +1568,86 @@ const modulo3 = [
 
 
 /* ==================================================
+   MODULO 4 - PRIMEROS PASOS CON GEMINI Y CHATGPT
+================================================== */
+
+const modulo4 = [
+  {
+    titulo:"Conozcamos el espacio de conversación",
+    intro:"Llegó el momento de comenzar a utilizar una herramienta de inteligencia artificial de forma práctica.",
+    explicacion:"Gemini y ChatGPT tienen un espacio donde escribimos lo que necesitamos y recibimos una respuesta. A ese intercambio podemos verlo como una conversación: escribimos una instrucción, leemos el resultado y continuamos si necesitamos aclarar o mejorar algo.",
+    ejemplo:"Puedes escribir: «Explícame qué es el ciclo del agua con palabras sencillas para estudiantes de 3.º grado».",
+    pasos:["Abre Gemini como herramienta principal de práctica.","Identifica el espacio donde puedes escribir.","Observa el botón que permite enviar el mensaje.","No compartas información privada durante la práctica."],
+    practica:"Identifica dónde escribirías tu primera instrucción."
+  },
+  {
+    titulo:"Mi primera pregunta a la IA",
+    intro:"Empezaremos con una solicitud muy sencilla para perder el miedo a escribir.",
+    explicacion:"No necesitas utilizar palabras técnicas. Puedes escribir como si explicaras a otra persona qué necesitas. Mientras más clara sea tu petición, más fácil será obtener una respuesta útil.",
+    ejemplo:"Escribe en Gemini: «Dame 3 ideas sencillas para enseñar los colores a niños de 1.º grado».",
+    pasos:["Copia o escribe la solicitud del ejemplo.","Envíala a Gemini.","Espera la respuesta.","Lee las tres ideas sin preocuparte todavía por hacerlas perfectas."],
+    practica:"Realiza tu primera consulta educativa y observa la respuesta."
+  },
+  {
+    titulo:"Leer antes de aceptar",
+    intro:"La IA puede responder rápidamente, pero tú decides si la respuesta sirve.",
+    explicacion:"Después de recibir una respuesta debemos leerla completa. Pregúntate si corresponde al grado, al tema, al tiempo disponible y a la realidad de tus estudiantes.",
+    ejemplo:"Si pediste una actividad para 1.º grado y la respuesta utiliza conceptos demasiado difíciles, puedes pedir que la haga más sencilla.",
+    pasos:["Lee toda la respuesta.","Identifica una parte que te guste.","Identifica algo que cambiarías.","Recuerda que puedes continuar conversando con la IA."],
+    practica:"Escoge una parte útil de la respuesta y una parte que mejorarías."
+  },
+  {
+    titulo:"Pedir que cambie una respuesta",
+    intro:"No tienes que conformarte con la primera respuesta.",
+    explicacion:"Una conversación con IA puede continuar. Puedes pedir que acorte, amplíe, simplifique, cambie el tono, agregue ejemplos o adapte el contenido a otro grado.",
+    ejemplo:"Después de una respuesta puedes escribir: «Hazla más corta, más divertida y apropiada para estudiantes de 2.º grado».",
+    pasos:["Regresa a la conversación anterior.","Escribe qué quieres cambiar.","Envía la nueva instrucción.","Compara la primera respuesta con la nueva."],
+    practica:"Pide al menos un cambio a una respuesta que hayas recibido."
+  },
+  {
+    titulo:"Dar contexto mejora la respuesta",
+    intro:"La IA trabaja mejor cuando entiende para quién y para qué necesitas algo.",
+    explicacion:"Decir el grado, el área, el tema, el propósito y alguna condición importante ayuda a obtener resultados más cercanos a lo que necesitas.",
+    ejemplo:"En lugar de «Haz una actividad de lectura», prueba: «Crea una actividad de lectura de 15 minutos para 4.º grado sobre el cuidado del ambiente, con instrucciones sencillas».",
+    pasos:["Indica el grado.","Indica el tema o área.","Explica qué necesitas.","Agrega una condición útil, como duración o dificultad."],
+    practica:"Convierte una petición corta en una petición con más contexto."
+  },
+  {
+    titulo:"Probar la misma tarea en ChatGPT",
+    intro:"Ahora veremos que una misma necesidad puede trabajarse con otra herramienta.",
+    explicacion:"ChatGPT también permite escribir instrucciones y continuar una conversación. Las respuestas pueden ser diferentes a las de Gemini. El objetivo no es decidir cuál es siempre mejor, sino aprender a expresar claramente lo que necesitas y revisar el resultado.",
+    ejemplo:"Utiliza en ChatGPT la misma solicitud educativa que probaste en Gemini y observa qué cambia.",
+    pasos:["Abre ChatGPT en otra pestaña o aplicación si lo tienes disponible.","Escribe la misma instrucción que utilizaste en Gemini.","Lee la respuesta.","Compara cuál resultado se acerca más a tu necesidad."],
+    practica:"Compara una respuesta de Gemini con una de ChatGPT."
+  },
+  {
+    titulo:"Continuar una conversación",
+    intro:"No hace falta comenzar desde cero cada vez que quieras ajustar algo.",
+    explicacion:"Dentro de una misma conversación puedes hacer preguntas relacionadas con la respuesta anterior. Esto permite avanzar paso a paso y mejorar el material.",
+    ejemplo:"Primero: «Crea una actividad sobre las plantas para 3.º grado». Después: «Ahora agrega 5 preguntas sencillas para comprobar lo aprendido».",
+    pasos:["Haz una primera solicitud.","Lee el resultado.","Pide una mejora o complemento.","Observa cómo la conversación conserva el contexto."],
+    practica:"Realiza una solicitud inicial y después una segunda instrucción relacionada."
+  },
+  {
+    titulo:"Copiar una respuesta útil",
+    intro:"Cuando encuentres una idea que te sirva, puedes llevarla a tus propios documentos.",
+    explicacion:"Puedes seleccionar y copiar el contenido que necesites. Después podrás pegarlo en una nota o documento para revisarlo, adaptarlo y guardarlo. No es necesario conservar todo lo que genera la IA.",
+    ejemplo:"Puedes copiar solamente la actividad que te gustó y después modificar palabras o instrucciones antes de usarla.",
+    pasos:["Selecciona una parte útil de una respuesta.","Cópiala.","Pégala en una nota o documento.","Revísala y realiza los cambios que consideres necesarios."],
+    practica:"Copia una idea útil y guárdala en un espacio donde puedas editarla."
+  },
+  {
+    titulo:"Práctica final: mi primera conversación educativa",
+    intro:"Vamos a reunir todo lo aprendido en una práctica sencilla.",
+    explicacion:"En esta práctica harás una solicitud educativa, revisarás la respuesta y pedirás al menos una mejora. Lo importante no es obtener una respuesta perfecta, sino aprender el proceso.",
+    ejemplo:"Solicitud inicial: «Crea una actividad divertida de Matemática para 2.º grado sobre sumas». Mejora: «Hazla para 20 minutos y utiliza materiales que normalmente hay en el salón».",
+    pasos:["Elige grado, área y tema.","Escribe una solicitud en Gemini.","Lee y revisa la respuesta.","Pide una mejora y guarda la idea que más te sirva."],
+    practica:"Completa tu primera conversación educativa y luego realiza la evaluación del módulo."
+  }
+];
+
+
+/* ==================================================
    EXAMENES
 ================================================== */
 
@@ -1852,6 +1932,20 @@ const examenes = {
       c:0
     }
   ]
+,
+
+  4:[
+    {p:"¿Dónde escribimos normalmente una instrucción para Gemini o ChatGPT?",o:["En el espacio de conversación o cuadro de mensaje","En el botón de volumen","En la carpeta Descargas"],c:0},
+    {p:"¿Necesitas utilizar palabras técnicas para hacer tu primera consulta?",o:["Sí, siempre","No; puedes explicar claramente lo que necesitas con palabras sencillas","Solo si usas un celular"],c:1},
+    {p:"¿Qué debemos hacer después de recibir una respuesta de la IA?",o:["Leerla y revisar si realmente sirve para nuestra necesidad","Usarla sin leer","Compartirla inmediatamente"],c:0},
+    {p:"Si una respuesta es demasiado difícil para tus estudiantes, ¿qué puedes hacer?",o:["Pedir a la IA que la simplifique","Aceptar la respuesta obligatoriamente","Cerrar el curso"],c:0},
+    {p:"¿Qué información ayuda a dar contexto a una solicitud educativa?",o:["Grado, tema, propósito y condiciones importantes","La contraseña de la maestra","Datos privados de los estudiantes"],c:0},
+    {p:"¿Podemos probar una misma instrucción en Gemini y ChatGPT?",o:["Sí, y comparar los resultados","No, está prohibido","Solo después de terminar todo el curso"],c:0},
+    {p:"¿Las respuestas de Gemini y ChatGPT tienen que ser exactamente iguales?",o:["Sí","No, pueden producir resultados diferentes","Solo en Matemática"],c:1},
+    {p:"¿Podemos continuar una conversación pidiendo cambios sobre una respuesta anterior?",o:["Sí","No, siempre debemos empezar de cero","Solo una vez al mes"],c:0},
+    {p:"¿Qué podemos hacer con una parte útil de una respuesta?",o:["Copiarla, pegarla, revisarla y adaptarla","Publicarla sin revisar","Compartir datos privados junto con ella"],c:0},
+    {p:"¿Cuál es el objetivo principal de este módulo?",o:["Aprender a iniciar, revisar y continuar una conversación educativa con IA","Memorizar todos los botones de una aplicación","Dejar todas las decisiones a la IA"],c:0}
+  ]
 
 };
 
@@ -1876,6 +1970,10 @@ if(!Array.isArray(progreso.modulo3Completas)){
   progreso.modulo3Completas=[];
 }
 
+if(!Array.isArray(progreso.modulo4Completas)){
+  progreso.modulo4Completas=[];
+}
+
 if(typeof progreso.ultimaLeccion!=="number"){
   progreso.ultimaLeccion=0;
 }
@@ -1886,6 +1984,10 @@ if(typeof progreso.ultimaLeccion2!=="number"){
 
 if(typeof progreso.ultimaLeccion3!=="number"){
   progreso.ultimaLeccion3=0;
+}
+
+if(typeof progreso.ultimaLeccion4!=="number"){
+  progreso.ultimaLeccion4=0;
 }
 
 if(!progreso.examenes){
@@ -1917,6 +2019,10 @@ function leccionesCompletas(modulo){
 
   if(modulo===3){
     return progreso.modulo3Completas.length>=modulo3.length;
+  }
+
+  if(modulo===4){
+    return progreso.modulo4Completas.length>=modulo4.length;
   }
 
   return false;
@@ -1980,7 +2086,7 @@ function renderModulos(){
 
     let boton="";
 
-    if(numero===1 || numero===2 || numero===3){
+    if(numero===1 || numero===2 || numero===3 || numero===4){
 
       if(disponible){
 
@@ -2092,6 +2198,7 @@ function datosModulo(n){
   if(n===1) return modulo1;
   if(n===2) return modulo2;
   if(n===3) return modulo3;
+  if(n===4) return modulo4;
 
   return [];
 }
@@ -2101,6 +2208,7 @@ function completasModulo(n){
   if(n===1) return progreso.leccionesCompletas;
   if(n===2) return progreso.modulo2Completas;
   if(n===3) return progreso.modulo3Completas;
+  if(n===4) return progreso.modulo4Completas;
 
   return [];
 }
@@ -2110,6 +2218,7 @@ function ultimaModulo(n){
   if(n===1) return progreso.ultimaLeccion;
   if(n===2) return progreso.ultimaLeccion2;
   if(n===3) return progreso.ultimaLeccion3;
+  if(n===4) return progreso.ultimaLeccion4;
 
   return 0;
 }
@@ -2119,6 +2228,7 @@ function establecerUltima(n,i){
   if(n===1) progreso.ultimaLeccion=i;
   if(n===2) progreso.ultimaLeccion2=i;
   if(n===3) progreso.ultimaLeccion3=i;
+  if(n===4) progreso.ultimaLeccion4=i;
 
   guardar();
 }
@@ -2218,7 +2328,9 @@ function mostrarLeccion(i){
 
   let extra="";
 
-  if((moduloActual===2 && (i===5 || i===6)) || (moduloActual===3 && i===7)){
+  if((moduloActual===2 && (i===5 || i===6)) ||
+     (moduloActual===3 && i===7) ||
+     (moduloActual===4 && (i===0 || i===5))){
 
     extra=`
       <div class="bloque">
