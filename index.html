@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MAESTRA IA</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(135deg,#fff7fc,#f5f0ff,#eefcff);
+      color:#30283d;
+      min-height:100vh;
+    }
+
+    /* ENCABEZADO */
+
+    header{
+      background:white;
+      padding:18px 6%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 3px 15px rgba(0,0,0,.06);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .logo-icon{
+      width:48px;
+      height:48px;
+      background:linear-gradient(135deg,#ec4899,#a855f7);
+      border-radius:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:25px;
+    }
+
+    .logo h1{
+      font-size:24px;
+      color:#7e22ce;
+    }
+
+    .logo p{
+      font-size:12px;
+      color:#777;
+    }
+
+    .modo{
+      border:none;
+      background:#f3e8ff;
+      color:#7e22ce;
+      padding:12px 18px;
+      border-radius:25px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    /* HERO */
+
+    .hero{
+      text-align:center;
+      padding:55px 20px 35px;
+    }
+
+    .badge{
+      display:inline-block;
+      background:#dcfce7;
+      color:#16803c;
+      padding:8px 17px;
+      border-radius:30px;
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:18px;
+    }
+
+    .hero h2{
+      font-size:42px;
+      margin-bottom:12px;
+    }
+
+    .hero h2 span{
+      color:#a855f7;
+    }
+
+    .hero p{
+      font-size:18px;
+      color:#706879;
+      max-width:650px;
+      margin:auto;
+      line-height:1.6;
+    }
+
+    /* CONTENIDO */
+
+    .contenedor{
+      max-width:1150px;
+      margin:auto;
+      padding:20px;
+    }
+
+    .titulo-seccion{
+      margin:15px 0 22px;
+    }
+
+    .titulo-seccion h3{
+      font-size:25px;
+    }
+
+    .titulo-seccion p{
+      color:#777;
+      margin-top:6px;
+    }
+
+    /* TARJETAS */
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+    }
+
+    .tarjeta{
+      background:white;
+      border-radius:22px;
+      padding:25px 20px;
+      min-height:190px;
+      box-shadow:0 7px 22px rgba(82,53,100,.08);
+      cursor:pointer;
+      transition:.25s;
+      border:2px solid transparent;
+    }
+
+    .tarjeta:hover{
+      transform:translateY(-6px);
+      border-color:#e9d5ff;
+      box-shadow:0 12px 28px rgba(126,34,206,.13);
+    }
+
+    .icono{
+      width:55px;
+      height:55px;
+      border-radius:17px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      margin-bottom:17px;
+    }
+
+    .rosa{background:#fce7f3;}
+    .morado{background:#f3e8ff;}
+    .azul{background:#e0f2fe;}
+    .amarillo{background:#fef3c7;}
+    .verde{background:#dcfce7;}
+    .naranja{background:#ffedd5;}
+    .celeste{background:#cffafe;}
+    .lila{background:#ede9fe;}
+
+    .tarjeta h4{
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .tarjeta p{
+      color:#777;
+      line-height:1.45;
+      font-size:14px;
+    }
+
+    /* GUIA */
+
+    .guia{
+      margin:35px 0;
+      background:linear-gradient(135deg,#7e22ce,#db2777);
+      border-radius:25px;
+      padding:28px;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .guia h3{
+      font-size:24px;
+      margin-bottom:7px;
+    }
+
+    .guia p{
+      opacity:.9;
+    }
+
+    .guia button{
+      background:white;
+      color:#7e22ce;
+      border:0;
+      border-radius:30px;
+      padding:14px 24px;
+      font-weight:bold;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    /* VENTANA PRINCIPIANTE */
+
+    .ayuda{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(30,20,40,.55);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:500;
+    }
+
+    .ayuda-contenido{
+      background:white;
+      width:100%;
+      max-width:520px;
+      border-radius:25px;
+      padding:30px;
+    }
+
+    .ayuda-contenido h3{
+      color:#7e22ce;
+      font-size:25px;
+      margin-bottom:15px;
+    }
+
+    .ayuda-contenido p{
+      line-height:1.6;
+      color:#555;
+      margin-bottom:12px;
+    }
+
+    .cerrar{
+      width:100%;
+      margin-top:15px;
+      padding:13px;
+      border:0;
+      border-radius:15px;
+      background:#a855f7;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    footer{
+      text-align:center;
+      color:#8b8490;
+      padding:35px 15px;
+      font-size:13px;
+    }
+
+    /* CELULAR */
+
+    @media(max-width:900px){
+      .grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:550px){
+
+      header{
+        padding:12px;
+      }
+
+      .logo p{
+        display:none;
+      }
+
+      .modo{
+        font-size:11px;
+        padding:10px;
+      }
+
+      .hero{
+        padding-top:35px;
+      }
+
+      .hero h2{
+        font-size:31px;
+      }
+
+      .hero p{
+        font-size:16px;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .tarjeta{
+        min-height:auto;
+      }
+
+      .guia{
+        flex-direction:column;
+        text-align:center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <div class="logo-icon">🌸</div>
+
+    <div>
+      <h1>MAESTRA IA</h1>
+      <p>Tu compañera inteligente para enseñar</p>
+    </div>
+  </div>
+
+  <button class="modo" onclick="abrirAyuda()">
+    🌱 Modo principiante
+  </button>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="badge">
+    🌱 APRENDEMOS DESDE CERO
+  </div>
+
+  <h2>
+    Hola, <span>maestra</span> 👋
+  </h2>
+
+  <p>
+    La inteligencia artificial puede ayudarte a ahorrar tiempo,
+    crear clases increíbles y organizar mejor tu trabajo.
+    No necesitas saber de tecnología. Vamos paso a paso.
+  </p>
+
+</section>
+
+
+<main class="contenedor">
+
+  <div class="titulo-seccion">
+    <h3>¿Qué quieres hacer hoy?</h3>
+    <p>Selecciona una opción. Nosotros te acompañamos.</p>
+  </div>
+
+
+  <div class="grid">
+
+    <div class="tarjeta" onclick="accion('curso')">
+      <div class="icono rosa">🎓</div>
+      <h4>Aprender IA desde cero</h4>
+      <p>
+        Comienza el curso y aprende a utilizar la inteligencia
+        artificial sin complicaciones.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('asistente')">
+      <div class="icono morado">✨</div>
+      <h4>Mi Asistente IA</h4>
+      <p>
+        Cuéntanos qué necesitas y te ayudaremos a construir
+        la instrucción correcta.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('planificar')">
+      <div class="icono azul">📚</div>
+      <h4>Planificar una clase</h4>
+      <p>
+        Crea tu planificación por grado, área y tema
+        paso a paso.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('crear')">
+      <div class="icono amarillo">🎨</div>
+      <h4>Crear para mi salón</h4>
+      <p>
+        Actividades, cuentos, juegos, fichas, carteleras
+        y mucho más.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('evaluar')">
+      <div class="icono verde">📝</div>
+      <h4>Crear una evaluación</h4>
+      <p>
+        Diseña preguntas, instrumentos, rúbricas y
+        estrategias de evaluación.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('prompts')">
+      <div class="icono naranja">💡</div>
+      <h4>Biblioteca de Prompts</h4>
+      <p>
+        Encuentra instrucciones listas para usar según
+        lo que necesites.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('trabajos')">
+      <div class="icono celeste">📂</div>
+      <h4>Mis trabajos</h4>
+      <p>
+        Encuentra las planificaciones y recursos que
+        hayas creado.
+      </p>
+    </div>
+
+
+    <div class="tarjeta" onclick="accion('progreso')">
+      <div class="icono lila">📊</div>
+      <h4>Mi progreso</h4>
+      <p>
+        Mira cuánto has avanzado y cuáles módulos
+        te faltan por completar.
+      </p>
+    </div>
+
+  </div>
+
+
+  <section class="guia">
+
+    <div>
+      <h3>💜 ¿No sabes por dónde comenzar?</h3>
+      <p>
+        No te preocupes. MAESTRA IA puede acompañarte paso a paso.
+      </p>
+    </div>
+
+    <button onclick="abrirAyuda()">
+      👉 Guíame paso a paso
+    </button>
+
+  </section>
+
+</main>
+
+
+<div class="ayuda" id="ayuda">
+
+  <div class="ayuda-contenido">
+
+    <h3>🌸 Bienvenida a MAESTRA IA</h3>
+
+    <p>
+      Aquí no necesitas conocer palabras complicadas ni saber
+      programación.
+    </p>
+
+    <p>
+      <strong>Paso 1:</strong>
+      piensa qué necesitas hacer para tu clase.
+    </p>
+
+    <p>
+      <strong>Paso 2:</strong>
+      selecciona una de las opciones de la pantalla.
+    </p>
+
+    <p>
+      <strong>Paso 3:</strong>
+      MAESTRA IA te hará preguntas sencillas.
+    </p>
+
+    <p>
+      <strong>Paso 4:</strong>
+      construiremos juntas el material que necesitas.
+    </p>
+
+    <button class="cerrar" onclick="cerrarAyuda()">
+      ¡Entendido! Quiero comenzar
+    </button>
+
+  </div>
+
+</div>
+
+
+<footer>
+  🌸 MAESTRA IA · Inteligencia Artificial para transformar tu día a día en el aula.
+</footer>
+
+
+<script>
+
+function abrirAyuda(){
+  document.getElementById("ayuda").style.display = "flex";
+}
+
+function cerrarAyuda(){
+  document.getElementById("ayuda").style.display = "none";
+}
+
+function accion(tipo){
+
+  const mensajes = {
+
+    curso:
+      "🎓 Aquí construiremos el curso completo de Inteligencia Artificial para Maestras.",
+
+    asistente:
+      "✨ Próximamente abriremos tu Asistente IA.",
+
+    planificar:
+      "📚 Aquí construiremos tu Planificador Inteligente.",
+
+    crear:
+      "🎨 Aquí podrás crear materiales para tu salón.",
+
+    evaluar:
+      "📝 Aquí construiremos evaluaciones y rúbricas.",
+
+    prompts:
+      "💡 Aquí encontrarás nuestra Biblioteca de Prompts.",
+
+    trabajos:
+      "📂 Aquí guardaremos todos tus trabajos.",
+
+    progreso:
+      "📊 Aquí podrás consultar tu progreso en el curso."
+
+  };
+
+  alert(mensajes[tipo]);
+
+}
+
+</script>
+
+</body>
+</html>
