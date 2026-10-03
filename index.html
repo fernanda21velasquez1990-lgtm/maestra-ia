@@ -1042,6 +1042,36 @@ footer{
 .biblio-empty{text-align:center;padding:30px;color:#756c79;background:#fff;border-radius:20px}
 @media(max-width:760px){.biblio-grid,.biblio-filtros,.biblio-editor-grid{grid-template-columns:1fr}.biblio-full{grid-column:auto}.biblio-hero h2{font-size:25px}}
 
+
+/* ==================================================
+   MIS TRABAJOS
+================================================== */
+.trab-wrap{max-width:1100px;margin:0 auto;padding:28px 18px 60px}
+.trab-hero{background:linear-gradient(135deg,#fff,#eef8ff);border:1px solid #d6eaf8;border-radius:28px;padding:28px;box-shadow:0 12px 35px rgba(40,100,150,.08);margin-bottom:22px}
+.trab-hero h2{margin:0 0 8px;color:#0369a1;font-size:30px}
+.trab-hero p{margin:0;color:#58656d;line-height:1.65}
+.trab-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.trab-bar button{border:0;border-radius:14px;padding:12px 15px;font-weight:800;cursor:pointer}
+.trab-add{background:#0284c7;color:#fff}.trab-clear{background:#fee2e2;color:#991b1b}
+.trab-form{display:none;background:#fff;border:2px solid #bae6fd;border-radius:22px;padding:20px;margin-bottom:20px}
+.trab-form.visible{display:block}
+.trab-gridform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.trab-input,.trab-select,.trab-textarea{width:100%;box-sizing:border-box;border:2px solid #dceaf2;border-radius:13px;padding:11px 12px;font:inherit}
+.trab-textarea{min-height:120px;resize:vertical}
+.trab-full{grid-column:1/-1}
+.trab-save{width:100%;border:0;border-radius:14px;padding:13px;background:#0284c7;color:#fff;font-weight:900;cursor:pointer}
+.trab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.trab-card{background:#fff;border:1px solid #dcebf3;border-radius:20px;padding:18px;box-shadow:0 8px 22px rgba(30,80,120,.05)}
+.trab-card h3{margin:6px 0;color:#164e63}
+.trab-tag{display:inline-block;border-radius:999px;background:#e0f2fe;color:#0369a1;padding:5px 9px;font-size:12px;font-weight:900}
+.trab-meta{font-size:13px;color:#718087;margin:8px 0}
+.trab-preview{white-space:pre-wrap;line-height:1.5;color:#48565c;max-height:120px;overflow:hidden;background:#f8fcff;border-radius:12px;padding:11px;margin:10px 0}
+.trab-actions{display:flex;gap:8px;flex-wrap:wrap}
+.trab-actions button{border:0;border-radius:11px;padding:9px 11px;font-weight:800;cursor:pointer}
+.trab-copy{background:#dbeafe;color:#1d4ed8}.trab-delete{background:#fee2e2;color:#991b1b}
+.trab-empty{text-align:center;background:#fff;border:1px dashed #b9d9ea;border-radius:22px;padding:35px;color:#667780}
+@media(max-width:760px){.trab-grid,.trab-gridform{grid-template-columns:1fr}.trab-full{grid-column:auto}.trab-hero h2{font-size:25px}}
+
 </style>
 </head>
 
@@ -1128,7 +1158,7 @@ footer{
         <p>Instrucciones educativas listas para adaptar y utilizar.</p>
       </div>
 
-      <div class="tarjeta" onclick="proximamente('📂 Mis trabajos')">
+      <div class="tarjeta" onclick="abrirMisTrabajos()">
         <div class="icono celeste">📂</div>
         <h4>Mis trabajos</h4>
         <p>Encuentra los recursos que hayas creado.</p>
@@ -4905,6 +4935,99 @@ async function copiarPromptBiblioteca(){
 function cerrarEditorBiblioteca(){
   document.getElementById("editorBiblioteca").classList.remove("visible");
   window.scrollTo({top:0,behavior:"smooth"});
+}
+
+
+/* ==================================================
+   HERRAMIENTA: MIS TRABAJOS
+================================================== */
+function obtenerTrabajos(){
+  try{return JSON.parse(localStorage.getItem("maestraIATrabajos")||"[]");}
+  catch(e){return [];}
+}
+function guardarTrabajos(lista){
+  localStorage.setItem("maestraIATrabajos",JSON.stringify(lista));
+}
+function abrirMisTrabajos(){
+  document.body.innerHTML=`
+    <div class="trab-wrap">
+      <div style="margin-bottom:16px"><button class="btn-volver" onclick="location.reload()">← Volver al inicio</button></div>
+      <section class="trab-hero">
+        <h2>📁 Mis trabajos</h2>
+        <p>Guarda aquí prompts, ideas, planificaciones y recursos que quieras conservar. Por ahora se almacenan en este navegador; más adelante los conectaremos con tu cuenta y la base de datos de MAESTRA IA.</p>
+      </section>
+      <div class="trab-bar">
+        <button class="trab-add" onclick="mostrarFormularioTrabajo()">＋ Guardar un trabajo</button>
+      </div>
+      <section id="formTrabajo" class="trab-form">
+        <div class="trab-gridform">
+          <input id="trabTitulo" class="trab-input" placeholder="Título del trabajo">
+          <select id="trabTipo" class="trab-select">
+            <option>Prompt</option><option>Planificación</option><option>Actividad</option>
+            <option>Recurso</option><option>Evaluación</option><option>Idea</option><option>Otro</option>
+          </select>
+          <textarea id="trabContenido" class="trab-textarea trab-full" placeholder="Pega aquí el prompt, planificación, idea o contenido que deseas guardar."></textarea>
+          <button class="trab-save trab-full" onclick="guardarTrabajoManual()">💾 Guardar en Mis trabajos</button>
+        </div>
+      </section>
+      <div id="listaTrabajos" class="trab-grid"></div>
+    </div>`;
+  renderMisTrabajos();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function mostrarFormularioTrabajo(){
+  document.getElementById("formTrabajo").classList.toggle("visible");
+}
+function guardarTrabajoManual(){
+  const titulo=document.getElementById("trabTitulo").value.trim();
+  const tipo=document.getElementById("trabTipo").value;
+  const contenido=document.getElementById("trabContenido").value.trim();
+  if(!titulo){alert("Escribe un título para reconocer tu trabajo.");return;}
+  if(!contenido){alert("Escribe o pega el contenido que deseas guardar.");return;}
+  const lista=obtenerTrabajos();
+  lista.unshift({id:Date.now(),titulo,tipo,contenido,fecha:new Date().toLocaleString()});
+  guardarTrabajos(lista);
+  document.getElementById("trabTitulo").value="";
+  document.getElementById("trabContenido").value="";
+  document.getElementById("formTrabajo").classList.remove("visible");
+  renderMisTrabajos();
+  alert("💾 ¡Trabajo guardado!");
+}
+function renderMisTrabajos(){
+  const lista=obtenerTrabajos();
+  const box=document.getElementById("listaTrabajos");
+  if(!lista.length){
+    box.innerHTML=`<div class="trab-empty" style="grid-column:1/-1"><b>📂 Todavía no tienes trabajos guardados.</b><br><br>Cuando quieras conservar un prompt, una planificación o una idea, pulsa “Guardar un trabajo”.</div>`;
+    return;
+  }
+  box.innerHTML=lista.map(t=>`
+    <article class="trab-card">
+      <span class="trab-tag">${escaparTrabajo(t.tipo)}</span>
+      <h3>${escaparTrabajo(t.titulo)}</h3>
+      <div class="trab-meta">Guardado: ${escaparTrabajo(t.fecha||"")}</div>
+      <div class="trab-preview">${escaparTrabajo(t.contenido)}</div>
+      <div class="trab-actions">
+        <button class="trab-copy" onclick="copiarTrabajo(${t.id})">📋 Copiar</button>
+        <button class="trab-delete" onclick="eliminarTrabajo(${t.id})">🗑️ Eliminar</button>
+      </div>
+    </article>`).join("");
+}
+function escaparTrabajo(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+async function copiarTrabajo(id){
+  const t=obtenerTrabajos().find(x=>x.id===id);
+  if(!t)return;
+  try{await navigator.clipboard.writeText(t.contenido);alert("📋 Trabajo copiado.");}
+  catch(e){
+    const a=document.createElement("textarea");a.value=t.contenido;document.body.appendChild(a);a.select();
+    document.execCommand("copy");a.remove();alert("📋 Trabajo copiado.");
+  }
+}
+function eliminarTrabajo(id){
+  if(!confirm("¿Quieres eliminar este trabajo guardado?"))return;
+  guardarTrabajos(obtenerTrabajos().filter(x=>x.id!==id));
+  renderMisTrabajos();
 }
 
 </script>
