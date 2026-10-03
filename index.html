@@ -1728,6 +1728,86 @@ const modulo5 = [
 
 
 /* ==================================================
+   MODULO 6 - EL SECRETO DE UN BUEN PROMPT
+================================================== */
+
+const modulo6 = [
+  {
+    titulo:"¿Qué es un prompt?",
+    intro:"Ya has conversado con la IA. Ahora aprenderás el nombre de la instrucción que le escribimos.",
+    explicacion:"Un prompt es la instrucción, pregunta o solicitud que escribimos a una herramienta de inteligencia artificial para indicarle qué necesitamos. No tiene que ser complicado: debe ser claro y contener la información realmente útil.",
+    ejemplo:"«Crea una actividad divertida para estudiantes de 2.º grado sobre los animales vertebrados». Esa oración es un prompt.",
+    pasos:["Piensa en algo que quieras pedir a la IA.","Escríbelo con palabras sencillas.","Indica claramente qué necesitas.","Recuerda que podrás mejorarlo después."],
+    practica:"Escribe mentalmente un prompt sencillo relacionado con una clase."
+  },
+  {
+    titulo:"La fórmula MAESTRA",
+    intro:"Utilizaremos una fórmula sencilla para construir prompts sin memorizar términos técnicos.",
+    explicacion:"Nuestra fórmula será: TAREA + PARA QUIÉN + TEMA + DETALLES + FORMATO. No siempre necesitarás los cinco elementos, pero esta guía te ayudará cuando no sepas cómo comenzar.",
+    ejemplo:"TAREA: crea una actividad. PARA QUIÉN: 3.º grado. TEMA: el ciclo del agua. DETALLES: 20 minutos y trabajo en parejas. FORMATO: pasos numerados.",
+    pasos:["Primero indica la tarea.","Después di para quién es.","Agrega el tema.","Incluye detalles y formato cuando sean necesarios."],
+    practica:"Recuerda la fórmula: tarea + para quién + tema + detalles + formato."
+  },
+  {
+    titulo:"1. Decir la TAREA",
+    intro:"El primer elemento responde: ¿qué quiero que haga la IA?",
+    explicacion:"Comienza con un verbo claro: crea, explica, resume, adapta, propone, compara, organiza, redacta o genera. Esto ayuda a definir la acción esperada.",
+    ejemplo:"«Crea 5 preguntas», «Explica la fotosíntesis», «Adapta esta actividad» o «Propón tres juegos».",
+    pasos:["Elige una acción concreta.","Evita solicitudes demasiado vagas.","Escribe la acción al inicio cuando sea posible.","Comprueba que se entienda qué resultado quieres."],
+    practica:"Elige un verbo para una necesidad real: crear, explicar, adaptar, organizar u otro."
+  },
+  {
+    titulo:"2. Decir PARA QUIÉN",
+    intro:"El mismo contenido debe cambiar según las personas que lo utilizarán.",
+    explicacion:"Indicar el grado, edad aproximada o nivel ayuda a adaptar vocabulario, dificultad y extensión. No es necesario incluir nombres ni datos personales de estudiantes.",
+    ejemplo:"«Explica la multiplicación para estudiantes de 3.º grado con lenguaje sencillo».",
+    pasos:["Indica el grado o nivel.","No compartas nombres completos.","Piensa en la dificultad adecuada.","Pide lenguaje sencillo cuando lo necesites."],
+    practica:"Añade el grado a uno de tus prompts."
+  },
+  {
+    titulo:"3. Indicar el TEMA",
+    intro:"Ahora especificaremos sobre qué debe trabajar la IA.",
+    explicacion:"Un tema concreto reduce respuestas demasiado generales. Puedes incluir un contenido, habilidad, valor, concepto o situación educativa.",
+    ejemplo:"En vez de «haz algo de Ciencias», escribe «crea una actividad sobre los estados del agua para 2.º grado».",
+    pasos:["Define el contenido principal.","Evita temas demasiado amplios si necesitas algo concreto.","Relaciona el tema con la tarea.","Revisa que el tema quede escrito claramente."],
+    practica:"Escribe un tema específico que estés trabajando con tus estudiantes."
+  },
+  {
+    titulo:"4. Agregar DETALLES útiles",
+    intro:"Los detalles ayudan a acercar la respuesta a la realidad de tu aula.",
+    explicacion:"Puedes agregar duración, materiales, cantidad de actividades, modalidad de trabajo, dificultad o alguna condición importante. Incluye solamente detalles que realmente cambien el resultado.",
+    ejemplo:"«Debe durar 25 minutos, realizarse en equipos y utilizar materiales disponibles en el salón».",
+    pasos:["Piensa cuánto tiempo tienes.","Indica recursos o limitaciones importantes.","Añade la cantidad que necesitas.","Evita información privada o innecesaria."],
+    practica:"Agrega dos detalles útiles a tu prompt."
+  },
+  {
+    titulo:"5. Elegir el FORMATO",
+    intro:"Podemos decirle a la IA cómo queremos recibir el resultado.",
+    explicacion:"Un formato claro hace que la respuesta sea más fácil de leer y utilizar. Puedes pedir una tabla, lista, pasos, preguntas, secciones, guion, ficha o esquema.",
+    ejemplo:"«Preséntalo en una tabla con: inicio, desarrollo, cierre, recursos y tiempo».",
+    pasos:["Piensa dónde utilizarás el resultado.","Elige un formato práctico.","Indícalo al final del prompt.","Si no te gusta, pide que reorganice la misma información."],
+    practica:"Elige un formato para tu próximo resultado."
+  },
+  {
+    titulo:"De un prompt débil a uno más útil",
+    intro:"Veremos cómo pequeños cambios pueden mejorar una solicitud.",
+    explicacion:"Un prompt débil suele ser demasiado general. Mejorarlo no significa hacerlo enorme: significa agregar el contexto necesario para que la IA entienda mejor la tarea.",
+    ejemplo:"Débil: «Haz una clase de Matemática». Mejorado: «Crea una actividad de 20 minutos para 2.º grado sobre sumas de dos cifras, usando objetos del salón. Organízala en inicio, actividad y cierre».",
+    pasos:["Escribe una solicitud corta.","Busca qué información importante falta.","Aplica la fórmula del módulo.","Compara la versión inicial con la mejorada."],
+    practica:"Transforma una solicitud muy general en un prompt más completo."
+  },
+  {
+    titulo:"Práctica final: construyo mi propio prompt",
+    intro:"Ahora crearás un prompt completo que puedas utilizar realmente en tu trabajo.",
+    explicacion:"Combina la tarea, para quién, tema, detalles y formato. Después pruébalo en Gemini y, si deseas, también en ChatGPT. Revisa el resultado y modifica tu prompt si es necesario.",
+    ejemplo:"«Crea un juego educativo para estudiantes de 4.º grado sobre las fracciones. Debe durar 20 minutos, trabajar en grupos y utilizar papel y lápiz. Preséntalo con objetivo, materiales y pasos».",
+    pasos:["Define la tarea.","Indica grado y tema.","Añade detalles importantes.","Elige el formato, prueba el prompt y revisa el resultado."],
+    practica:"Construye y prueba un prompt completo. Después realiza la evaluación del módulo."
+  }
+];
+
+
+/* ==================================================
    EXAMENES
 ================================================== */
 
@@ -2040,6 +2120,20 @@ const examenes = {
     {p:"¿Qué conviene hacer después de añadir contexto a una solicitud?",o:["Revisar la respuesta y seguir ajustando si hace falta","Usarla sin leer","Borrar toda la conversación"],c:0},
     {p:"¿Qué habilidad estamos desarrollando principalmente en este módulo?",o:["Mantener conversaciones claras y progresivas con la IA","Programar aplicaciones","Memorizar respuestas"],c:0}
   ]
+,
+
+  6:[
+    {p:"¿Qué es un prompt?",o:["La instrucción o solicitud que damos a una IA","Una contraseña","Un archivo descargado"],c:0},
+    {p:"¿Cuál es la fórmula sencilla que usamos en este módulo?",o:["Tarea + para quién + tema + detalles + formato","Nombre + contraseña + teléfono","Pregunta + copiar + cerrar"],c:0},
+    {p:"¿Qué elemento indica lo que queremos que haga la IA?",o:["La tarea","El color de la pantalla","La contraseña"],c:0},
+    {p:"¿Por qué conviene indicar para quién es el contenido?",o:["Para adaptar lenguaje y dificultad","Para compartir datos personales","Para que la respuesta sea siempre más larga"],c:0},
+    {p:"¿Cuál es un tema más específico?",o:["Ciencias","Los estados del agua para 2.º grado","Algo educativo"],c:1},
+    {p:"¿Cuál es un detalle útil para una actividad?",o:["Debe durar 20 minutos","La contraseña del correo","El nombre completo de cada estudiante"],c:0},
+    {p:"¿Qué podemos pedir como formato?",o:["Una tabla o pasos numerados","Una contraseña","Datos privados"],c:0},
+    {p:"¿Un buen prompt tiene que ser necesariamente muy largo?",o:["No; debe contener la información útil y ser claro","Sí, siempre debe tener varias páginas","Solo si usamos ChatGPT"],c:0},
+    {p:"¿Cómo mejoramos «Haz una clase de Matemática»?",o:["Agregando grado, tema, detalles y formato necesarios","Escribiéndolo muchas veces","Añadiendo datos personales"],c:0},
+    {p:"Después de probar un prompt, ¿qué podemos hacer?",o:["Revisar el resultado y ajustar el prompt","Aceptar siempre la primera respuesta","Eliminar todos los detalles"],c:0}
+  ]
 
 };
 
@@ -2072,6 +2166,10 @@ if(!Array.isArray(progreso.modulo5Completas)){
   progreso.modulo5Completas=[];
 }
 
+if(!Array.isArray(progreso.modulo6Completas)){
+  progreso.modulo6Completas=[];
+}
+
 if(typeof progreso.ultimaLeccion!=="number"){
   progreso.ultimaLeccion=0;
 }
@@ -2090,6 +2188,10 @@ if(typeof progreso.ultimaLeccion4!=="number"){
 
 if(typeof progreso.ultimaLeccion5!=="number"){
   progreso.ultimaLeccion5=0;
+}
+
+if(typeof progreso.ultimaLeccion6!=="number"){
+  progreso.ultimaLeccion6=0;
 }
 
 if(!progreso.examenes){
@@ -2129,6 +2231,10 @@ function leccionesCompletas(modulo){
 
   if(modulo===5){
     return progreso.modulo5Completas.length>=modulo5.length;
+  }
+
+  if(modulo===6){
+    return progreso.modulo6Completas.length>=modulo6.length;
   }
 
   return false;
@@ -2192,7 +2298,7 @@ function renderModulos(){
 
     let boton="";
 
-    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5){
+    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5 || numero===6){
 
       if(disponible){
 
@@ -2306,6 +2412,7 @@ function datosModulo(n){
   if(n===3) return modulo3;
   if(n===4) return modulo4;
   if(n===5) return modulo5;
+  if(n===6) return modulo6;
 
   return [];
 }
@@ -2317,6 +2424,7 @@ function completasModulo(n){
   if(n===3) return progreso.modulo3Completas;
   if(n===4) return progreso.modulo4Completas;
   if(n===5) return progreso.modulo5Completas;
+  if(n===6) return progreso.modulo6Completas;
 
   return [];
 }
@@ -2328,6 +2436,7 @@ function ultimaModulo(n){
   if(n===3) return progreso.ultimaLeccion3;
   if(n===4) return progreso.ultimaLeccion4;
   if(n===5) return progreso.ultimaLeccion5;
+  if(n===6) return progreso.ultimaLeccion6;
 
   return 0;
 }
@@ -2339,6 +2448,7 @@ function establecerUltima(n,i){
   if(n===3) progreso.ultimaLeccion3=i;
   if(n===4) progreso.ultimaLeccion4=i;
   if(n===5) progreso.ultimaLeccion5=i;
+  if(n===6) progreso.ultimaLeccion6=i;
 
   guardar();
 }
