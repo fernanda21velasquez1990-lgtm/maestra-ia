@@ -1,562 +1,1306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MAESTRA IA</title>
+<title>MAESTRA IA</title>
 
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+<style>
+:root{
+  --morado:#9333ea;
+  --morado2:#7e22ce;
+  --rosa:#db2777;
+  --verde:#16a34a;
+  --texto:#332a3b;
+  --gris:#746c79;
+  --fondo:#fbf8ff;
+  --blanco:#ffffff;
+}
 
-    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(135deg,#fff7fc,#f5f0ff,#eefcff);
-      color:#30283d;
-      min-height:100vh;
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    /* ENCABEZADO */
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#fff9fc,#f7f2ff,#f1fcff);
+  color:var(--texto);
+  min-height:100vh;
+}
 
-    header{
-      background:white;
-      padding:18px 6%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      box-shadow:0 3px 15px rgba(0,0,0,.06);
-      position:sticky;
-      top:0;
-      z-index:100;
-    }
+button{
+  font-family:inherit;
+}
 
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+header{
+  background:white;
+  padding:16px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 3px 15px rgba(0,0,0,.06);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    .logo-icon{
-      width:48px;
-      height:48px;
-      background:linear-gradient(135deg,#ec4899,#a855f7);
-      border-radius:15px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:25px;
-    }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  cursor:pointer;
+}
 
-    .logo h1{
-      font-size:24px;
-      color:#7e22ce;
-    }
+.logo-icon{
+  width:49px;
+  height:49px;
+  background:linear-gradient(135deg,#ec4899,#9333ea);
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
 
-    .logo p{
-      font-size:12px;
-      color:#777;
-    }
+.logo h1{
+  font-size:23px;
+  color:var(--morado2);
+}
 
-    .modo{
-      border:none;
-      background:#f3e8ff;
-      color:#7e22ce;
-      padding:12px 18px;
-      border-radius:25px;
-      font-weight:bold;
-      cursor:pointer;
-    }
+.logo p{
+  font-size:12px;
+  color:#777;
+  margin-top:2px;
+}
 
-    /* HERO */
+.modo{
+  border:none;
+  background:#f3e8ff;
+  color:var(--morado2);
+  padding:11px 17px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .hero{
-      text-align:center;
-      padding:55px 20px 35px;
-    }
+/* INICIO */
 
-    .badge{
-      display:inline-block;
-      background:#dcfce7;
-      color:#16803c;
-      padding:8px 17px;
-      border-radius:30px;
-      font-size:14px;
-      font-weight:bold;
-      margin-bottom:18px;
-    }
+.hero{
+  text-align:center;
+  padding:52px 20px 34px;
+}
 
-    .hero h2{
-      font-size:42px;
-      margin-bottom:12px;
-    }
+.badge{
+  display:inline-block;
+  background:#dcfce7;
+  color:#15803d;
+  padding:8px 17px;
+  border-radius:30px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
 
-    .hero h2 span{
-      color:#a855f7;
-    }
+.hero h2{
+  font-size:42px;
+  margin-bottom:12px;
+}
 
-    .hero p{
-      font-size:18px;
-      color:#706879;
-      max-width:650px;
-      margin:auto;
-      line-height:1.6;
-    }
+.hero h2 span{
+  color:var(--morado);
+}
 
-    /* CONTENIDO */
+.hero p{
+  font-size:18px;
+  color:#706879;
+  max-width:680px;
+  margin:auto;
+  line-height:1.65;
+}
 
-    .contenedor{
-      max-width:1150px;
-      margin:auto;
-      padding:20px;
-    }
+.contenedor{
+  max-width:1150px;
+  margin:auto;
+  padding:20px;
+}
 
-    .titulo-seccion{
-      margin:15px 0 22px;
-    }
+.titulo-seccion{
+  margin:15px 0 22px;
+}
 
-    .titulo-seccion h3{
-      font-size:25px;
-    }
+.titulo-seccion h3{
+  font-size:25px;
+}
 
-    .titulo-seccion p{
-      color:#777;
-      margin-top:6px;
-    }
+.titulo-seccion p{
+  color:#777;
+  margin-top:6px;
+}
 
-    /* TARJETAS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-    }
+.tarjeta{
+  background:white;
+  border-radius:22px;
+  padding:25px 20px;
+  min-height:190px;
+  box-shadow:0 7px 22px rgba(82,53,100,.08);
+  cursor:pointer;
+  transition:.25s;
+  border:2px solid transparent;
+}
 
-    .tarjeta{
-      background:white;
-      border-radius:22px;
-      padding:25px 20px;
-      min-height:190px;
-      box-shadow:0 7px 22px rgba(82,53,100,.08);
-      cursor:pointer;
-      transition:.25s;
-      border:2px solid transparent;
-    }
+.tarjeta:hover{
+  transform:translateY(-5px);
+  border-color:#e9d5ff;
+}
 
-    .tarjeta:hover{
-      transform:translateY(-6px);
-      border-color:#e9d5ff;
-      box-shadow:0 12px 28px rgba(126,34,206,.13);
-    }
+.icono{
+  width:55px;
+  height:55px;
+  border-radius:17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  margin-bottom:17px;
+}
 
-    .icono{
-      width:55px;
-      height:55px;
-      border-radius:17px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      margin-bottom:17px;
-    }
+.rosa{background:#fce7f3;}
+.morado{background:#f3e8ff;}
+.azul{background:#e0f2fe;}
+.amarillo{background:#fef3c7;}
+.verde{background:#dcfce7;}
+.naranja{background:#ffedd5;}
+.celeste{background:#cffafe;}
+.lila{background:#ede9fe;}
 
-    .rosa{background:#fce7f3;}
-    .morado{background:#f3e8ff;}
-    .azul{background:#e0f2fe;}
-    .amarillo{background:#fef3c7;}
-    .verde{background:#dcfce7;}
-    .naranja{background:#ffedd5;}
-    .celeste{background:#cffafe;}
-    .lila{background:#ede9fe;}
+.tarjeta h4{
+  font-size:18px;
+  margin-bottom:8px;
+}
 
-    .tarjeta h4{
-      font-size:18px;
-      margin-bottom:8px;
-    }
+.tarjeta p{
+  color:#777;
+  line-height:1.45;
+  font-size:14px;
+}
 
-    .tarjeta p{
-      color:#777;
-      line-height:1.45;
-      font-size:14px;
-    }
+.guia{
+  margin:35px 0;
+  background:linear-gradient(135deg,#7e22ce,#db2777);
+  border-radius:25px;
+  padding:28px;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
 
-    /* GUIA */
+.guia h3{
+  font-size:23px;
+  margin-bottom:7px;
+}
 
-    .guia{
-      margin:35px 0;
-      background:linear-gradient(135deg,#7e22ce,#db2777);
-      border-radius:25px;
-      padding:28px;
-      color:white;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
+.guia p{
+  opacity:.92;
+}
 
-    .guia h3{
-      font-size:24px;
-      margin-bottom:7px;
-    }
+.guia button{
+  background:white;
+  color:#7e22ce;
+  border:0;
+  border-radius:30px;
+  padding:14px 24px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .guia p{
-      opacity:.9;
-    }
+/* GENERALES */
 
-    .guia button{
-      background:white;
-      color:#7e22ce;
-      border:0;
-      border-radius:30px;
-      padding:14px 24px;
-      font-weight:bold;
-      cursor:pointer;
-      white-space:nowrap;
-    }
+.pantalla{
+  display:none;
+}
 
-    /* VENTANA PRINCIPIANTE */
+.ancho{
+  max-width:1100px;
+  margin:auto;
+  padding:38px 20px 65px;
+}
 
-    .ayuda{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(30,20,40,.55);
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      z-index:500;
-    }
+.btn-volver{
+  border:0;
+  background:#f3e8ff;
+  color:#7e22ce;
+  padding:11px 18px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-bottom:25px;
+}
 
-    .ayuda-contenido{
-      background:white;
-      width:100%;
-      max-width:520px;
-      border-radius:25px;
-      padding:30px;
-    }
+.banner-curso{
+  background:linear-gradient(135deg,#7e22ce,#db2777);
+  color:white;
+  padding:34px;
+  border-radius:28px;
+  margin-bottom:30px;
+}
 
-    .ayuda-contenido h3{
-      color:#7e22ce;
-      font-size:25px;
-      margin-bottom:15px;
-    }
+.banner-curso small{
+  font-weight:bold;
+}
 
-    .ayuda-contenido p{
-      line-height:1.6;
-      color:#555;
-      margin-bottom:12px;
-    }
+.banner-curso h2{
+  font-size:31px;
+  margin:10px 0;
+}
 
-    .cerrar{
-      width:100%;
-      margin-top:15px;
-      padding:13px;
-      border:0;
-      border-radius:15px;
-      background:#a855f7;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-    }
+.banner-curso p{
+  max-width:760px;
+  line-height:1.6;
+}
 
-    footer{
-      text-align:center;
-      color:#8b8490;
-      padding:35px 15px;
-      font-size:13px;
-    }
+.barra{
+  height:13px;
+  background:rgba(255,255,255,.25);
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:22px;
+}
 
-    /* CELULAR */
+.barra > div{
+  height:100%;
+  background:white;
+  width:0;
+  transition:.4s;
+}
 
-    @media(max-width:900px){
-      .grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
+.texto-progreso{
+  font-size:13px;
+  margin-top:8px;
+}
 
-    @media(max-width:550px){
+.modulo{
+  background:white;
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:15px;
+  box-shadow:0 5px 18px rgba(70,40,90,.07);
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
 
-      header{
-        padding:12px;
-      }
+.modulo.bloqueado{
+  opacity:.58;
+}
 
-      .logo p{
-        display:none;
-      }
+.modulo-icon{
+  min-width:58px;
+  height:58px;
+  border-radius:18px;
+  background:#f3e8ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+}
 
-      .modo{
-        font-size:11px;
-        padding:10px;
-      }
+.modulo-info{
+  flex:1;
+}
 
-      .hero{
-        padding-top:35px;
-      }
+.modulo-num{
+  color:#9333ea;
+  font-size:12px;
+  font-weight:bold;
+}
 
-      .hero h2{
-        font-size:31px;
-      }
+.modulo h3{
+  margin:5px 0 6px;
+  font-size:19px;
+}
 
-      .hero p{
-        font-size:16px;
-      }
+.modulo p{
+  color:#777;
+  font-size:14px;
+  line-height:1.5;
+}
 
-      .grid{
-        grid-template-columns:1fr;
-      }
+.tiempo{
+  color:#999;
+  font-size:12px;
+  margin-top:8px;
+}
 
-      .tarjeta{
-        min-height:auto;
-      }
+.btn-principal{
+  border:0;
+  background:#9333ea;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-      .guia{
-        flex-direction:column;
-        text-align:center;
-      }
-    }
-  </style>
+.bloqueo{
+  background:#f4f4f5;
+  color:#777;
+  padding:9px 14px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* MODULO */
+
+.curso-layout{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:25px;
+  align-items:start;
+}
+
+.menu-lecciones{
+  background:white;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 5px 20px rgba(70,40,90,.07);
+  position:sticky;
+  top:95px;
+}
+
+.menu-lecciones h3{
+  font-size:16px;
+  margin-bottom:14px;
+}
+
+.leccion-menu{
+  width:100%;
+  border:0;
+  text-align:left;
+  background:#faf8fc;
+  padding:12px;
+  border-radius:13px;
+  margin-bottom:8px;
+  cursor:pointer;
+  color:#555;
+}
+
+.leccion-menu.activa{
+  background:#f3e8ff;
+  color:#7e22ce;
+  font-weight:bold;
+}
+
+.leccion-menu.completa::after{
+  content:" ✓";
+  color:#16a34a;
+  font-weight:bold;
+}
+
+.leccion{
+  background:white;
+  border-radius:28px;
+  padding:34px;
+  box-shadow:0 7px 28px rgba(70,40,90,.08);
+}
+
+.mini-badge{
+  display:inline-block;
+  background:#dcfce7;
+  color:#15803d;
+  padding:7px 14px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.leccion h1{
+  font-size:31px;
+  margin:17px 0 10px;
+}
+
+.leccion-intro{
+  color:#666;
+  font-size:17px;
+  line-height:1.7;
+}
+
+.bloque{
+  margin-top:28px;
+}
+
+.bloque h2{
+  font-size:21px;
+  margin-bottom:12px;
+}
+
+.bloque p{
+  line-height:1.75;
+  color:#555;
+}
+
+.caja{
+  border-radius:19px;
+  padding:21px;
+  margin-top:13px;
+  line-height:1.75;
+}
+
+.caja-morada{background:#f8f5ff;}
+.caja-azul{background:#ecfeff;}
+.caja-amarilla{background:#fff7ed;}
+.caja-verde{background:#f0fdf4;}
+
+.pasos p{
+  margin:8px 0;
+}
+
+.acciones-leccion{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:28px;
+}
+
+.btn-ayuda,
+.btn-repetir{
+  border:0;
+  padding:12px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-ayuda{
+  background:#fff7ed;
+  color:#9a3412;
+}
+
+.btn-repetir{
+  background:#f3e8ff;
+  color:#7e22ce;
+}
+
+.btn-logrado{
+  flex:1;
+  min-width:180px;
+  border:0;
+  background:linear-gradient(135deg,#7e22ce,#db2777);
+  color:white;
+  padding:14px 20px;
+  border-radius:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.mensaje{
+  margin-top:20px;
+}
+
+.felicitacion{
+  background:#dcfce7;
+  color:#166534;
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+}
+
+.navegacion{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:25px;
+}
+
+.navegacion button{
+  border:0;
+  padding:12px 18px;
+  border-radius:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.anterior{
+  background:#f4f4f5;
+  color:#555;
+}
+
+.siguiente{
+  background:#7e22ce;
+  color:white;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(30,20,40,.55);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:500;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:530px;
+  border-radius:25px;
+  padding:30px;
+}
+
+.modal-box h3{
+  color:#7e22ce;
+  font-size:24px;
+  margin-bottom:14px;
+}
+
+.modal-box p{
+  line-height:1.65;
+  color:#555;
+  margin-bottom:11px;
+}
+
+.cerrar{
+  width:100%;
+  margin-top:15px;
+  padding:13px;
+  border:0;
+  border-radius:15px;
+  background:#a855f7;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  color:#8b8490;
+  padding:35px 15px;
+  font-size:13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .curso-layout{grid-template-columns:1fr;}
+  .menu-lecciones{position:static;}
+}
+
+@media(max-width:560px){
+  header{padding:11px;}
+  .logo p{display:none;}
+  .logo h1{font-size:19px;}
+  .logo-icon{width:42px;height:42px;}
+  .modo{font-size:11px;padding:9px;}
+  .hero{padding-top:35px;}
+  .hero h2{font-size:31px;}
+  .hero p{font-size:16px;}
+  .grid{grid-template-columns:1fr;}
+  .tarjeta{min-height:auto;}
+  .guia{flex-direction:column;text-align:center;}
+  .modulo{align-items:flex-start;flex-wrap:wrap;}
+  .modulo .btn-principal,.bloqueo{margin-left:76px;}
+  .leccion{padding:24px 20px;}
+  .leccion h1{font-size:27px;}
+  .banner-curso{padding:27px 22px;}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-
-  <div class="logo">
+  <div class="logo" onclick="mostrarInicio()">
     <div class="logo-icon">🌸</div>
-
     <div>
       <h1>MAESTRA IA</h1>
       <p>Tu compañera inteligente para enseñar</p>
     </div>
   </div>
 
-  <button class="modo" onclick="abrirAyuda()">
+  <button class="modo" onclick="abrirModal('principiante')">
     🌱 Modo principiante
   </button>
-
 </header>
 
+<!-- INICIO -->
 
-<section class="hero">
+<section id="inicio">
 
-  <div class="badge">
-    🌱 APRENDEMOS DESDE CERO
-  </div>
+  <section class="hero">
+    <div class="badge">🌱 APRENDEMOS DESDE CERO</div>
 
-  <h2>
-    Hola, <span>maestra</span> 👋
-  </h2>
+    <h2>Hola, <span>maestra</span> 👋</h2>
 
-  <p>
-    La inteligencia artificial puede ayudarte a ahorrar tiempo,
-    crear clases increíbles y organizar mejor tu trabajo.
-    No necesitas saber de tecnología. Vamos paso a paso.
-  </p>
-
-</section>
-
-
-<main class="contenedor">
-
-  <div class="titulo-seccion">
-    <h3>¿Qué quieres hacer hoy?</h3>
-    <p>Selecciona una opción. Nosotros te acompañamos.</p>
-  </div>
-
-
-  <div class="grid">
-
-    <div class="tarjeta" onclick="accion('curso')">
-      <div class="icono rosa">🎓</div>
-      <h4>Aprender IA desde cero</h4>
-      <p>
-        Comienza el curso y aprende a utilizar la inteligencia
-        artificial sin complicaciones.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('asistente')">
-      <div class="icono morado">✨</div>
-      <h4>Mi Asistente IA</h4>
-      <p>
-        Cuéntanos qué necesitas y te ayudaremos a construir
-        la instrucción correcta.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('planificar')">
-      <div class="icono azul">📚</div>
-      <h4>Planificar una clase</h4>
-      <p>
-        Crea tu planificación por grado, área y tema
-        paso a paso.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('crear')">
-      <div class="icono amarillo">🎨</div>
-      <h4>Crear para mi salón</h4>
-      <p>
-        Actividades, cuentos, juegos, fichas, carteleras
-        y mucho más.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('evaluar')">
-      <div class="icono verde">📝</div>
-      <h4>Crear una evaluación</h4>
-      <p>
-        Diseña preguntas, instrumentos, rúbricas y
-        estrategias de evaluación.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('prompts')">
-      <div class="icono naranja">💡</div>
-      <h4>Biblioteca de Prompts</h4>
-      <p>
-        Encuentra instrucciones listas para usar según
-        lo que necesites.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('trabajos')">
-      <div class="icono celeste">📂</div>
-      <h4>Mis trabajos</h4>
-      <p>
-        Encuentra las planificaciones y recursos que
-        hayas creado.
-      </p>
-    </div>
-
-
-    <div class="tarjeta" onclick="accion('progreso')">
-      <div class="icono lila">📊</div>
-      <h4>Mi progreso</h4>
-      <p>
-        Mira cuánto has avanzado y cuáles módulos
-        te faltan por completar.
-      </p>
-    </div>
-
-  </div>
-
-
-  <section class="guia">
-
-    <div>
-      <h3>💜 ¿No sabes por dónde comenzar?</h3>
-      <p>
-        No te preocupes. MAESTRA IA puede acompañarte paso a paso.
-      </p>
-    </div>
-
-    <button onclick="abrirAyuda()">
-      👉 Guíame paso a paso
-    </button>
-
+    <p>
+      La inteligencia artificial puede ayudarte a ahorrar tiempo,
+      crear clases increíbles y organizar mejor tu trabajo.
+      No necesitas saber de tecnología. Vamos paso a paso.
+    </p>
   </section>
 
-</main>
+  <main class="contenedor">
 
+    <div class="titulo-seccion">
+      <h3>¿Qué quieres hacer hoy?</h3>
+      <p>Selecciona una opción. Nosotros te acompañamos.</p>
+    </div>
 
-<div class="ayuda" id="ayuda">
+    <div class="grid">
 
-  <div class="ayuda-contenido">
+      <div class="tarjeta" onclick="abrirCurso()">
+        <div class="icono rosa">🎓</div>
+        <h4>Aprender IA desde cero</h4>
+        <p>Comienza el curso y aprende inteligencia artificial sin complicaciones.</p>
+      </div>
 
-    <h3>🌸 Bienvenida a MAESTRA IA</h3>
+      <div class="tarjeta" onclick="proximamente('✨ Mi Asistente IA')">
+        <div class="icono morado">✨</div>
+        <h4>Mi Asistente IA</h4>
+        <p>Cuéntanos qué necesitas y te ayudaremos a construir la instrucción correcta.</p>
+      </div>
 
-    <p>
-      Aquí no necesitas conocer palabras complicadas ni saber
-      programación.
-    </p>
+      <div class="tarjeta" onclick="proximamente('📚 Planificador Inteligente')">
+        <div class="icono azul">📚</div>
+        <h4>Planificar una clase</h4>
+        <p>Crea tu planificación por grado, área y tema paso a paso.</p>
+      </div>
 
-    <p>
-      <strong>Paso 1:</strong>
-      piensa qué necesitas hacer para tu clase.
-    </p>
+      <div class="tarjeta" onclick="proximamente('🎨 Crear para mi salón')">
+        <div class="icono amarillo">🎨</div>
+        <h4>Crear para mi salón</h4>
+        <p>Actividades, cuentos, juegos, fichas, carteleras y mucho más.</p>
+      </div>
 
-    <p>
-      <strong>Paso 2:</strong>
-      selecciona una de las opciones de la pantalla.
-    </p>
+      <div class="tarjeta" onclick="proximamente('📝 Evaluaciones')">
+        <div class="icono verde">📝</div>
+        <h4>Crear una evaluación</h4>
+        <p>Diseña preguntas, instrumentos, rúbricas y estrategias de evaluación.</p>
+      </div>
 
-    <p>
-      <strong>Paso 3:</strong>
-      MAESTRA IA te hará preguntas sencillas.
-    </p>
+      <div class="tarjeta" onclick="proximamente('💡 Biblioteca de Prompts')">
+        <div class="icono naranja">💡</div>
+        <h4>Biblioteca de Prompts</h4>
+        <p>Encuentra instrucciones listas para utilizar según lo que necesites.</p>
+      </div>
 
-    <p>
-      <strong>Paso 4:</strong>
-      construiremos juntas el material que necesitas.
-    </p>
+      <div class="tarjeta" onclick="proximamente('📂 Mis trabajos')">
+        <div class="icono celeste">📂</div>
+        <h4>Mis trabajos</h4>
+        <p>Encuentra las planificaciones y recursos que hayas creado.</p>
+      </div>
 
-    <button class="cerrar" onclick="cerrarAyuda()">
-      ¡Entendido! Quiero comenzar
-    </button>
+      <div class="tarjeta" onclick="abrirCurso()">
+        <div class="icono lila">📊</div>
+        <h4>Mi progreso</h4>
+        <p>Mira cuánto has avanzado y continúa exactamente donde quedaste.</p>
+      </div>
+
+    </div>
+
+    <section class="guia">
+      <div>
+        <h3>💜 ¿No sabes por dónde comenzar?</h3>
+        <p>MAESTRA IA puede acompañarte paso a paso.</p>
+      </div>
+
+      <button onclick="abrirModal('principiante')">
+        👉 Guíame paso a paso
+      </button>
+    </section>
+
+  </main>
+</section>
+
+<!-- AULA -->
+
+<section id="aula" class="pantalla">
+  <div class="ancho">
+
+    <button class="btn-volver" onclick="mostrarInicio()">← Volver al inicio</button>
+
+    <div class="banner-curso">
+      <small>🎓 TU PRIMER CURSO</small>
+
+      <h2>Inteligencia Artificial para Maestras</h2>
+
+      <p>
+        Aprende desde cero a utilizar la inteligencia artificial
+        para planificar, crear materiales, evaluar y hacer más sencillo
+        tu día a día docente.
+      </p>
+
+      <div class="barra">
+        <div id="barraProgreso"></div>
+      </div>
+
+      <div class="texto-progreso" id="textoProgreso">
+        Tu progreso: 0%
+      </div>
+    </div>
+
+    <div class="titulo-seccion">
+      <h3>🌸 Tu camino de aprendizaje</h3>
+      <p>No tienes que hacerlo todo hoy. Avanza a tu propio ritmo.</p>
+    </div>
+
+    <div id="listaModulos"></div>
 
   </div>
+</section>
 
+<!-- MODULO 1 -->
+
+<section id="modulo1" class="pantalla">
+  <div class="ancho">
+
+    <button class="btn-volver" onclick="abrirCurso()">← Mis módulos</button>
+
+    <div class="curso-layout">
+
+      <aside class="menu-lecciones">
+        <h3>🌱 Empezamos desde cero</h3>
+        <div id="menuLecciones"></div>
+      </aside>
+
+      <article class="leccion" id="contenidoLeccion"></article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+  <div class="modal-box" id="modalContenido"></div>
 </div>
-
 
 <footer>
   🌸 MAESTRA IA · Inteligencia Artificial para transformar tu día a día en el aula.
 </footer>
 
-
 <script>
 
-function abrirAyuda(){
-  document.getElementById("ayuda").style.display = "flex";
+/* ============================
+   DATOS DEL CURSO
+============================ */
+
+const modulos = [
+  ["🌱","Empezamos desde cero","Aprende las herramientas digitales básicas antes de comenzar con IA.","45 min"],
+  ["🤖","¿Qué es la Inteligencia Artificial?","Descubre qué es la IA y cómo puede ayudarte como maestra.","20 min"],
+  ["💬","Aprendiendo a conversar con la IA","Aprende a pedir lo que necesitas con palabras sencillas.","25 min"],
+  ["✨","El secreto de un buen prompt","Construye instrucciones claras para conseguir mejores resultados.","30 min"],
+  ["📚","Planifica conmigo","Utiliza IA para preparar clases de 1.º a 6.º grado.","35 min"],
+  ["🎨","Crea para tu salón","Crea actividades, cuentos, juegos, fichas y materiales.","35 min"],
+  ["📝","Evaluar también puede ser fácil","Crea evaluaciones, rúbricas y listas de cotejo.","30 min"],
+  ["🌈","Mi aula creativa con IA","Transforma tus ideas en recursos educativos creativos.","30 min"],
+  ["🛡️","IA responsable","Aprende a proteger información y revisar los resultados de la IA.","25 min"],
+  ["🏆","Mi proyecto final","Aplica todo lo aprendido en una experiencia educativa completa.","45 min"]
+];
+
+const lecciones = [
+
+{
+titulo:"Conozcamos el navegador",
+intro:"Comenzaremos identificando la herramienta que estás utilizando en este mismo momento.",
+explicacion:"Un navegador es una aplicación que nos permite visitar páginas de Internet. Algunos ejemplos son Google Chrome, Microsoft Edge, Safari y Firefox.",
+ejemplo:"Si estás leyendo MAESTRA IA ahora mismo, ya estás utilizando un navegador. ¡Ya comenzaste!",
+pasos:[
+"Mira la parte superior de tu pantalla.",
+"Busca el espacio donde aparece la dirección de esta página.",
+"Haz clic una vez sobre esa dirección.",
+"No cambies nada. Solo reconoce dónde está."
+],
+practica:"Identifica la barra de direcciones de tu navegador."
+},
+
+{
+titulo:"Clic, toque y desplazamiento",
+intro:"Ahora aprenderemos tres movimientos básicos que utilizarás constantemente.",
+explicacion:"En una computadora hacemos clic con el mouse. En un teléfono o tableta tocamos la pantalla. Para movernos hacia arriba o abajo utilizamos el desplazamiento.",
+ejemplo:"Cuando pulsaste el botón para entrar a este módulo ya realizaste un clic o un toque correctamente.",
+pasos:[
+"Haz clic o toca un espacio vacío de esta página.",
+"Desplázate lentamente hacia abajo.",
+"Ahora vuelve un poco hacia arriba.",
+"Observa que puedes recorrer una página sin cerrar nada."
+],
+practica:"Practica desplazarte por esta misma lección."
+},
+
+{
+titulo:"Escribir, borrar y corregir",
+intro:"No necesitas escribir rápido. Lo importante es sentirte cómoda utilizando el teclado.",
+explicacion:"El teclado nos permite escribir letras, números y símbolos. La tecla de borrar nos ayuda a corregir cuando cometemos un error.",
+ejemplo:"Todos cometemos errores al escribir. Corregir forma parte normal del trabajo digital.",
+pasos:[
+"Abre una nota o documento donde puedas escribir.",
+"Escribe: Hoy aprenderé inteligencia artificial.",
+"Borra la palabra 'Hoy'.",
+"Vuelve a escribirla.",
+"Comprueba que puedes escribir y corregir sin problema."
+],
+practica:"Escribe una oración corta relacionada con tu trabajo como maestra."
+},
+
+{
+titulo:"Seleccionar texto",
+intro:"Seleccionar significa marcar una palabra o fragmento para poder trabajar con él.",
+explicacion:"Cuando seleccionamos texto podemos copiarlo, eliminarlo o reemplazarlo sin tener que escribirlo nuevamente.",
+ejemplo:"Cuando una palabra aparece resaltada después de arrastrar el mouse sobre ella, esa palabra está seleccionada.",
+pasos:[
+"Busca una oración que hayas escrito.",
+"Coloca el cursor al principio.",
+"Mantén presionado y arrastra hasta el final.",
+"Observa cómo el texto queda resaltado."
+],
+practica:"Selecciona una oración completa."
+},
+
+{
+titulo:"Copiar y pegar",
+intro:"Esta habilidad será una de nuestras mejores amigas cuando trabajemos con inteligencia artificial.",
+explicacion:"Copiar guarda temporalmente un texto y pegar coloca una copia en otro lugar. Así evitamos escribir nuevamente información larga.",
+ejemplo:"En Windows normalmente puedes copiar con Ctrl + C y pegar con Ctrl + V. También puedes utilizar el menú del mouse.",
+pasos:[
+"Selecciona una oración.",
+"Cópiala usando Ctrl + C o la opción Copiar.",
+"Ve a otra línea.",
+"Utiliza Ctrl + V o la opción Pegar.",
+"Comprueba que ahora tienes dos copias."
+],
+practica:"Copia y pega una oración sin volver a escribirla."
+},
+
+{
+titulo:"Pestañas del navegador",
+intro:"Las pestañas permiten tener varias páginas abiertas al mismo tiempo.",
+explicacion:"Cada pestaña funciona como una página independiente dentro del navegador. Esto será útil cuando tengamos MAESTRA IA abierta y también queramos utilizar otra herramienta.",
+ejemplo:"Puedes tener MAESTRA IA en una pestaña y ChatGPT en otra, sin cerrar ninguna.",
+pasos:[
+"Observa la parte superior del navegador.",
+"Localiza la pestaña donde está abierta MAESTRA IA.",
+"Busca el símbolo + para abrir una pestaña nueva.",
+"Abre una pestaña y luego regresa a MAESTRA IA."
+],
+practica:"Abre una nueva pestaña y vuelve a esta página."
+},
+
+{
+titulo:"Descargar y encontrar un archivo",
+intro:"Durante el curso crearemos materiales que posiblemente quieras conservar.",
+explicacion:"Descargar significa guardar en tu dispositivo un archivo que estaba en Internet. Normalmente los archivos descargados llegan a una carpeta llamada Descargas.",
+ejemplo:"Una planificación en PDF o Word puede descargarse para guardarla, imprimirla o compartirla.",
+pasos:[
+"Identifica dónde aparecen las descargas en tu navegador.",
+"Busca en tu computadora o teléfono la carpeta Descargas.",
+"Observa algunos archivos que ya tengas allí.",
+"No elimines nada durante esta práctica."
+],
+practica:"Localiza la carpeta de Descargas de tu dispositivo."
+},
+
+{
+titulo:"Guardar y organizar",
+intro:"Aprender a organizar lo que creamos nos ahorrará muchísimo tiempo.",
+explicacion:"Podemos crear carpetas para guardar nuestros documentos según grado, materia, lapso o tipo de recurso.",
+ejemplo:"Una carpeta llamada 'Planificaciones 3er grado' puede contener todas tus planificaciones del año.",
+pasos:[
+"Crea una carpeta nueva en tu dispositivo.",
+"Ponle como nombre: MAESTRA IA.",
+"Dentro podrás guardar posteriormente tus materiales del curso.",
+"Recuerda dónde la creaste."
+],
+practica:"Crea tu carpeta MAESTRA IA."
+},
+
+{
+titulo:"Práctica final",
+intro:"Ya tienes las herramientas digitales esenciales para comenzar nuestra aventura con inteligencia artificial.",
+explicacion:"No necesitas dominar todo perfectamente. Lo importante es que ahora reconoces las acciones básicas que utilizaremos durante el curso.",
+ejemplo:"Ya sabes navegar, hacer clic, escribir, seleccionar, copiar, pegar, trabajar con pestañas y organizar archivos.",
+pasos:[
+"Piensa cuál de las habilidades te resultó más fácil.",
+"Identifica cuál necesitas practicar un poco más.",
+"Recuerda: puedes regresar a cualquier lección cuando quieras.",
+"Cuando estés lista, marca esta práctica como completada."
+],
+practica:"Completa el módulo y prepárate para conocer qué es realmente la Inteligencia Artificial."
 }
 
-function cerrarAyuda(){
-  document.getElementById("ayuda").style.display = "none";
+];
+
+/* ============================
+   PROGRESO LOCAL
+============================ */
+
+let progreso = JSON.parse(localStorage.getItem("maestraIAProgreso")) || {
+  leccionesCompletas:[],
+  ultimaLeccion:0
+};
+
+function guardarProgreso(){
+  localStorage.setItem("maestraIAProgreso",JSON.stringify(progreso));
 }
 
-function accion(tipo){
+/* ============================
+   NAVEGACION
+============================ */
 
-  const mensajes = {
-
-    curso:
-      "🎓 Aquí construiremos el curso completo de Inteligencia Artificial para Maestras.",
-
-    asistente:
-      "✨ Próximamente abriremos tu Asistente IA.",
-
-    planificar:
-      "📚 Aquí construiremos tu Planificador Inteligente.",
-
-    crear:
-      "🎨 Aquí podrás crear materiales para tu salón.",
-
-    evaluar:
-      "📝 Aquí construiremos evaluaciones y rúbricas.",
-
-    prompts:
-      "💡 Aquí encontrarás nuestra Biblioteca de Prompts.",
-
-    trabajos:
-      "📂 Aquí guardaremos todos tus trabajos.",
-
-    progreso:
-      "📊 Aquí podrás consultar tu progreso en el curso."
-
-  };
-
-  alert(mensajes[tipo]);
-
+function ocultarTodo(){
+  document.getElementById("inicio").style.display="none";
+  document.getElementById("aula").style.display="none";
+  document.getElementById("modulo1").style.display="none";
 }
+
+function mostrarInicio(){
+  ocultarTodo();
+  document.getElementById("inicio").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function abrirCurso(){
+  ocultarTodo();
+  document.getElementById("aula").style.display="block";
+  renderModulos();
+  actualizarProgreso();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function abrirModuloUno(indice=null){
+  ocultarTodo();
+  document.getElementById("modulo1").style.display="block";
+
+  const destino = indice === null ? progreso.ultimaLeccion : indice;
+
+  renderMenuLecciones(destino);
+  mostrarLeccion(destino);
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ============================
+   MODULOS
+============================ */
+
+function renderModulos(){
+
+  let html="";
+
+  modulos.forEach((m,i)=>{
+
+    const disponible = i===0;
+
+    html += `
+      <div class="modulo ${disponible ? "" : "bloqueado"}">
+
+        <div class="modulo-icon">${m[0]}</div>
+
+        <div class="modulo-info">
+          <div class="modulo-num">MÓDULO ${i+1}</div>
+          <h3>${m[1]}</h3>
+          <p>${m[2]}</p>
+          <div class="tiempo">⏱ ${m[3]}</div>
+        </div>
+
+        ${
+          disponible
+          ? `<button class="btn-principal" onclick="abrirModuloUno()">
+               ${progreso.leccionesCompletas.length ? "Continuar →" : "Comenzar →"}
+             </button>`
+          : `<div class="bloqueo">🔒 Próximamente</div>`
+        }
+
+      </div>
+    `;
+  });
+
+  document.getElementById("listaModulos").innerHTML=html;
+}
+
+function actualizarProgreso(){
+
+  const porcentaje = Math.round(
+    (progreso.leccionesCompletas.length / lecciones.length) * 10
+  );
+
+  document.getElementById("barraProgreso").style.width=porcentaje+"%";
+
+  document.getElementById("textoProgreso").innerHTML =
+    "Tu progreso general del curso: "+porcentaje+"% · "+
+    progreso.leccionesCompletas.length+" de "+lecciones.length+
+    " lecciones iniciales completadas";
+}
+
+/* ============================
+   LECCIONES
+============================ */
+
+function renderMenuLecciones(activa){
+
+  let html="";
+
+  lecciones.forEach((l,i)=>{
+
+    const completa=progreso.leccionesCompletas.includes(i);
+
+    html+=`
+      <button
+        class="leccion-menu ${i===activa ? "activa" : ""} ${completa ? "completa" : ""}"
+        onclick="cambiarLeccion(${i})">
+        ${i+1}. ${l.titulo}
+      </button>
+    `;
+  });
+
+  document.getElementById("menuLecciones").innerHTML=html;
+}
+
+function cambiarLeccion(i){
+  progreso.ultimaLeccion=i;
+  guardarProgreso();
+  renderMenuLecciones(i);
+  mostrarLeccion(i);
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function mostrarLeccion(i){
+
+  const l=lecciones[i];
+
+  document.getElementById("contenidoLeccion").innerHTML=`
+
+    <span class="mini-badge">
+      🌱 MÓDULO 1 · LECCIÓN ${i+1} DE ${lecciones.length}
+    </span>
+
+    <h1>${l.titulo}</h1>
+
+    <p class="leccion-intro">${l.intro}</p>
+
+    <div class="bloque">
+      <h2>👩‍🏫 Te explico</h2>
+      <p>${l.explicacion}</p>
+    </div>
+
+    <div class="bloque">
+      <h2>👀 Mira este ejemplo</h2>
+      <div class="caja caja-morada">
+        ${l.ejemplo}
+      </div>
+    </div>
+
+    <div class="bloque">
+      <h2>🤝 Hagámoslo juntas</h2>
+
+      <div class="caja caja-azul pasos">
+        ${l.pasos.map((p,n)=>`<p><strong>${n+1}.</strong> ${p}</p>`).join("")}
+      </div>
+    </div>
+
+    <div class="bloque">
+      <h2>🌟 Ahora practica tú</h2>
+
+      <div class="caja caja-verde">
+        ${l.practica}
+      </div>
+    </div>
+
+    <div class="acciones-leccion">
+
+      <button class="btn-repetir" onclick="explicarOtraVez(${i})">
+        🔄 Explícame otra vez
+      </button>
+
+      <button class="btn-ayuda" onclick="necesitoAyuda(${i})">
+        🙋 Necesito ayuda
+      </button>
+
+      <button class="btn-logrado" onclick="completarLeccion(${i})">
+        ${
+          progreso.leccionesCompletas.includes(i)
+          ? "✅ Lección completada"
+          : "🎉 ¡Ya lo hice!"
+        }
+      </button>
+
+    </div>
+
+    <div class="mensaje" id="mensajeLeccion"></div>
+
+    <div class="navegacion">
+
+      <button
+        class="anterior"
+        onclick="irAnterior(${i})"
+        ${i===0 ? "disabled" : ""}>
+        ← Anterior
+      </button>
+
+      <button
+        class="siguiente"
+        onclick="irSiguiente(${i})">
+        ${i===lecciones.length-1 ? "Finalizar módulo ✓" : "Siguiente →"}
+      </button>
+
+    </div>
+
+  `;
+}
+
+function completarLeccion(i){
+
+  if(!progreso.leccionesCompletas.includes(i)){
+    progreso.leccionesCompletas.push(i);
+  }
+
+  if(i < lecciones.length-1){
+    progreso.ultimaLeccion=i+1;
+  }
+
+  guardarProgreso();
+  renderMenuLecciones(i);
+
+  document.getElementById("mensajeLeccion").innerHTML=`
+    <div class="felicitacion">
+      <div style="font-size:36px">🎉</div>
+      <h3>¡Excelente, maestra!</h3>
+      <p style="margin-top:6px">
+        Acabas de completar esta práctica. Cada pequeño paso cuenta.
+      </p>
+    </div>
+  `;
+}
+
+function irAnterior(i){
+  if(i>0) cambiarLeccion(i-1);
+}
+
+function irSiguiente(i){
+
+  if(i < lecciones.length-1){
+    cambiarLeccion(i+1);
+  }else{
+
+    if(!progreso.leccionesCompletas.includes(i)){
+      progreso.leccionesCompletas.push(i);
+      guardarProgreso();
+    }
+
+    abrirModal("finalModulo");
+  }
+}
+
+/* ============================
+   AYUDAS
+============================ */
+
+function explicarOtraVez(i){
+
+  abrirModalPersonalizado(
+    "🔄 Vamos otra vez",
+    "No pasa nada si necesitas repetirlo. Lee solamente una instrucción a la vez. Haz ese paso y después continúa con el siguiente. No tienes que memorizar nada."
+  );
+}
+
+function necesitoAyuda(i){
+
+  const ayudas=[
+    "Busca arriba de esta misma página. Allí está la barra del navegador. Si estás en teléfono, puede aparecer arriba o abajo.",
+    "Si utilizas computadora, mueve el mouse y presiona una vez. Si utilizas teléfono, toca suavemente la pantalla con un dedo.",
+    "Abre una aplicación sencilla como Notas. Allí puedes practicar sin miedo a dañar nada.",
+    "Para seleccionar en computadora mantén presionado el botón izquierdo del mouse mientras lo mueves sobre las palabras.",
+    "En computadora recuerda: Ctrl + C copia y Ctrl + V pega. En teléfono mantén presionado el texto para ver las opciones.",
+    "Busca arriba junto al nombre de esta página. Normalmente verás un signo + para abrir otra pestaña.",
+    "Busca una carpeta llamada Descargas o Downloads. En teléfono también puede aparecer dentro de la aplicación Archivos.",
+    "Si no sabes crear una carpeta todavía, no te preocupes. Puedes practicarlo con alguien y volver a esta lección.",
+    "Puedes repetir cualquiera de las lecciones anteriores. No existe ningún problema en practicar varias veces."
+  ];
+
+  abrirModalPersonalizado(
+    "🙋 Estoy aquí para ayudarte",
+    ayudas[i]
+  );
+}
+
+/* ============================
+   MODALES
+============================ */
+
+function abrirModal(tipo){
+
+  if(tipo==="principiante"){
+
+    abrirModalPersonalizado(
+      "🌸 Bienvenida a MAESTRA IA",
+      `
+      No necesitas conocer palabras complicadas ni saber programación.<br><br>
+      <strong>1.</strong> Elige lo que quieres aprender.<br><br>
+      <strong>2.</strong> Lee una instrucción a la vez.<br><br>
+      <strong>3.</strong> Practica sin miedo.<br><br>
+      <strong>4.</strong> Si algo no se entiende, pulsa <strong>Necesito ayuda</strong>.<br><br>
+      Aquí avanzamos a tu ritmo.
+      `
+    );
+  }
+
+  if(tipo==="finalModulo"){
+
+    abrirModalPersonalizado(
+      "🏆 ¡Terminaste tu primer módulo!",
+      `
+      Ya conoces las herramientas digitales básicas que utilizaremos durante el curso.<br><br>
+      No necesitas dominarlas perfectamente. Puedes regresar y practicar cuando quieras.<br><br>
+      <strong>El siguiente paso será descubrir qué es realmente la Inteligencia Artificial y qué puede —y qué no puede— hacer por una maestra.</strong>
+      `
+    );
+  }
+}
+
+function abrirModalPersonalizado(titulo,texto){
+
+  document.getElementById("modalContenido").innerHTML=`
+    <h3>${titulo}</h3>
+    <p>${texto}</p>
+
+    <button class="cerrar" onclick="cerrarModal()">
+      Entendido 💜
+    </button>
+  `;
+
+  document.getElementById("modal").style.display="flex";
+}
+
+function cerrarModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+function proximamente(nombre){
+
+  abrirModalPersonalizado(
+    nombre,
+    "Estamos construyendo esta herramienta. Primero aprenderemos juntas las bases y después la activaremos dentro de MAESTRA IA."
+  );
+}
+
+/* INICIO */
+
+mostrarInicio();
 
 </script>
 
