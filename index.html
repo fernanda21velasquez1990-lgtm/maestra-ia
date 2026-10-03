@@ -1968,6 +1968,86 @@ const modulo8 = [
 
 
 /* ==================================================
+   MODULO 9 - EVALUAR TAMBIEN PUEDE SER FACIL
+================================================== */
+
+const modulo9 = [
+  {
+    titulo:"La IA como apoyo para evaluar",
+    intro:"Evaluar no es solamente colocar una nota. También nos ayuda a conocer qué aprendieron los estudiantes y qué necesitan reforzar.",
+    explicacion:"La IA puede ayudarte a crear borradores de preguntas, instrumentos y criterios de evaluación. Tú debes decidir qué aprendizaje evaluar, revisar cada propuesta y adaptarla al nivel y contexto de tus estudiantes.",
+    ejemplo:"«Ayúdame a crear una evaluación breve para 3.º grado sobre el ciclo del agua».",
+    pasos:["Define qué aprendizaje quieres observar.","Indica grado y tema.","Decide qué tipo de evaluación necesitas.","Revisa todo antes de aplicarlo."],
+    practica:"Piensa en un aprendizaje que necesites evaluar próximamente."
+  },
+  {
+    titulo:"Diagnóstica, formativa y sumativa",
+    intro:"No todas las evaluaciones tienen el mismo propósito.",
+    explicacion:"Una evaluación diagnóstica ayuda a explorar conocimientos previos; la formativa permite observar avances durante el aprendizaje; y la sumativa valora resultados al finalizar un proceso. Puedes explicar a la IA cuál de estas necesitas.",
+    ejemplo:"«Crea 5 preguntas diagnósticas para conocer qué saben estudiantes de 4.º grado sobre las fracciones antes de comenzar el tema».",
+    pasos:["Identifica el momento de la evaluación.","Define para qué necesitas la información.","Indica el tipo de evaluación en tu solicitud.","Comprueba que las preguntas correspondan al propósito."],
+    practica:"Elige si tu próxima evaluación será diagnóstica, formativa o sumativa y explica por qué."
+  },
+  {
+    titulo:"Crear preguntas claras",
+    intro:"Una buena pregunta debe permitir comprender qué se espera del estudiante.",
+    explicacion:"Puedes pedir preguntas de selección, verdadero o falso, respuesta breve, desarrollo, relación o aplicación. La variedad puede ser útil, pero cada pregunta debe corresponder al aprendizaje y al nivel.",
+    ejemplo:"«Crea 6 preguntas variadas para 2.º grado sobre los animales: 2 de selección, 2 de verdadero o falso y 2 de respuesta breve».",
+    pasos:["Indica cantidad de preguntas.","Define los tipos que necesitas.","Pide lenguaje apropiado para el grado.","Revisa que no haya preguntas confusas."],
+    practica:"Solicita cinco preguntas variadas sobre un tema de tu clase."
+  },
+  {
+    titulo:"Crear una clave de respuestas",
+    intro:"La IA también puede ayudarte a preparar una guía para revisar las respuestas.",
+    explicacion:"Puedes solicitar respuestas esperadas o una clave, pero debes comprobar cada una. En preguntas abiertas puede haber más de una respuesta válida, por lo que conviene definir qué elementos esenciales esperas encontrar.",
+    ejemplo:"«Incluye al final una clave de respuestas y explica brevemente qué debería contener una respuesta correcta en las preguntas abiertas».",
+    pasos:["Pide la clave junto con la evaluación.","Comprueba cada respuesta.","Identifica preguntas que admitan varias respuestas.","Corrige cualquier error antes de usarla."],
+    practica:"Pide una clave para las preguntas que creaste y compruébala."
+  },
+  {
+    titulo:"Criterios de evaluación",
+    intro:"Los criterios nos ayudan a observar con mayor claridad qué esperamos del trabajo de un estudiante.",
+    explicacion:"Puedes pedir criterios sencillos, observables y relacionados con el propósito. Evita criterios vagos como «lo hizo bien» cuando puedas describir exactamente qué debe demostrar.",
+    ejemplo:"Para una exposición: «Explica la idea principal», «Utiliza vocabulario del tema» y «Presenta al menos dos ejemplos».",
+    pasos:["Vuelve al propósito de aprendizaje.","Identifica evidencias observables.","Redacta criterios claros.","Comprueba que realmente puedan observarse."],
+    practica:"Crea tres criterios sencillos para una actividad."
+  },
+  {
+    titulo:"Lista de cotejo",
+    intro:"Una lista de cotejo permite registrar rápidamente si determinados aspectos están presentes.",
+    explicacion:"Puedes pedir a la IA una tabla con criterios y opciones como Sí/No o Logrado/En proceso. Debe ser breve, clara y relacionada con la actividad evaluada.",
+    ejemplo:"«Crea una lista de cotejo de 5 criterios para evaluar un afiche de Ciencias de 4.º grado. Usa columnas: criterio, logrado y en proceso».",
+    pasos:["Describe la actividad.","Define qué aspectos observarás.","Pide pocos criterios importantes.","Revisa que cada criterio sea claro."],
+    practica:"Genera una lista de cotejo para una actividad de tu aula."
+  },
+  {
+    titulo:"Rúbrica sencilla",
+    intro:"Una rúbrica puede mostrar diferentes niveles de desempeño para cada criterio.",
+    explicacion:"Para comenzar, puedes trabajar con pocos criterios y tres niveles, por ejemplo: logrado, en proceso y requiere apoyo. Las descripciones deben indicar diferencias comprensibles entre niveles.",
+    ejemplo:"«Crea una rúbrica sencilla con 4 criterios y tres niveles: logrado, en proceso y requiere apoyo, para evaluar un cuento escrito en 5.º grado».",
+    pasos:["Selecciona pocos criterios importantes.","Define los niveles.","Pide descripciones observables.","Ajusta el lenguaje al contexto escolar."],
+    practica:"Crea una rúbrica de tres niveles para una producción sencilla."
+  },
+  {
+    titulo:"Adaptar sin perder el aprendizaje",
+    intro:"Una evaluación puede necesitar ajustes para permitir que distintos estudiantes demuestren lo aprendido.",
+    explicacion:"Puedes pedir instrucciones más breves, menos ítems, apoyo visual, más tiempo o una forma diferente de responder, según corresponda. La adaptación debe conservar el aprendizaje que quieres observar y debe revisarse profesionalmente.",
+    ejemplo:"«Mantén el mismo objetivo, pero presenta instrucciones más cortas y divide las preguntas en pasos».",
+    pasos:["Identifica la barrera.","Mantén claro qué aprendizaje evaluarás.","Pide una adaptación concreta.","Comprueba que el objetivo no se haya perdido."],
+    practica:"Adapta una pregunta manteniendo el mismo aprendizaje esperado."
+  },
+  {
+    titulo:"Práctica final: creo mi evaluación completa",
+    intro:"Ahora reunirás preguntas, respuestas y criterios en un instrumento completo.",
+    explicacion:"Elige grado, área, tema y propósito. Pide una evaluación breve con instrucciones, preguntas variadas, clave de respuestas y criterios. Después resuélvela tú misma para detectar errores antes de aplicarla.",
+    ejemplo:"«Crea una evaluación formativa para 4.º grado sobre fracciones. Incluye instrucciones claras, 8 preguntas variadas, clave de respuestas y 4 criterios de evaluación. Usa lenguaje apropiado para la edad».",
+    pasos:["Define grado, tema y propósito.","Solicita preguntas e instrucciones.","Pide clave y criterios.","Resuelve, revisa y corrige todo antes de utilizarlo."],
+    practica:"Construye una evaluación completa y luego realiza la evaluación final del módulo."
+  }
+];
+
+
+/* ==================================================
    EXAMENES
 ================================================== */
 
@@ -2322,6 +2402,20 @@ const examenes = {
     {p:"¿Qué puede incluir un pequeño paquete de aula?",o:["Actividad, recurso creativo y práctica sobre un mismo tema","Solo una contraseña","Únicamente una imagen"],c:0},
     {p:"¿Quién realiza la revisión final de un recurso generado con IA?",o:["La maestra","La IA sin supervisión","El navegador"],c:0}
   ]
+,
+
+  9:[
+    {p:"¿Para qué puede ayudarnos la IA en la evaluación?",o:["Para crear borradores de preguntas, instrumentos y criterios que debemos revisar","Para decidir todas las calificaciones sin revisión","Para sustituir el criterio docente"],c:0},
+    {p:"¿Qué busca principalmente una evaluación diagnóstica?",o:["Explorar conocimientos previos","Dar siempre una calificación final","Reemplazar la enseñanza"],c:0},
+    {p:"¿Para qué sirve principalmente la evaluación formativa?",o:["Observar avances durante el aprendizaje","Cerrar obligatoriamente un período","Guardar contraseñas"],c:0},
+    {p:"¿Qué debemos revisar en las preguntas creadas por IA?",o:["Claridad, nivel, relación con el aprendizaje y corrección","Solo el color","Únicamente la cantidad"],c:0},
+    {p:"¿Qué debemos hacer con una clave de respuestas generada por IA?",o:["Comprobar cada respuesta antes de utilizarla","Aceptar todas las respuestas automáticamente","No leerla"],c:0},
+    {p:"¿Cómo conviene redactar un criterio de evaluación?",o:["De forma clara y observable","De manera vaga","Con datos personales"],c:0},
+    {p:"¿Qué permite registrar una lista de cotejo?",o:["Si determinados criterios están presentes o logrados","Contraseñas","La velocidad de Internet"],c:0},
+    {p:"¿Qué caracteriza a una rúbrica sencilla?",o:["Criterios con diferentes niveles de desempeño","Una sola pregunta sin criterios","Solo una nota sin descripción"],c:0},
+    {p:"Al adaptar una evaluación, ¿qué debemos procurar conservar?",o:["El aprendizaje que queremos observar","Exactamente el mismo formato siempre","La cantidad original de palabras"],c:0},
+    {p:"Antes de aplicar una evaluación creada con IA conviene:",o:["Resolverla, revisarla y corregirla","Imprimirla sin leer","Compartirla inmediatamente"],c:0}
+  ]
 
 };
 
@@ -2366,6 +2460,10 @@ if(!Array.isArray(progreso.modulo8Completas)){
   progreso.modulo8Completas=[];
 }
 
+if(!Array.isArray(progreso.modulo9Completas)){
+  progreso.modulo9Completas=[];
+}
+
 if(typeof progreso.ultimaLeccion!=="number"){
   progreso.ultimaLeccion=0;
 }
@@ -2396,6 +2494,10 @@ if(typeof progreso.ultimaLeccion7!=="number"){
 
 if(typeof progreso.ultimaLeccion8!=="number"){
   progreso.ultimaLeccion8=0;
+}
+
+if(typeof progreso.ultimaLeccion9!=="number"){
+  progreso.ultimaLeccion9=0;
 }
 
 if(!progreso.examenes){
@@ -2447,6 +2549,10 @@ function leccionesCompletas(modulo){
 
   if(modulo===8){
     return progreso.modulo8Completas.length>=modulo8.length;
+  }
+
+  if(modulo===9){
+    return progreso.modulo9Completas.length>=modulo9.length;
   }
 
   return false;
@@ -2510,7 +2616,7 @@ function renderModulos(){
 
     let boton="";
 
-    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5 || numero===6 || numero===7 || numero===8){
+    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5 || numero===6 || numero===7 || numero===8 || numero===9){
 
       if(disponible){
 
@@ -2627,6 +2733,7 @@ function datosModulo(n){
   if(n===6) return modulo6;
   if(n===7) return modulo7;
   if(n===8) return modulo8;
+  if(n===9) return modulo9;
 
   return [];
 }
@@ -2641,6 +2748,7 @@ function completasModulo(n){
   if(n===6) return progreso.modulo6Completas;
   if(n===7) return progreso.modulo7Completas;
   if(n===8) return progreso.modulo8Completas;
+  if(n===9) return progreso.modulo9Completas;
 
   return [];
 }
@@ -2655,6 +2763,7 @@ function ultimaModulo(n){
   if(n===6) return progreso.ultimaLeccion6;
   if(n===7) return progreso.ultimaLeccion7;
   if(n===8) return progreso.ultimaLeccion8;
+  if(n===9) return progreso.ultimaLeccion9;
 
   return 0;
 }
@@ -2669,6 +2778,7 @@ function establecerUltima(n,i){
   if(n===6) progreso.ultimaLeccion6=i;
   if(n===7) progreso.ultimaLeccion7=i;
   if(n===8) progreso.ultimaLeccion8=i;
+  if(n===9) progreso.ultimaLeccion9=i;
 
   guardar();
 }
