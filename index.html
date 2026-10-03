@@ -899,6 +899,36 @@ footer{
     grid-template-columns:1fr;
   }
 }
+
+/* ==================================================
+   MI ASISTENTE IA
+================================================== */
+.asistente-wrap{max-width:1050px;margin:0 auto;padding:28px 18px 60px}
+.asistente-hero{background:linear-gradient(135deg,#fff,#f7edff);border:1px solid #ead8ff;border-radius:28px;padding:28px;box-shadow:0 12px 35px rgba(90,30,140,.10);margin-bottom:22px}
+.asistente-hero h2{margin:0 0 8px;color:#7e22ce;font-size:30px}
+.asistente-hero p{margin:0;color:#5b5562;line-height:1.65}
+.pasos-asistente{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.paso-ia{background:white;border:1px solid #eee3f7;border-radius:24px;padding:22px;box-shadow:0 8px 24px rgba(70,30,100,.06)}
+.paso-ia h3{margin:0 0 14px;color:#40204f}
+.paso-num{display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;border-radius:50%;background:#a855f7;color:white;font-weight:800;margin-right:8px}
+.ia-opciones{display:flex;flex-wrap:wrap;gap:10px}
+.ia-chip{border:2px solid #ead8ff;background:#fff;border-radius:15px;padding:11px 14px;cursor:pointer;font-weight:700;color:#4b3158;transition:.2s}
+.ia-chip:hover,.ia-chip.activo{background:#f1e2ff;border-color:#a855f7;color:#7e22ce;transform:translateY(-1px)}
+.ia-select,.ia-textarea{width:100%;border:2px solid #e8dcf1;border-radius:15px;padding:13px 14px;font:inherit;background:white;box-sizing:border-box}
+.ia-textarea{min-height:120px;resize:vertical;line-height:1.5}
+.ia-select:focus,.ia-textarea:focus{outline:none;border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.12)}
+.generar-prompt{width:100%;margin-top:18px;border:0;border-radius:16px;padding:15px 18px;background:linear-gradient(90deg,#9333ea,#c026d3);color:white;font-weight:800;font-size:16px;cursor:pointer}
+.resultado-prompt{margin-top:22px;background:#fff;border:2px solid #d8b4fe;border-radius:24px;padding:22px;display:none}
+.resultado-prompt.visible{display:block}
+.prompt-box{background:#faf7fc;border:1px solid #eadcf3;border-radius:16px;padding:18px;white-space:pre-wrap;line-height:1.65;color:#31243a;margin:14px 0}
+.prompt-actions{display:flex;flex-wrap:wrap;gap:10px}
+.prompt-actions button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer}
+.btn-copy{background:#7e22ce;color:white}
+.btn-new{background:#ede9fe;color:#5b21b6}
+.btn-home-ia{background:#ecfeff;color:#0f766e}
+.ia-note{font-size:14px;color:#6b6570;margin-top:10px;line-height:1.5}
+@media(max-width:760px){.pasos-asistente{grid-template-columns:1fr}.asistente-hero h2{font-size:25px}}
+
 </style>
 </head>
 
@@ -955,7 +985,7 @@ footer{
         <p>Curso completo pensado especialmente para docentes.</p>
       </div>
 
-      <div class="tarjeta" onclick="proximamente('✨ Mi Asistente IA')">
+      <div class="tarjeta" onclick="abrirAsistenteIA()">
         <div class="icono morado">✨</div>
         <h4>Mi Asistente IA</h4>
         <p>Cuéntanos qué necesitas y construiremos la instrucción contigo.</p>
@@ -3950,6 +3980,148 @@ function proximamente(nombre){
 ================================================== */
 
 mostrarInicio();
+
+
+/* ==================================================
+   HERRAMIENTA: MI ASISTENTE IA
+================================================== */
+let asistenteDatos = {grado:"", area:"", accion:""};
+
+function abrirAsistenteIA(){
+  asistenteDatos={grado:"",area:"",accion:""};
+  document.body.innerHTML=`
+    <div class="asistente-wrap">
+      <div style="margin-bottom:16px">
+        <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+      </div>
+
+      <section class="asistente-hero">
+        <h2>✨ Mi Asistente IA</h2>
+        <p>No necesitas saber escribir un prompt. Cuéntame paso a paso qué necesitas y MAESTRA IA preparará una instrucción clara para que puedas usarla en Gemini o ChatGPT.</p>
+      </section>
+
+      <div class="pasos-asistente">
+        <section class="paso-ia">
+          <h3><span class="paso-num">1</span>¿Para qué grado?</h3>
+          <div class="ia-opciones" id="gradosIA">
+            ${["1.º","2.º","3.º","4.º","5.º","6.º"].map(g=>`<button class="ia-chip" onclick="elegirAsistente('grado','${g}',this)">${g} grado</button>`).join("")}
+          </div>
+        </section>
+
+        <section class="paso-ia">
+          <h3><span class="paso-num">2</span>¿Qué área trabajarás?</h3>
+          <select id="areaIA" class="ia-select" onchange="asistenteDatos.area=this.value">
+            <option value="">Selecciona un área</option>
+            <option>Lengua y Literatura</option>
+            <option>Matemática</option>
+            <option>Ciencias Naturales</option>
+            <option>Ciencias Sociales</option>
+            <option>Educación Física</option>
+            <option>Arte y Expresión</option>
+            <option>Orientación y Convivencia</option>
+            <option>Otra área</option>
+          </select>
+        </section>
+
+        <section class="paso-ia">
+          <h3><span class="paso-num">3</span>¿Qué quieres hacer?</h3>
+          <div class="ia-opciones">
+            ${[
+              ["Planificar una clase","planificación"],
+              ["Crear una actividad","actividad"],
+              ["Crear un recurso","recurso educativo"],
+              ["Crear una evaluación","evaluación"],
+              ["Crear un cuento","cuento educativo"],
+              ["Crear un juego","juego educativo"],
+              ["Explicar un tema","explicación"],
+              ["Otra cosa","tarea educativa"]
+            ].map(x=>`<button class="ia-chip" onclick="elegirAsistente('accion','${x[1]}',this)">${x[0]}</button>`).join("")}
+          </div>
+        </section>
+
+        <section class="paso-ia">
+          <h3><span class="paso-num">4</span>Cuéntame qué necesitas</h3>
+          <textarea id="necesidadIA" class="ia-textarea" placeholder="Ejemplo: Quiero trabajar el ciclo del agua en una clase de 45 minutos. Tengo pizarra, hojas y colores."></textarea>
+          <p class="ia-note">Escríbelo como se lo contarías a otra maestra. No necesitas usar palabras técnicas.</p>
+        </section>
+      </div>
+
+      <button class="generar-prompt" onclick="generarPromptAsistente()">✨ Crear mi prompt</button>
+
+      <section id="resultadoPromptIA" class="resultado-prompt">
+        <h3 style="margin-top:0;color:#7e22ce">💜 Tu prompt está listo</h3>
+        <p>Puedes copiarlo y pegarlo en Gemini o ChatGPT.</p>
+        <div id="promptGeneradoIA" class="prompt-box"></div>
+        <div class="prompt-actions">
+          <button class="btn-copy" onclick="copiarPromptIA()">📋 Copiar prompt</button>
+          <button class="btn-new" onclick="abrirAsistenteIA()">✨ Crear otro</button>
+          <button class="btn-home-ia" onclick="location.reload()">🏠 Volver al inicio</button>
+        </div>
+        <p class="ia-note">Recuerda: revisa siempre la respuesta de la IA antes de utilizarla con tus estudiantes y no compartas datos personales o sensibles.</p>
+      </section>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function elegirAsistente(tipo,valor,boton){
+  asistenteDatos[tipo]=valor;
+  const contenedor=boton.parentElement;
+  contenedor.querySelectorAll(".ia-chip").forEach(b=>b.classList.remove("activo"));
+  boton.classList.add("activo");
+}
+
+function generarPromptAsistente(){
+  const necesidad=(document.getElementById("necesidadIA").value||"").trim();
+  if(!asistenteDatos.grado){
+    alert("Selecciona primero el grado.");
+    return;
+  }
+  if(!asistenteDatos.area){
+    alert("Selecciona el área que deseas trabajar.");
+    return;
+  }
+  if(!asistenteDatos.accion){
+    alert("Selecciona qué quieres hacer.");
+    return;
+  }
+  if(!necesidad){
+    alert("Cuéntame brevemente qué necesitas.");
+    return;
+  }
+
+  const prompt=`Actúa como apoyo para una docente de educación primaria.
+
+Necesito crear una ${asistenteDatos.accion} para estudiantes de ${asistenteDatos.grado} grado, en el área de ${asistenteDatos.area}.
+
+Mi necesidad es la siguiente:
+${necesidad}
+
+Prepara una propuesta clara, práctica y apropiada para la edad. Usa lenguaje sencillo, organiza la respuesta paso a paso y considera recursos realistas para un aula de primaria. Si falta algún dato importante, indícalo claramente en lugar de inventarlo. No incluyas datos personales de estudiantes.
+
+Yo revisaré y adaptaré la propuesta antes de utilizarla en el aula.`;
+
+  document.getElementById("promptGeneradoIA").textContent=prompt;
+  const resultado=document.getElementById("resultadoPromptIA");
+  resultado.classList.add("visible");
+  resultado.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function copiarPromptIA(){
+  const prompt=document.getElementById("promptGeneradoIA").textContent;
+  try{
+    await navigator.clipboard.writeText(prompt);
+    alert("💜 ¡Listo! Tu prompt fue copiado. Ahora puedes pegarlo en Gemini o ChatGPT.");
+  }catch(e){
+    const area=document.createElement("textarea");
+    area.value=prompt;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+    alert("💜 ¡Listo! Tu prompt fue copiado.");
+  }
+}
 
 </script>
 
