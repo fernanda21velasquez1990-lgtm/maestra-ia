@@ -956,6 +956,34 @@ footer{
 .plan-tip{font-size:14px;color:#667171;line-height:1.5;margin-top:10px}
 @media(max-width:760px){.plan-grid{grid-template-columns:1fr}.plan-full{grid-column:auto}.plan-hero h2{font-size:25px}}
 
+
+/* ==================================================
+   CREAR PARA MI SALON
+================================================== */
+.salon-wrap{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
+.salon-hero{background:linear-gradient(135deg,#fff,#fff8e8);border:1px solid #f5e4b5;border-radius:28px;padding:28px;box-shadow:0 12px 35px rgba(160,110,20,.08);margin-bottom:22px}
+.salon-hero h2{margin:0 0 8px;color:#b45309;font-size:30px}
+.salon-hero p{margin:0;color:#625b50;line-height:1.65}
+.salon-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.salon-card{background:#fff;border:1px solid #f0e8d7;border-radius:22px;padding:20px;box-shadow:0 8px 22px rgba(90,70,30,.05)}
+.salon-card h3{margin:0 0 12px;color:#5f4524}
+.salon-full{grid-column:1/-1}
+.salon-select,.salon-input,.salon-textarea{width:100%;box-sizing:border-box;border:2px solid #eee3cf;border-radius:14px;padding:12px 13px;font:inherit;background:#fff}
+.salon-textarea{min-height:105px;resize:vertical;line-height:1.5}
+.salon-select:focus,.salon-input:focus,.salon-textarea:focus{outline:none;border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.12)}
+.recurso-chips{display:flex;flex-wrap:wrap;gap:10px}
+.recurso-chip{border:2px solid #f3dfb7;background:#fff;border-radius:15px;padding:11px 14px;cursor:pointer;font-weight:800;color:#674b25}
+.recurso-chip:hover,.recurso-chip.activo{background:#fff2cc;border-color:#f59e0b;color:#92400e;transform:translateY(-1px)}
+.salon-btn{width:100%;border:0;border-radius:16px;padding:15px 18px;background:linear-gradient(90deg,#d97706,#f59e0b);color:#fff;font-size:16px;font-weight:900;cursor:pointer;margin-top:18px}
+.salon-result{display:none;margin-top:22px;background:#fff;border:2px solid #fcd34d;border-radius:24px;padding:22px}
+.salon-result.visible{display:block}
+.salon-prompt{background:#fffaf0;border:1px solid #f3dfb7;border-radius:16px;padding:18px;white-space:pre-wrap;line-height:1.65;color:#3f3428;margin:14px 0}
+.salon-actions{display:flex;flex-wrap:wrap;gap:10px}
+.salon-actions button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer}
+.salon-copy{background:#b45309;color:#fff}.salon-new{background:#fef3c7;color:#92400e}.salon-home{background:#f3e8ff;color:#7e22ce}
+.salon-note{font-size:14px;color:#6e675d;line-height:1.5;margin-top:10px}
+@media(max-width:760px){.salon-grid{grid-template-columns:1fr}.salon-full{grid-column:auto}.salon-hero h2{font-size:25px}}
+
 </style>
 </head>
 
@@ -1024,7 +1052,7 @@ footer{
         <p>Crea planificaciones según grado, área y tema.</p>
       </div>
 
-      <div class="tarjeta" onclick="proximamente('🎨 Crear para mi salón')">
+      <div class="tarjeta" onclick="abrirCreadorSalon()">
         <div class="icono amarillo">🎨</div>
         <h4>Crear para mi salón</h4>
         <p>Actividades, cuentos, juegos, fichas y materiales.</p>
@@ -4300,6 +4328,181 @@ async function copiarPlanificacion(){
     t.value=prompt;document.body.appendChild(t);t.select();
     document.execCommand("copy");t.remove();
     alert("📚 ¡Listo! El prompt de planificación fue copiado.");
+  }
+}
+
+
+/* ==================================================
+   HERRAMIENTA: CREAR PARA MI SALON
+================================================== */
+let recursoSalonElegido="";
+
+function abrirCreadorSalon(){
+  recursoSalonElegido="";
+  document.body.innerHTML=`
+    <div class="salon-wrap">
+      <div style="margin-bottom:16px">
+        <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+      </div>
+
+      <section class="salon-hero">
+        <h2>🎨 Crear para mi salón</h2>
+        <p>Elige lo que necesitas preparar. MAESTRA IA organizará tus datos y construirá un prompt específico para crear un recurso educativo en Gemini o ChatGPT.</p>
+      </section>
+
+      <div class="salon-grid">
+        <section class="salon-card salon-full">
+          <h3>1. ¿Qué quieres crear?</h3>
+          <div class="recurso-chips">
+            ${[
+              ["🧩 Actividad","actividad educativa"],
+              ["📖 Cuento","cuento educativo"],
+              ["🎲 Juego","juego educativo"],
+              ["📄 Ficha","ficha de trabajo"],
+              ["🖼️ Cartelera","cartelera educativa"],
+              ["🧠 Mapa conceptual","mapa conceptual"],
+              ["📚 Guía","guía de aprendizaje"],
+              ["🤝 Dinámica","dinámica grupal"],
+              ["🃏 Tarjetas","tarjetas educativas"],
+              ["🔎 Reto","reto educativo"],
+              ["📝 Ejercicios","ejercicios de práctica"],
+              ["✨ Otro recurso","recurso educativo"]
+            ].map(x=>`<button class="recurso-chip" onclick="elegirRecursoSalon('${x[1]}',this)">${x[0]}</button>`).join("")}
+          </div>
+        </section>
+
+        <section class="salon-card">
+          <h3>2. Grado</h3>
+          <select id="salonGrado" class="salon-select">
+            <option value="">Selecciona</option>
+            <option>1.º grado</option><option>2.º grado</option><option>3.º grado</option>
+            <option>4.º grado</option><option>5.º grado</option><option>6.º grado</option>
+          </select>
+        </section>
+
+        <section class="salon-card">
+          <h3>3. Área</h3>
+          <select id="salonArea" class="salon-select">
+            <option value="">Selecciona</option>
+            <option>Lengua y Literatura</option><option>Matemática</option>
+            <option>Ciencias Naturales</option><option>Ciencias Sociales</option>
+            <option>Educación Física</option><option>Arte y Expresión</option>
+            <option>Orientación y Convivencia</option><option>Otra área</option>
+          </select>
+        </section>
+
+        <section class="salon-card">
+          <h3>4. Tema</h3>
+          <input id="salonTema" class="salon-input" placeholder="Ejemplo: Las fracciones">
+        </section>
+
+        <section class="salon-card">
+          <h3>5. Tiempo disponible</h3>
+          <select id="salonTiempo" class="salon-select">
+            <option value="">No es necesario indicar</option>
+            <option>10 minutos</option><option>15 minutos</option><option>20 minutos</option>
+            <option>30 minutos</option><option>45 minutos</option><option>60 minutos</option>
+          </select>
+        </section>
+
+        <section class="salon-card">
+          <h3>6. ¿Qué quieres lograr?</h3>
+          <textarea id="salonObjetivo" class="salon-textarea" placeholder="Ejemplo: Que practiquen cómo representar fracciones de forma sencilla."></textarea>
+        </section>
+
+        <section class="salon-card">
+          <h3>7. Materiales o condiciones</h3>
+          <textarea id="salonMateriales" class="salon-textarea" placeholder="Ejemplo: solo papel, lápiz y colores; trabajo en parejas; sin Internet."></textarea>
+        </section>
+
+        <section class="salon-card salon-full">
+          <h3>8. ¿Cómo te gustaría que fuera?</h3>
+          <textarea id="salonEstilo" class="salon-textarea" placeholder="Ejemplo: divertido, sencillo, con instrucciones cortas y apropiado para imprimir."></textarea>
+          <p class="salon-note">No escribas nombres, diagnósticos ni otros datos personales de estudiantes.</p>
+        </section>
+      </div>
+
+      <button class="salon-btn" onclick="generarRecursoSalon()">🎨 Crear mi prompt para el recurso</button>
+
+      <section id="salonResultado" class="salon-result">
+        <h3 style="margin-top:0;color:#b45309">✨ Tu prompt está listo</h3>
+        <p>Cópialo y úsalo en Gemini o ChatGPT. Después revisa cuidadosamente el recurso antes de imprimirlo o compartirlo.</p>
+        <div id="salonPrompt" class="salon-prompt"></div>
+        <div class="salon-actions">
+          <button class="salon-copy" onclick="copiarRecursoSalon()">📋 Copiar prompt</button>
+          <button class="salon-new" onclick="abrirCreadorSalon()">🎨 Crear otro recurso</button>
+          <button class="salon-home" onclick="location.reload()">🏠 Volver al inicio</button>
+        </div>
+        <p class="salon-note">Comprueba contenido, ortografía, dificultad, instrucciones y respuestas antes de utilizar el material con tus estudiantes.</p>
+      </section>
+    </div>
+  `;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function elegirRecursoSalon(valor,boton){
+  recursoSalonElegido=valor;
+  boton.parentElement.querySelectorAll(".recurso-chip").forEach(b=>b.classList.remove("activo"));
+  boton.classList.add("activo");
+}
+
+function generarRecursoSalon(){
+  const grado=document.getElementById("salonGrado").value;
+  const area=document.getElementById("salonArea").value;
+  const tema=document.getElementById("salonTema").value.trim();
+  const tiempo=document.getElementById("salonTiempo").value;
+  const objetivo=document.getElementById("salonObjetivo").value.trim();
+  const materiales=document.getElementById("salonMateriales").value.trim();
+  const estilo=document.getElementById("salonEstilo").value.trim();
+
+  if(!recursoSalonElegido){alert("Selecciona primero qué quieres crear.");return;}
+  if(!grado){alert("Selecciona el grado.");return;}
+  if(!area){alert("Selecciona el área.");return;}
+  if(!tema){alert("Escribe el tema.");return;}
+  if(!objetivo){alert("Cuéntame qué quieres lograr con este recurso.");return;}
+
+  const prompt=`Actúa como apoyo para una docente de educación primaria.
+
+Crea un borrador de ${recursoSalonElegido} con estas características:
+
+- Grado: ${grado}
+- Área: ${area}
+- Tema: ${tema}
+- Propósito: ${objetivo}
+- Tiempo disponible: ${tiempo || "Adáptalo a un tiempo razonable para el tipo de recurso."}
+- Materiales o condiciones: ${materiales || "Utiliza recursos sencillos y accesibles para un aula de primaria."}
+- Estilo o preferencias: ${estilo || "Debe ser claro, atractivo, sencillo y apropiado para la edad."}
+
+REQUISITOS:
+1. Coloca un título atractivo y apropiado.
+2. Explica el objetivo del recurso.
+3. Presenta instrucciones claras y paso a paso.
+4. Adapta vocabulario y dificultad al grado.
+5. Si requiere materiales, enuméralos.
+6. Si contiene preguntas o ejercicios, incluye una guía o respuestas esperadas al final para revisión docente.
+7. Si es un recurso para imprimir, organiza el contenido de forma limpia y fácil de copiar a un documento.
+8. Evita solicitar o incluir datos personales de estudiantes.
+9. No inventes datos académicos importantes; señala cualquier información que deba verificarse.
+10. Propón una adaptación sencilla si algún estudiante necesita más apoyo.
+
+La docente revisará exactitud, ortografía, dificultad e instrucciones antes de utilizar el recurso.`;
+
+  document.getElementById("salonPrompt").textContent=prompt;
+  const box=document.getElementById("salonResultado");
+  box.classList.add("visible");
+  box.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function copiarRecursoSalon(){
+  const prompt=document.getElementById("salonPrompt").textContent;
+  try{
+    await navigator.clipboard.writeText(prompt);
+    alert("🎨 ¡Listo! El prompt del recurso fue copiado.");
+  }catch(e){
+    const t=document.createElement("textarea");
+    t.value=prompt;document.body.appendChild(t);t.select();
+    document.execCommand("copy");t.remove();
+    alert("🎨 ¡Listo! El prompt del recurso fue copiado.");
   }
 }
 
