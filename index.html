@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MAESTRA IA</title>
 
 <style>
@@ -12,10 +11,13 @@
   --morado2:#7e22ce;
   --rosa:#db2777;
   --verde:#16a34a;
+  --verdeClaro:#dcfce7;
+  --amarillo:#f59e0b;
+  --rojo:#dc2626;
   --texto:#30283a;
   --gris:#706879;
   --fondo:#fbf8ff;
-  --blanco:#ffffff;
+  --blanco:#fff;
 }
 
 *{
@@ -24,14 +26,19 @@
   padding:0;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#fff9fc,#f7f2ff,#f1fcff);
   color:var(--texto);
+  background:
+    linear-gradient(135deg,#fff9fc,#f7f2ff,#f1fcff);
   min-height:100vh;
 }
 
-button,input,textarea{
+button,input,select,textarea{
   font-family:inherit;
 }
 
@@ -39,9 +46,18 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  cursor:not-allowed;
+  opacity:.55;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
 header{
-  background:white;
-  padding:16px 5%;
+  background:#fff;
+  padding:15px 5%;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -61,12 +77,12 @@ header{
 .logo-icon{
   width:49px;
   height:49px;
-  background:linear-gradient(135deg,#ec4899,#9333ea);
   border-radius:16px;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:25px;
+  background:linear-gradient(135deg,#ec4899,#9333ea);
 }
 
 .logo h1{
@@ -75,13 +91,13 @@ header{
 }
 
 .logo p{
-  font-size:12px;
   color:#777;
+  font-size:12px;
   margin-top:2px;
 }
 
 .modo{
-  border:none;
+  border:0;
   background:#f3e8ff;
   color:var(--morado2);
   padding:11px 17px;
@@ -89,13 +105,13 @@ header{
   font-weight:bold;
 }
 
-/* =========================
+/* ==========================
    INICIO
-========================= */
+========================== */
 
 .hero{
   text-align:center;
-  padding:52px 20px 34px;
+  padding:52px 20px 32px;
 }
 
 .badge{
@@ -119,10 +135,10 @@ header{
 }
 
 .hero p{
-  font-size:18px;
-  color:#706879;
-  max-width:680px;
+  max-width:700px;
   margin:auto;
+  color:#706879;
+  font-size:18px;
   line-height:1.65;
 }
 
@@ -152,7 +168,7 @@ header{
 }
 
 .tarjeta{
-  background:white;
+  background:#fff;
   border-radius:22px;
   padding:25px 20px;
   min-height:190px;
@@ -220,7 +236,7 @@ header{
 }
 
 .guia button{
-  background:white;
+  background:#fff;
   color:#7e22ce;
   border:0;
   border-radius:30px;
@@ -228,9 +244,9 @@ header{
   font-weight:bold;
 }
 
-/* =========================
+/* ==========================
    PANTALLAS
-========================= */
+========================== */
 
 .pantalla{
   display:none;
@@ -254,14 +270,10 @@ header{
 
 .banner-curso{
   background:linear-gradient(135deg,#7e22ce,#db2777);
-  color:white;
+  color:#fff;
   padding:34px;
   border-radius:28px;
   margin-bottom:30px;
-}
-
-.banner-curso small{
-  font-weight:bold;
 }
 
 .banner-curso h2{
@@ -270,7 +282,7 @@ header{
 }
 
 .banner-curso p{
-  max-width:760px;
+  max-width:800px;
   line-height:1.6;
 }
 
@@ -284,22 +296,22 @@ header{
 
 .barra > div{
   height:100%;
-  background:white;
+  background:#fff;
   width:0;
-  transition:.4s;
+  transition:.5s;
 }
 
 .texto-progreso{
   font-size:13px;
-  margin-top:8px;
+  margin-top:9px;
 }
 
-/* =========================
+/* ==========================
    MODULOS
-========================= */
+========================== */
 
 .modulo{
-  background:white;
+  background:#fff;
   border-radius:22px;
   padding:22px;
   margin-bottom:15px;
@@ -307,6 +319,7 @@ header{
   display:flex;
   gap:18px;
   align-items:center;
+  border:2px solid transparent;
 }
 
 .modulo.bloqueado{
@@ -314,7 +327,7 @@ header{
 }
 
 .modulo.completado{
-  border:2px solid #bbf7d0;
+  border-color:#86efac;
 }
 
 .modulo-icon{
@@ -358,7 +371,7 @@ header{
 .btn-principal{
   border:0;
   background:#9333ea;
-  color:white;
+  color:#fff;
   padding:12px 20px;
   border-radius:25px;
   font-weight:bold;
@@ -376,19 +389,19 @@ header{
   font-size:12px;
 }
 
-/* =========================
-   AULA
-========================= */
+/* ==========================
+   LECCIONES
+========================== */
 
 .curso-layout{
   display:grid;
-  grid-template-columns:255px 1fr;
+  grid-template-columns:260px 1fr;
   gap:25px;
   align-items:start;
 }
 
 .menu-lecciones{
-  background:white;
+  background:#fff;
   border-radius:22px;
   padding:18px;
   box-shadow:0 5px 20px rgba(70,40,90,.07);
@@ -399,6 +412,7 @@ header{
 .menu-lecciones h3{
   font-size:16px;
   margin-bottom:14px;
+  line-height:1.4;
 }
 
 .leccion-menu{
@@ -410,6 +424,7 @@ header{
   border-radius:13px;
   margin-bottom:8px;
   color:#555;
+  line-height:1.35;
 }
 
 .leccion-menu.activa{
@@ -425,7 +440,7 @@ header{
 }
 
 .leccion{
-  background:white;
+  background:#fff;
   border-radius:28px;
   padding:34px;
   box-shadow:0 7px 28px rgba(70,40,90,.08);
@@ -441,9 +456,9 @@ header{
   font-weight:bold;
 }
 
-.badge-ia{
-  background:#ede9fe;
-  color:#7e22ce;
+.badge-cel{
+  background:#e0f2fe;
+  color:#0369a1;
 }
 
 .leccion h1{
@@ -480,8 +495,8 @@ header{
 
 .caja-morada{background:#f8f5ff;}
 .caja-azul{background:#ecfeff;}
-.caja-amarilla{background:#fff7ed;}
 .caja-verde{background:#f0fdf4;}
+.caja-amarilla{background:#fff7ed;}
 .caja-rosa{background:#fdf2f8;}
 
 .pasos p{
@@ -518,17 +533,14 @@ header{
   min-width:180px;
   border:0;
   background:linear-gradient(135deg,#7e22ce,#db2777);
-  color:white;
+  color:#fff;
   padding:14px 20px;
   border-radius:20px;
   font-weight:bold;
 }
 
-.mensaje{
-  margin-top:20px;
-}
-
 .felicitacion{
+  margin-top:20px;
   background:#dcfce7;
   color:#166534;
   padding:22px;
@@ -557,82 +569,192 @@ header{
 
 .siguiente{
   background:#7e22ce;
-  color:white;
+  color:#fff;
 }
 
-/* =========================
-   ACTIVIDADES IA
-========================= */
+/* ==========================
+   GEMINI / CHATGPT
+========================== */
 
-.reto-grid{
+.herramientas{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:16px;
+  gap:15px;
+  margin-top:15px;
 }
 
-.reto-opcion{
-  border:2px solid #eee7f5;
-  background:white;
-  border-radius:18px;
-  padding:17px;
-  text-align:left;
+.herramienta{
+  border-radius:20px;
+  padding:20px;
+  border:2px solid #eee;
+}
+
+.herramienta h3{
+  margin-bottom:9px;
+}
+
+.herramienta p{
   font-size:14px;
-  line-height:1.5;
 }
 
-.reto-opcion:hover{
-  border-color:#c084fc;
+.gemini{
+  background:#f0f9ff;
+  border-color:#bae6fd;
 }
 
-.correcta{
-  background:#dcfce7 !important;
-  border-color:#86efac !important;
+.chatgpt{
+  background:#f0fdf4;
+  border-color:#bbf7d0;
 }
 
-.incorrecta{
-  background:#fee2e2 !important;
-  border-color:#fca5a5 !important;
+.principal-tag{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:15px;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
-.campo-practica{
-  width:100%;
-  min-height:120px;
-  border:2px solid #e9d5ff;
-  border-radius:17px;
-  padding:15px;
-  margin-top:12px;
-  font-size:15px;
-  resize:vertical;
+/* ==========================
+   EXAMEN
+========================== */
+
+.examen-portada{
+  text-align:center;
+  padding:20px 0;
 }
 
-.contador{
-  color:#777;
+.examen-icono{
+  font-size:60px;
+  margin-bottom:10px;
+}
+
+.examen-info{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:20px 0;
+}
+
+.pildora{
+  padding:8px 13px;
+  border-radius:20px;
+  background:#f3e8ff;
+  color:#7e22ce;
   font-size:13px;
-  margin-top:8px;
+  font-weight:bold;
 }
 
-.ejemplo-prompt{
-  background:white;
-  border-left:5px solid #a855f7;
-  border-radius:12px;
-  padding:18px;
-  margin-top:12px;
-  line-height:1.7;
+.btn-examen{
+  border:0;
+  background:linear-gradient(135deg,#7e22ce,#db2777);
+  color:#fff;
+  border-radius:25px;
+  padding:14px 28px;
+  font-weight:bold;
+  font-size:15px;
 }
 
-.alerta{
-  border-left:5px solid #f59e0b;
-  background:#fffbeb;
-  padding:18px;
-  border-radius:12px;
-  margin-top:14px;
-  line-height:1.6;
+.examen-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:22px;
 }
 
-/* =========================
+.examen-barra{
+  height:9px;
+  background:#eee;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:28px;
+}
+
+.examen-barra div{
+  height:100%;
+  background:linear-gradient(90deg,#9333ea,#ec4899);
+}
+
+.pregunta-examen h2{
+  font-size:24px;
+  line-height:1.45;
+  margin-bottom:20px;
+}
+
+.opcion-examen{
+  width:100%;
+  border:2px solid #eee;
+  background:#fff;
+  padding:16px;
+  border-radius:15px;
+  margin-bottom:10px;
+  text-align:left;
+  transition:.2s;
+}
+
+.opcion-examen:hover{
+  border-color:#c084fc;
+  background:#faf5ff;
+}
+
+.opcion-examen.seleccionada{
+  border-color:#9333ea;
+  background:#f3e8ff;
+  color:#6b21a8;
+  font-weight:bold;
+}
+
+.resultado{
+  text-align:center;
+  padding:15px;
+}
+
+.nota-grande{
+  font-size:64px;
+  font-weight:bold;
+  color:#7e22ce;
+  margin:12px 0;
+}
+
+.estrellas{
+  font-size:35px;
+  margin:10px;
+  animation:flotar 1.1s ease-in-out infinite alternate;
+}
+
+@keyframes flotar{
+  from{transform:translateY(0) scale(1);}
+  to{transform:translateY(-7px) scale(1.08);}
+}
+
+.confeti{
+  font-size:36px;
+  animation:celebrar .8s ease-in-out infinite alternate;
+}
+
+@keyframes celebrar{
+  from{transform:rotate(-7deg) scale(1);}
+  to{transform:rotate(7deg) scale(1.12);}
+}
+
+.resultado-aprobado{
+  background:#f0fdf4;
+  border:2px solid #86efac;
+}
+
+.resultado-repasar{
+  background:#fff7ed;
+  border:2px solid #fed7aa;
+}
+
+/* ==========================
    MODAL
-========================= */
+========================== */
 
 .modal{
   display:none;
@@ -646,7 +768,7 @@ header{
 }
 
 .modal-box{
-  background:white;
+  background:#fff;
   width:100%;
   max-width:550px;
   border-radius:25px;
@@ -674,7 +796,7 @@ header{
   border:0;
   border-radius:15px;
   background:#a855f7;
-  color:white;
+  color:#fff;
   font-weight:bold;
 }
 
@@ -685,12 +807,11 @@ footer{
   font-size:13px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ==========================
+   MOVIL
+========================== */
 
 @media(max-width:900px){
-
   .grid{
     grid-template-columns:repeat(2,1fr);
   }
@@ -704,8 +825,7 @@ footer{
   }
 }
 
-@media(max-width:560px){
-
+@media(max-width:600px){
   header{
     padding:11px;
   }
@@ -754,8 +874,8 @@ footer{
   }
 
   .modulo{
-    align-items:flex-start;
     flex-wrap:wrap;
+    align-items:flex-start;
   }
 
   .modulo .btn-principal,
@@ -775,7 +895,7 @@ footer{
     padding:27px 22px;
   }
 
-  .reto-grid{
+  .herramientas{
     grid-template-columns:1fr;
   }
 }
@@ -785,26 +905,20 @@ footer{
 <body>
 
 <header>
-
   <div class="logo" onclick="mostrarInicio()">
     <div class="logo-icon">🌸</div>
-
     <div>
       <h1>MAESTRA IA</h1>
       <p>Tu compañera inteligente para enseñar</p>
     </div>
   </div>
 
-  <button class="modo" onclick="abrirModal('principiante')">
+  <button class="modo" onclick="modalPrincipiante()">
     🌱 Modo principiante
   </button>
-
 </header>
 
-
-<!-- =========================
-     INICIO
-========================= -->
+<!-- INICIO -->
 
 <section id="inicio">
 
@@ -819,163 +933,80 @@ footer{
     </h2>
 
     <p>
-      La inteligencia artificial puede ayudarte a ahorrar tiempo,
-      crear clases increíbles y organizar mejor tu trabajo.
-      No necesitas saber de tecnología. Vamos paso a paso.
+      Aprende a utilizar la inteligencia artificial desde tu celular
+      o computadora. No necesitas experiencia previa.
+      Te acompañamos paso a paso.
     </p>
 
   </section>
 
-
   <main class="contenedor">
 
     <div class="titulo-seccion">
-
-      <h3>
-        ¿Qué quieres hacer hoy?
-      </h3>
-
-      <p>
-        Selecciona una opción. Nosotros te acompañamos.
-      </p>
-
+      <h3>¿Qué quieres hacer hoy?</h3>
+      <p>Selecciona una opción. Nosotros te acompañamos.</p>
     </div>
-
 
     <div class="grid">
 
       <div class="tarjeta" onclick="abrirCurso()">
         <div class="icono rosa">🎓</div>
         <h4>Aprender IA desde cero</h4>
-        <p>
-          Comienza el curso y aprende inteligencia artificial
-          sin complicaciones.
-        </p>
+        <p>Curso completo pensado especialmente para docentes.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('✨ Mi Asistente IA')">
-
+      <div class="tarjeta" onclick="proximamente('✨ Mi Asistente IA')">
         <div class="icono morado">✨</div>
-
         <h4>Mi Asistente IA</h4>
-
-        <p>
-          Cuéntanos qué necesitas y te ayudaremos
-          a construir la instrucción correcta.
-        </p>
-
+        <p>Cuéntanos qué necesitas y construiremos la instrucción contigo.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('📚 Planificador Inteligente')">
-
+      <div class="tarjeta" onclick="proximamente('📚 Planificar una clase')">
         <div class="icono azul">📚</div>
-
         <h4>Planificar una clase</h4>
-
-        <p>
-          Crea tu planificación por grado, área y tema
-          paso a paso.
-        </p>
-
+        <p>Crea planificaciones según grado, área y tema.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('🎨 Crear para mi salón')">
-
+      <div class="tarjeta" onclick="proximamente('🎨 Crear para mi salón')">
         <div class="icono amarillo">🎨</div>
-
         <h4>Crear para mi salón</h4>
-
-        <p>
-          Actividades, cuentos, juegos, fichas,
-          carteleras y mucho más.
-        </p>
-
+        <p>Actividades, cuentos, juegos, fichas y materiales.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('📝 Evaluaciones')">
-
+      <div class="tarjeta" onclick="proximamente('📝 Crear una evaluación')">
         <div class="icono verde">📝</div>
-
         <h4>Crear una evaluación</h4>
-
-        <p>
-          Diseña preguntas, instrumentos, rúbricas
-          y estrategias de evaluación.
-        </p>
-
+        <p>Preguntas, rúbricas, listas de cotejo y mucho más.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('💡 Biblioteca de Prompts')">
-
+      <div class="tarjeta" onclick="proximamente('💡 Biblioteca de Prompts')">
         <div class="icono naranja">💡</div>
-
         <h4>Biblioteca de Prompts</h4>
-
-        <p>
-          Encuentra instrucciones listas para utilizar
-          según lo que necesites.
-        </p>
-
+        <p>Instrucciones educativas listas para adaptar y utilizar.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="proximamente('📂 Mis trabajos')">
-
+      <div class="tarjeta" onclick="proximamente('📂 Mis trabajos')">
         <div class="icono celeste">📂</div>
-
         <h4>Mis trabajos</h4>
-
-        <p>
-          Encuentra las planificaciones y recursos
-          que hayas creado.
-        </p>
-
+        <p>Encuentra los recursos que hayas creado.</p>
       </div>
 
-
-      <div class="tarjeta"
-           onclick="abrirCurso()">
-
+      <div class="tarjeta" onclick="abrirCurso()">
         <div class="icono lila">📊</div>
-
         <h4>Mi progreso</h4>
-
-        <p>
-          Mira cuánto has avanzado y continúa
-          exactamente donde quedaste.
-        </p>
-
+        <p>Consulta tus avances, evaluaciones y mejores notas.</p>
       </div>
 
     </div>
 
-
     <section class="guia">
 
       <div>
-
-        <h3>
-          💜 ¿No sabes por dónde comenzar?
-        </h3>
-
-        <p>
-          MAESTRA IA puede acompañarte paso a paso.
-        </p>
-
+        <h3>💜 ¿No sabes por dónde comenzar?</h3>
+        <p>MAESTRA IA te acompaña desde el primer paso.</p>
       </div>
 
-      <button onclick="abrirModal('principiante')">
+      <button onclick="modalPrincipiante()">
         👉 Guíame paso a paso
       </button>
 
@@ -985,62 +1016,42 @@ footer{
 
 </section>
 
+<!-- CURSO -->
 
-<!-- =========================
-     LISTA DE MODULOS
-========================= -->
-
-<section id="aula" class="pantalla">
+<section id="curso" class="pantalla">
 
   <div class="ancho">
 
-    <button class="btn-volver"
-            onclick="mostrarInicio()">
+    <button class="btn-volver" onclick="mostrarInicio()">
       ← Volver al inicio
     </button>
 
-
     <div class="banner-curso">
 
-      <small>
-        🎓 TU PRIMER CURSO
-      </small>
+      <small>🎓 TU PRIMER CURSO</small>
 
-      <h2>
-        Inteligencia Artificial para Maestras
-      </h2>
+      <h2>Inteligencia Artificial para Maestras</h2>
 
       <p>
-        Aprende desde cero a utilizar la inteligencia artificial
-        para planificar, crear materiales, evaluar y hacer más
-        sencillo tu día a día docente.
+        Desde las habilidades digitales básicas hasta la creación
+        de planificaciones, actividades y recursos con inteligencia
+        artificial.
       </p>
 
       <div class="barra">
-        <div id="barraProgreso"></div>
+        <div id="barraGeneral"></div>
       </div>
 
-      <div class="texto-progreso"
-           id="textoProgreso">
+      <div class="texto-progreso" id="textoGeneral">
         Tu progreso: 0%
       </div>
 
     </div>
 
-
     <div class="titulo-seccion">
-
-      <h3>
-        🌸 Tu camino de aprendizaje
-      </h3>
-
-      <p>
-        No tienes que hacerlo todo hoy.
-        Avanza a tu propio ritmo.
-      </p>
-
+      <h3>🌸 Tu camino de aprendizaje</h3>
+      <p>Avanza a tu propio ritmo. Cada paso cuenta.</p>
     </div>
-
 
     <div id="listaModulos"></div>
 
@@ -1048,35 +1059,24 @@ footer{
 
 </section>
 
+<!-- AULA GENERICA -->
 
-<!-- =========================
-     MODULO 1
-========================= -->
-
-<section id="modulo1" class="pantalla">
+<section id="aula" class="pantalla">
 
   <div class="ancho">
 
-    <button class="btn-volver"
-            onclick="abrirCurso()">
+    <button class="btn-volver" onclick="abrirCurso()">
       ← Mis módulos
     </button>
 
     <div class="curso-layout">
 
       <aside class="menu-lecciones">
-
-        <h3>
-          🌱 Empezamos desde cero
-        </h3>
-
-        <div id="menuLecciones1"></div>
-
+        <h3 id="tituloMenu"></h3>
+        <div id="menuLecciones"></div>
       </aside>
 
-      <article class="leccion"
-               id="contenidoLeccion1">
-      </article>
+      <article class="leccion" id="contenidoLeccion"></article>
 
     </div>
 
@@ -1084,654 +1084,664 @@ footer{
 
 </section>
 
+<!-- EXAMEN -->
 
-<!-- =========================
-     MODULO 2
-========================= -->
-
-<section id="modulo2" class="pantalla">
+<section id="examen" class="pantalla">
 
   <div class="ancho">
 
-    <button class="btn-volver"
-            onclick="abrirCurso()">
-      ← Mis módulos
+    <button class="btn-volver" onclick="volverModuloDesdeExamen()">
+      ← Volver al módulo
     </button>
 
-    <div class="curso-layout">
-
-      <aside class="menu-lecciones">
-
-        <h3>
-          🤖 ¿Qué es la Inteligencia Artificial?
-        </h3>
-
-        <div id="menuLecciones2"></div>
-
-      </aside>
-
-      <article class="leccion"
-               id="contenidoLeccion2">
-      </article>
-
-    </div>
+    <article class="leccion" id="contenidoExamen"></article>
 
   </div>
 
 </section>
-
 
 <!-- MODAL -->
 
 <div class="modal" id="modal">
-
-  <div class="modal-box"
-       id="modalContenido">
-  </div>
-
+  <div class="modal-box" id="modalContenido"></div>
 </div>
-
 
 <footer>
   🌸 MAESTRA IA · Inteligencia Artificial para transformar tu día a día en el aula.
 </footer>
 
-
 <script>
 
-/* =====================================================
-   INFORMACION GENERAL
-===================================================== */
+/* ==================================================
+   ESTRUCTURA GENERAL
+================================================== */
 
 const modulos = [
-
-{
- icono:"🌱",
- titulo:"Empezamos desde cero",
- descripcion:"Aprende las herramientas digitales básicas antes de comenzar con IA.",
- tiempo:"45 min"
-},
-
-{
- icono:"🤖",
- titulo:"¿Qué es la Inteligencia Artificial?",
- descripcion:"Descubre qué es la IA y cómo puede ayudarte como maestra.",
- tiempo:"35 min"
-},
-
-{
- icono:"💬",
- titulo:"Aprendiendo a conversar con la IA",
- descripcion:"Aprende a pedir lo que necesitas con palabras sencillas.",
- tiempo:"30 min"
-},
-
-{
- icono:"✨",
- titulo:"El secreto de un buen prompt",
- descripcion:"Construye instrucciones claras para conseguir mejores resultados.",
- tiempo:"35 min"
-},
-
-{
- icono:"📚",
- titulo:"Planifica conmigo",
- descripcion:"Utiliza IA para preparar clases de 1.º a 6.º grado.",
- tiempo:"40 min"
-},
-
-{
- icono:"🎨",
- titulo:"Crea para tu salón",
- descripcion:"Crea actividades, cuentos, juegos, fichas y materiales.",
- tiempo:"40 min"
-},
-
-{
- icono:"📝",
- titulo:"Evaluar también puede ser fácil",
- descripcion:"Crea evaluaciones, rúbricas y listas de cotejo.",
- tiempo:"35 min"
-},
-
-{
- icono:"🌈",
- titulo:"Mi aula creativa con IA",
- descripcion:"Transforma tus ideas en recursos educativos creativos.",
- tiempo:"35 min"
-},
-
-{
- icono:"🛡️",
- titulo:"IA responsable",
- descripcion:"Aprende a proteger información y revisar los resultados de la IA.",
- tiempo:"30 min"
-},
-
-{
- icono:"🏆",
- titulo:"Mi proyecto final",
- descripcion:"Aplica todo lo aprendido en una experiencia educativa completa.",
- tiempo:"45 min"
-}
-
+  {
+    icono:"🌱",
+    titulo:"Empezamos desde cero",
+    descripcion:"Aprende las habilidades digitales básicas antes de comenzar con IA.",
+    tiempo:"45 min"
+  },
+  {
+    icono:"📱",
+    titulo:"Mi celular también es mi herramienta",
+    descripcion:"Aprende a estudiar y trabajar con IA directamente desde tu teléfono.",
+    tiempo:"50 min"
+  },
+  {
+    icono:"🤖",
+    titulo:"¿Qué es la Inteligencia Artificial?",
+    descripcion:"Descubre qué es la IA, qué puede hacer y cuáles son sus límites.",
+    tiempo:"35 min"
+  },
+  {
+    icono:"✨",
+    titulo:"Primeros pasos con Gemini y ChatGPT",
+    descripcion:"Conoce las dos herramientas y aprende dónde escribir y cómo comenzar.",
+    tiempo:"40 min"
+  },
+  {
+    icono:"💬",
+    titulo:"Aprendiendo a conversar con la IA",
+    descripcion:"Aprende a explicar claramente lo que necesitas.",
+    tiempo:"35 min"
+  },
+  {
+    icono:"🪄",
+    titulo:"El secreto de un buen prompt",
+    descripcion:"Construye instrucciones que produzcan mejores resultados.",
+    tiempo:"40 min"
+  },
+  {
+    icono:"📚",
+    titulo:"Planifica conmigo",
+    descripcion:"Crea planificaciones adaptadas a tu grado, área y estudiantes.",
+    tiempo:"45 min"
+  },
+  {
+    icono:"🎨",
+    titulo:"Crea para tu salón",
+    descripcion:"Crea actividades, cuentos, juegos, fichas y recursos.",
+    tiempo:"45 min"
+  },
+  {
+    icono:"📝",
+    titulo:"Evaluar también puede ser fácil",
+    descripcion:"Utiliza IA como apoyo para crear instrumentos de evaluación.",
+    tiempo:"40 min"
+  },
+  {
+    icono:"🌈",
+    titulo:"Mi aula creativa con IA",
+    descripcion:"Transforma ideas sencillas en experiencias educativas.",
+    tiempo:"40 min"
+  },
+  {
+    icono:"🛡️",
+    titulo:"IA responsable y segura",
+    descripcion:"Protege datos, revisa información y utiliza IA responsablemente.",
+    tiempo:"35 min"
+  },
+  {
+    icono:"🏆",
+    titulo:"Mi proyecto final",
+    descripcion:"Integra todo lo aprendido en una experiencia educativa.",
+    tiempo:"60 min"
+  }
 ];
 
 
-/* =====================================================
+/* ==================================================
    MODULO 1
-===================================================== */
-
-const lecciones1 = [
-
-{
-titulo:"Conozcamos el navegador",
-
-intro:
-"Comenzaremos identificando la herramienta que estás utilizando en este mismo momento.",
-
-explicacion:
-"Un navegador es una aplicación que nos permite visitar páginas de Internet. Algunos ejemplos son Google Chrome, Microsoft Edge, Safari y Firefox.",
-
-ejemplo:
-"Si estás leyendo MAESTRA IA ahora mismo, ya estás utilizando un navegador. ¡Ya comenzaste!",
-
-pasos:[
-"Mira la parte superior de tu pantalla.",
-"Busca el espacio donde aparece la dirección de esta página.",
-"Haz clic una vez sobre esa dirección.",
-"No cambies nada. Solo reconoce dónde está."
-],
-
-practica:
-"Identifica la barra de direcciones de tu navegador."
-},
-
-
-{
-titulo:"Clic, toque y desplazamiento",
-
-intro:
-"Ahora aprenderemos tres movimientos básicos que utilizarás constantemente.",
-
-explicacion:
-"En una computadora hacemos clic con el mouse. En un teléfono o tableta tocamos la pantalla. Para movernos hacia arriba o abajo utilizamos el desplazamiento.",
-
-ejemplo:
-"Cuando pulsaste el botón para entrar a este módulo ya realizaste un clic o un toque correctamente.",
-
-pasos:[
-"Haz clic o toca un espacio vacío de esta página.",
-"Desplázate lentamente hacia abajo.",
-"Ahora vuelve un poco hacia arriba.",
-"Observa que puedes recorrer una página sin cerrar nada."
-],
-
-practica:
-"Practica desplazarte por esta misma lección."
-},
-
-
-{
-titulo:"Escribir, borrar y corregir",
-
-intro:
-"No necesitas escribir rápido. Lo importante es sentirte cómoda utilizando el teclado.",
-
-explicacion:
-"El teclado nos permite escribir letras, números y símbolos. La tecla de borrar nos ayuda a corregir cuando cometemos un error.",
-
-ejemplo:
-"Todos cometemos errores al escribir. Corregir forma parte normal del trabajo digital.",
-
-pasos:[
-"Abre una nota o documento donde puedas escribir.",
-"Escribe: Hoy aprenderé inteligencia artificial.",
-"Borra la palabra Hoy.",
-"Vuelve a escribirla.",
-"Comprueba que puedes escribir y corregir sin problema."
-],
-
-practica:
-"Escribe una oración corta relacionada con tu trabajo como maestra."
-},
-
-
-{
-titulo:"Seleccionar texto",
-
-intro:
-"Seleccionar significa marcar una palabra o fragmento para poder trabajar con él.",
-
-explicacion:
-"Cuando seleccionamos texto podemos copiarlo, eliminarlo o reemplazarlo sin tener que escribirlo nuevamente.",
-
-ejemplo:
-"Cuando una palabra aparece resaltada después de arrastrar el mouse sobre ella, esa palabra está seleccionada.",
-
-pasos:[
-"Busca una oración que hayas escrito.",
-"Coloca el cursor al principio.",
-"Mantén presionado y arrastra hasta el final.",
-"Observa cómo el texto queda resaltado."
-],
-
-practica:
-"Selecciona una oración completa."
-},
-
-
-{
-titulo:"Copiar y pegar",
-
-intro:
-"Esta habilidad será una de nuestras mejores amigas cuando trabajemos con inteligencia artificial.",
-
-explicacion:
-"Copiar guarda temporalmente un texto y pegar coloca una copia en otro lugar. Así evitamos escribir nuevamente información larga.",
-
-ejemplo:
-"En Windows normalmente puedes copiar con Ctrl + C y pegar con Ctrl + V. También puedes utilizar el menú del mouse.",
-
-pasos:[
-"Selecciona una oración.",
-"Cópiala usando Ctrl + C o la opción Copiar.",
-"Ve a otra línea.",
-"Utiliza Ctrl + V o la opción Pegar.",
-"Comprueba que ahora tienes dos copias."
-],
-
-practica:
-"Copia y pega una oración sin volver a escribirla."
-},
-
-
-{
-titulo:"Pestañas del navegador",
-
-intro:
-"Las pestañas permiten tener varias páginas abiertas al mismo tiempo.",
-
-explicacion:
-"Cada pestaña funciona como una página independiente dentro del navegador. Esto será útil cuando tengamos MAESTRA IA abierta y también queramos utilizar otra herramienta.",
-
-ejemplo:
-"Puedes tener MAESTRA IA en una pestaña y una herramienta de inteligencia artificial en otra, sin cerrar ninguna.",
-
-pasos:[
-"Observa la parte superior del navegador.",
-"Localiza la pestaña donde está abierta MAESTRA IA.",
-"Busca el símbolo + para abrir una pestaña nueva.",
-"Abre una pestaña y luego regresa a MAESTRA IA."
-],
-
-practica:
-"Abre una nueva pestaña y vuelve a esta página."
-},
-
-
-{
-titulo:"Descargar y encontrar un archivo",
-
-intro:
-"Durante el curso crearemos materiales que posiblemente quieras conservar.",
-
-explicacion:
-"Descargar significa guardar en tu dispositivo un archivo que estaba en Internet. Normalmente los archivos descargados llegan a una carpeta llamada Descargas.",
-
-ejemplo:
-"Una planificación en PDF o Word puede descargarse para guardarla, imprimirla o compartirla.",
-
-pasos:[
-"Identifica dónde aparecen las descargas en tu navegador.",
-"Busca en tu computadora o teléfono la carpeta Descargas.",
-"Observa algunos archivos que ya tengas allí.",
-"No elimines nada durante esta práctica."
-],
-
-practica:
-"Localiza la carpeta de Descargas de tu dispositivo."
-},
-
-
-{
-titulo:"Guardar y organizar",
-
-intro:
-"Aprender a organizar lo que creamos nos ahorrará muchísimo tiempo.",
-
-explicacion:
-"Podemos crear carpetas para guardar nuestros documentos según grado, materia, lapso o tipo de recurso.",
-
-ejemplo:
-"Una carpeta llamada Planificaciones 3er grado puede contener todas tus planificaciones del año.",
-
-pasos:[
-"Crea una carpeta nueva en tu dispositivo.",
-"Ponle como nombre MAESTRA IA.",
-"Dentro podrás guardar posteriormente tus materiales del curso.",
-"Recuerda dónde la creaste."
-],
-
-practica:
-"Crea tu carpeta MAESTRA IA."
-},
-
-
-{
-titulo:"Práctica final",
-
-intro:
-"Ya tienes las herramientas digitales esenciales para comenzar nuestra aventura con inteligencia artificial.",
-
-explicacion:
-"No necesitas dominar todo perfectamente. Lo importante es que ahora reconoces las acciones básicas que utilizaremos durante el curso.",
-
-ejemplo:
-"Ya sabes navegar, hacer clic, escribir, seleccionar, copiar, pegar, trabajar con pestañas y organizar archivos.",
-
-pasos:[
-"Piensa cuál de las habilidades te resultó más fácil.",
-"Identifica cuál necesitas practicar un poco más.",
-"Recuerda que puedes regresar a cualquier lección.",
-"Marca esta práctica como completada."
-],
-
-practica:
-"Completa el módulo para desbloquear tu primera clase de Inteligencia Artificial."
-}
-
+================================================== */
+
+const modulo1 = [
+  {
+    titulo:"Conozcamos el navegador",
+    intro:"Comenzaremos identificando la herramienta que estás utilizando en este mismo momento.",
+    explicacion:"Un navegador es una aplicación que nos permite visitar páginas de Internet. Algunos ejemplos son Google Chrome, Microsoft Edge, Safari y Firefox.",
+    ejemplo:"Si estás leyendo MAESTRA IA ahora mismo, ya estás utilizando un navegador. ¡Ya comenzaste!",
+    pasos:[
+      "Mira la parte superior de tu pantalla.",
+      "Busca el espacio donde aparece la dirección de esta página.",
+      "Haz clic una vez sobre esa dirección.",
+      "No cambies nada. Solo reconoce dónde está."
+    ],
+    practica:"Identifica la barra de direcciones de tu navegador."
+  },
+  {
+    titulo:"Clic, toque y desplazamiento",
+    intro:"Aprenderemos tres movimientos básicos que utilizarás constantemente.",
+    explicacion:"En computadora hacemos clic con el mouse. En teléfono o tableta tocamos la pantalla. Para movernos por una página utilizamos el desplazamiento.",
+    ejemplo:"Cuando pulsaste el botón para entrar a este módulo ya realizaste correctamente un clic o toque.",
+    pasos:[
+      "Haz clic o toca un espacio vacío.",
+      "Desplázate lentamente hacia abajo.",
+      "Vuelve hacia arriba.",
+      "Practica varias veces."
+    ],
+    practica:"Recorre esta misma página hacia arriba y hacia abajo."
+  },
+  {
+    titulo:"Escribir, borrar y corregir",
+    intro:"No necesitas escribir rápido. Lo importante es sentirte cómoda con el teclado.",
+    explicacion:"El teclado permite escribir letras, números y símbolos. También podemos borrar y corregir nuestros errores.",
+    ejemplo:"Equivocarse al escribir es completamente normal. La tecla borrar nos permite corregir.",
+    pasos:[
+      "Abre una nota.",
+      "Escribe: Hoy aprenderé inteligencia artificial.",
+      "Borra una palabra.",
+      "Escríbela nuevamente."
+    ],
+    practica:"Escribe una oración relacionada con tu trabajo como maestra."
+  },
+  {
+    titulo:"Seleccionar texto",
+    intro:"Seleccionar significa marcar una palabra o fragmento para trabajar con él.",
+    explicacion:"Un texto seleccionado puede copiarse, eliminarse, reemplazarse o moverse.",
+    ejemplo:"Cuando arrastras el mouse sobre una oración y cambia el fondo del texto, lo has seleccionado.",
+    pasos:[
+      "Busca una oración.",
+      "Coloca el cursor al principio.",
+      "Mantén presionado y arrastra.",
+      "Observa el texto resaltado."
+    ],
+    practica:"Selecciona una oración completa."
+  },
+  {
+    titulo:"Copiar y pegar",
+    intro:"Esta será una habilidad fundamental cuando trabajemos con IA.",
+    explicacion:"Copiar permite conservar temporalmente un texto. Pegar coloca esa copia en otro lugar.",
+    ejemplo:"En Windows puedes usar Ctrl + C para copiar y Ctrl + V para pegar.",
+    pasos:[
+      "Selecciona una oración.",
+      "Cópiala.",
+      "Ve a otro espacio.",
+      "Pégala."
+    ],
+    practica:"Copia y pega una oración sin escribirla nuevamente."
+  },
+  {
+    titulo:"Pestañas del navegador",
+    intro:"Las pestañas permiten tener varias páginas abiertas simultáneamente.",
+    explicacion:"Podrás mantener MAESTRA IA abierta mientras trabajas con Gemini o ChatGPT en otra pestaña.",
+    ejemplo:"MAESTRA IA puede estar en una pestaña y Gemini en otra.",
+    pasos:[
+      "Mira la parte superior del navegador.",
+      "Busca la pestaña de MAESTRA IA.",
+      "Busca el símbolo +.",
+      "Abre otra pestaña y regresa."
+    ],
+    practica:"Abre una pestaña nueva y vuelve a MAESTRA IA."
+  },
+  {
+    titulo:"Descargar y encontrar un archivo",
+    intro:"Durante el curso crearemos materiales que querrás conservar.",
+    explicacion:"Descargar significa guardar en tu dispositivo un archivo que estaba en Internet.",
+    ejemplo:"Puedes descargar una planificación para guardarla, compartirla o imprimirla.",
+    pasos:[
+      "Busca la carpeta Descargas.",
+      "Ábrela.",
+      "Observa algunos archivos.",
+      "No elimines nada durante esta práctica."
+    ],
+    practica:"Localiza la carpeta Descargas."
+  },
+  {
+    titulo:"Guardar y organizar",
+    intro:"Organizar correctamente nuestros materiales nos ahorrará tiempo.",
+    explicacion:"Podemos crear carpetas para clasificar planificaciones, evaluaciones y recursos.",
+    ejemplo:"Una carpeta llamada MAESTRA IA puede contener todo lo que produzcas durante el curso.",
+    pasos:[
+      "Crea una carpeta nueva.",
+      "Llámala MAESTRA IA.",
+      "Recuerda dónde la guardaste.",
+      "La utilizaremos más adelante."
+    ],
+    practica:"Crea tu carpeta MAESTRA IA."
+  },
+  {
+    titulo:"Práctica final",
+    intro:"Ya tienes las habilidades digitales esenciales para continuar.",
+    explicacion:"No necesitas dominar cada acción perfectamente. Podrás volver a practicar cuando quieras.",
+    ejemplo:"Ya conoces navegador, clic, escritura, selección, copiar, pegar, pestañas y archivos.",
+    pasos:[
+      "Identifica qué aprendiste.",
+      "Piensa qué necesitas practicar.",
+      "Repasa si lo necesitas.",
+      "Cuando estés lista, marca la lección."
+    ],
+    practica:"Completa esta lección para habilitar la evaluación del módulo."
+  }
 ];
 
 
-/* =====================================================
-   MODULO 2
-===================================================== */
+/* ==================================================
+   MODULO 2 - CELULAR
+================================================== */
 
-const lecciones2 = [
-
-{
-tipo:"normal",
-
-titulo:"¿Qué es la Inteligencia Artificial?",
-
-intro:
-"Vamos a descubrir qué significa realmente eso que escuchamos llamar IA.",
-
-explicacion:
-"La Inteligencia Artificial es una tecnología que permite a los sistemas informáticos realizar tareas que normalmente relacionamos con capacidades humanas, como reconocer información, trabajar con lenguaje, encontrar patrones o generar contenido.",
-
-ejemplo:
-"Cuando una herramienta recibe tu instrucción y te ayuda a crear ideas para una clase, resumir información o redactar una actividad, estás utilizando una aplicación de inteligencia artificial.",
-
-pasos:[
-"No necesitas imaginar un robot que piensa como una persona.",
-"Piensa en la IA como una herramienta informática.",
-"Puede analizar instrucciones y producir resultados.",
-"Tú continúas tomando las decisiones."
-],
-
-practica:
-"Recuerda esta idea: la IA es una herramienta. La maestra sigue siendo quien decide cómo utilizar el resultado."
-},
-
-
-{
-tipo:"retoIA",
-
-titulo:"¿Esto utiliza IA?",
-
-intro:
-"Vamos a comprobar si ya puedes reconocer algunos usos cotidianos de inteligencia artificial.",
-
-explicacion:
-"La IA está presente en muchas herramientas que usamos diariamente, aunque no siempre lo notemos.",
-
-ejemplo:
-"Un sistema que reconoce una cara en una fotografía puede utilizar inteligencia artificial.",
-
-practica:
-"Selecciona IA o NO IA en cada situación."
-},
-
-
-{
-tipo:"normal",
-
-titulo:"¿Qué es ChatGPT?",
-
-intro:
-"Ahora conoceremos una de las herramientas de inteligencia artificial con las que podemos conversar utilizando lenguaje cotidiano.",
-
-explicacion:
-"ChatGPT es un asistente de inteligencia artificial con el que puedes conversar escribiendo instrucciones o preguntas. Puede ayudarte a generar, transformar, organizar y analizar información, entre otras tareas.",
-
-ejemplo:
-"Una maestra podría escribir: Ayúdame a crear tres actividades sencillas para enseñar las partes de una planta a estudiantes de 2.º grado.",
-
-pasos:[
-"La maestra escribe lo que necesita.",
-"La herramienta interpreta la solicitud.",
-"Genera una respuesta.",
-"La maestra revisa el resultado.",
-"La maestra decide qué conservar, cambiar o descartar."
-],
-
-practica:
-"Observa que conversar con una IA puede parecerse a explicar una tarea a otra persona, pero la respuesta siempre debe revisarse."
-},
-
-
-{
-tipo:"normal",
-
-titulo:"Lo que la IA puede hacer por una maestra",
-
-intro:
-"La IA puede ayudarnos especialmente con tareas que consumen tiempo.",
-
-explicacion:
-"Puede servir como apoyo para generar ideas, organizar borradores, adaptar textos, proponer actividades, crear preguntas, explicar conceptos de distintas maneras y preparar materiales iniciales.",
-
-ejemplo:
-"Puedes pedir: Crea cinco preguntas sencillas sobre los animales vertebrados para estudiantes de 4.º grado.",
-
-pasos:[
-"Usa la IA para obtener ideas.",
-"Pide diferentes opciones.",
-"Adapta el resultado a tus estudiantes.",
-"Revisa siempre antes de utilizarlo en clase."
-],
-
-practica:
-"Piensa en una tarea docente que actualmente te quite mucho tiempo. Esa tarea podría convertirse más adelante en una práctica con IA."
-},
-
-
-{
-tipo:"seguridad",
-
-titulo:"Lo que NO debemos confiarle",
-
-intro:
-"Utilizar IA también significa aprender a proteger a nuestros estudiantes y nuestra información.",
-
-explicacion:
-"No debemos introducir innecesariamente información privada o sensible de estudiantes, familias, compañeros o instituciones en herramientas de IA.",
-
-ejemplo:
-"En lugar de escribir el nombre completo de un estudiante y contar información privada sobre él, podemos describir la necesidad de forma general y sin identificarlo.",
-
-pasos:[
-"Evita nombres completos de estudiantes.",
-"No escribas contraseñas.",
-"No compartas números de identificación.",
-"Evita datos médicos o familiares identificables.",
-"Describe la situación sin revelar quién es la persona."
-],
-
-practica:
-"Antes de enviar algo a una IA pregúntate: ¿Necesita realmente conocer este dato para ayudarme?"
-},
-
-
-{
-tipo:"normal",
-
-titulo:"La IA también puede equivocarse",
-
-intro:
-"Esta es una de las lecciones más importantes de todo nuestro curso.",
-
-explicacion:
-"Una respuesta de inteligencia artificial puede sonar convincente y aun así contener errores, información incompleta o datos inventados. Por eso nunca debemos asumir que una respuesta es correcta solamente porque está bien escrita.",
-
-ejemplo:
-"Si la IA menciona una fecha histórica, una ley, una fuente, un autor o un dato científico importante, debemos comprobarlo antes de enseñarlo.",
-
-pasos:[
-"Lee la respuesta completa.",
-"Busca posibles errores.",
-"Comprueba datos importantes.",
-"Adapta el lenguaje al grado.",
-"No utilices automáticamente todo lo que recibes."
-],
-
-practica:
-"Recuerda nuestra regla: IA propone; la maestra revisa y decide."
-},
-
-
-{
-tipo:"primeraPeticion",
-
-titulo:"Mi primera conversación con IA",
-
-intro:
-"Ha llegado el momento de preparar tu primera petición educativa.",
-
-explicacion:
-"No necesitamos utilizar palabras complicadas. Empezaremos diciendo claramente quiénes son nuestros estudiantes, qué tema trabajamos y qué necesitamos.",
-
-ejemplo:
-"Necesito una actividad sencilla para estudiantes de 3.º grado sobre el ciclo del agua. Debe durar 20 minutos y utilizar materiales fáciles de conseguir.",
-
-practica:
-"Completa los espacios y MAESTRA IA construirá tu primera petición."
-}
-
+const modulo2 = [
+  {
+    titulo:"Conozcamos nuestro celular",
+    intro:"No necesitas una computadora para comenzar a trabajar con inteligencia artificial.",
+    explicacion:"Un teléfono inteligente permite navegar por Internet, escribir, copiar, pegar, descargar archivos y utilizar herramientas de IA.",
+    ejemplo:"Puedes estudiar MAESTRA IA desde tu teléfono y abrir Gemini en otra pestaña o aplicación.",
+    pasos:[
+      "Identifica el botón de encendido de tu celular.",
+      "Reconoce la pantalla principal.",
+      "Busca tu navegador, por ejemplo Chrome o Safari.",
+      "Ábrelo y vuelve a MAESTRA IA."
+    ],
+    practica:"Reconoce el navegador que utilizas en tu teléfono."
+  },
+  {
+    titulo:"Tocar, mantener presionado y deslizar",
+    intro:"En el celular nuestros dedos sustituyen muchas funciones del mouse.",
+    explicacion:"Tocar abre o selecciona. Mantener presionado muestra opciones adicionales. Deslizar permite movernos por una página.",
+    ejemplo:"Para leer esta lección probablemente ya estás deslizando el dedo hacia arriba.",
+    pasos:[
+      "Toca suavemente un botón.",
+      "Desliza hacia abajo.",
+      "Desliza nuevamente hacia arriba.",
+      "Practica mantener presionado un texto."
+    ],
+    practica:"Practica estos tres movimientos."
+  },
+  {
+    titulo:"El teclado del celular",
+    intro:"Aprenderemos a escribir cómodamente desde el teléfono.",
+    explicacion:"Cuando tocas un espacio donde se puede escribir, aparece automáticamente el teclado en pantalla.",
+    ejemplo:"El mismo teclado sirve para escribir mensajes y para conversar con Gemini o ChatGPT.",
+    pasos:[
+      "Abre una aplicación de notas.",
+      "Toca un espacio vacío.",
+      "Escribe: Estoy aprendiendo IA.",
+      "Borra una palabra y vuelve a escribirla."
+    ],
+    practica:"Escribe una oración utilizando el teclado de tu celular."
+  },
+  {
+    titulo:"Copiar y pegar desde el celular",
+    intro:"No tendrás que volver a escribir textos largos.",
+    explicacion:"En la mayoría de los teléfonos puedes mantener presionado un texto para seleccionarlo y encontrar las opciones Copiar y Pegar.",
+    ejemplo:"Podrás copiar un prompt desde MAESTRA IA y pegarlo en Gemini.",
+    pasos:[
+      "Mantén presionada una palabra.",
+      "Ajusta la selección si es necesario.",
+      "Toca Copiar.",
+      "Ve a otro espacio, mantén presionado y toca Pegar."
+    ],
+    practica:"Copia y pega una oración desde tu teléfono."
+  },
+  {
+    titulo:"Trabajar con varias páginas",
+    intro:"Podemos pasar de MAESTRA IA a una herramienta de IA sin perder nuestro avance.",
+    explicacion:"Los navegadores móviles permiten abrir varias pestañas. También puedes cambiar entre aplicaciones abiertas.",
+    ejemplo:"Lees una instrucción en MAESTRA IA, cambias a Gemini para practicar y luego regresas.",
+    pasos:[
+      "Identifica el botón de pestañas de tu navegador.",
+      "Abre una pestaña nueva.",
+      "Regresa a la pestaña anterior.",
+      "Practica cambiar entre ambas."
+    ],
+    practica:"Mantén dos páginas abiertas y cambia entre ellas."
+  },
+  {
+    titulo:"Gemini desde mi celular",
+    intro:"Gemini será una de nuestras herramientas principales de práctica.",
+    explicacion:"Puedes acceder a Gemini desde los servicios compatibles de Google disponibles para tu dispositivo y cuenta. La apariencia y algunas funciones pueden variar según el dispositivo, la región y la cuenta.",
+    ejemplo:"Podrás escribir una solicitud educativa, leer la respuesta y regresar a MAESTRA IA para continuar.",
+    pasos:[
+      "Abre tu navegador o la aplicación correspondiente.",
+      "Accede a Gemini con la cuenta que utilizarás para practicar.",
+      "Identifica el espacio donde se escriben las instrucciones.",
+      "Todavía no compartas información privada."
+    ],
+    practica:"Identifica dónde escribirías una pregunta en Gemini."
+  },
+  {
+    titulo:"ChatGPT como otra opción",
+    intro:"También aprenderemos a reconocer y utilizar ChatGPT como alternativa.",
+    explicacion:"Gemini y ChatGPT son herramientas diferentes de inteligencia artificial. Las funciones y límites disponibles pueden variar según la cuenta, el plan, el dispositivo y las actualizaciones de cada servicio.",
+    ejemplo:"Una misma instrucción educativa puede probarse en ambas herramientas y luego comparar los resultados.",
+    pasos:[
+      "Reconoce que no necesitas utilizar las dos al mismo tiempo.",
+      "Durante el curso practicaremos principalmente con Gemini.",
+      "También mostraremos cómo realizar tareas equivalentes con ChatGPT.",
+      "Tú podrás elegir la herramienta que tengas disponible."
+    ],
+    practica:"Recuerda: aprenderemos la habilidad, no solamente a pulsar botones de una aplicación."
+  },
+  {
+    titulo:"Descargar y compartir desde el celular",
+    intro:"Nuestros materiales también pueden guardarse desde el teléfono.",
+    explicacion:"Los archivos descargados suelen encontrarse en Descargas o en la aplicación de archivos del teléfono.",
+    ejemplo:"Un documento creado durante una actividad puede guardarse y luego enviarse o abrirse desde otra aplicación.",
+    pasos:[
+      "Busca la aplicación Archivos o equivalente.",
+      "Localiza Descargas.",
+      "Observa dónde se almacenan tus documentos.",
+      "No elimines archivos durante la práctica."
+    ],
+    practica:"Localiza la carpeta de descargas de tu teléfono."
+  },
+  {
+    titulo:"Práctica móvil final",
+    intro:"Ya tienes las herramientas esenciales para realizar el curso desde tu teléfono.",
+    explicacion:"A partir de ahora podrás alternar entre MAESTRA IA y una herramienta de inteligencia artificial.",
+    ejemplo:"Lees → practicas → vuelves al curso → continúas.",
+    pasos:[
+      "Abre MAESTRA IA.",
+      "Cambia a otra pestaña o aplicación.",
+      "Regresa al curso.",
+      "Comprueba que puedes continuar."
+    ],
+    practica:"Marca esta práctica cuando te sientas preparada para trabajar desde tu celular."
+  }
 ];
 
 
-/* =====================================================
-   PROGRESO
-===================================================== */
+/* ==================================================
+   EXAMENES
+================================================== */
 
-let progreso = JSON.parse(
-  localStorage.getItem("maestraIAProgreso")
-) || {
-  leccionesCompletas:[],
-  ultimaLeccion:0,
-  modulo2Completas:[],
-  ultimaLeccion2:0
+const examenes = {
+
+  1:[
+    {
+      p:"¿Para qué sirve principalmente un navegador?",
+      o:[
+        "Para visitar páginas de Internet",
+        "Solamente para hacer llamadas",
+        "Para apagar la computadora"
+      ],
+      c:0
+    },
+    {
+      p:"¿Qué significa seleccionar un texto?",
+      o:[
+        "Borrarlo automáticamente",
+        "Marcarlo para poder trabajar con él",
+        "Cerrar el navegador"
+      ],
+      c:1
+    },
+    {
+      p:"¿Qué combinación se utiliza normalmente para copiar en Windows?",
+      o:[
+        "Ctrl + C",
+        "Ctrl + P",
+        "Ctrl + Z"
+      ],
+      c:0
+    },
+    {
+      p:"¿Para qué sirven las pestañas del navegador?",
+      o:[
+        "Para abrir varias páginas sin cerrar las anteriores",
+        "Para aumentar el volumen",
+        "Para apagar Internet"
+      ],
+      c:0
+    },
+    {
+      p:"¿Dónde suelen encontrarse los archivos descargados?",
+      o:[
+        "En la carpeta Descargas",
+        "Solamente en la papelera",
+        "En el teclado"
+      ],
+      c:0
+    },
+    {
+      p:"¿Qué debemos hacer si todavía no dominamos una habilidad digital?",
+      o:[
+        "Abandonar el curso",
+        "Practicarla nuevamente",
+        "Evitar utilizar tecnología"
+      ],
+      c:1
+    },
+    {
+      p:"¿Para qué es útil crear una carpeta MAESTRA IA?",
+      o:[
+        "Para organizar nuestros materiales",
+        "Para cambiar la contraseña",
+        "Para cerrar páginas"
+      ],
+      c:0
+    },
+    {
+      p:"¿Qué hace la función pegar?",
+      o:[
+        "Coloca en otro lugar lo que copiamos",
+        "Apaga el dispositivo",
+        "Elimina todo el documento"
+      ],
+      c:0
+    },
+    {
+      p:"¿Necesitas dominar perfectamente todas las herramientas antes de continuar?",
+      o:[
+        "Sí, obligatoriamente",
+        "No, puedes continuar aprendiendo y practicando",
+        "Solo si tienes computadora"
+      ],
+      c:1
+    },
+    {
+      p:"¿Cuál es una habilidad básica que utilizaremos al trabajar con IA?",
+      o:[
+        "Copiar y pegar",
+        "Reparar físicamente una computadora",
+        "Programar un sistema operativo"
+      ],
+      c:0
+    }
+  ],
+
+  2:[
+    {
+      p:"¿Es obligatorio tener una computadora para comenzar este curso?",
+      o:[
+        "Sí",
+        "No, también podemos trabajar desde el celular",
+        "Solo para leer"
+      ],
+      c:1
+    },
+    {
+      p:"¿Qué suele ocurrir al tocar un espacio donde podemos escribir?",
+      o:[
+        "Aparece el teclado",
+        "Se apaga el teléfono",
+        "Se borra la aplicación"
+      ],
+      c:0
+    },
+    {
+      p:"¿Cómo podemos seleccionar texto normalmente desde un celular?",
+      o:[
+        "Manteniendo presionado el texto",
+        "Apagando la pantalla",
+        "Subiendo el volumen"
+      ],
+      c:0
+    },
+    {
+      p:"¿Para qué sirve tener varias pestañas abiertas?",
+      o:[
+        "Para pasar entre MAESTRA IA y otras páginas",
+        "Para aumentar la batería",
+        "Para cambiar el tamaño del teléfono"
+      ],
+      c:0
+    },
+    {
+      p:"¿Cuál será la herramienta principal de práctica en este curso?",
+      o:[
+        "Gemini",
+        "Una calculadora",
+        "Un videojuego"
+      ],
+      c:0
+    },
+    {
+      p:"¿También aprenderemos una alternativa a Gemini?",
+      o:[
+        "Sí, también veremos ChatGPT",
+        "No",
+        "Solamente correo electrónico"
+      ],
+      c:0
+    },
+    {
+      p:"¿Debemos compartir información privada para practicar con IA?",
+      o:[
+        "Sí, siempre",
+        "No",
+        "Solo contraseñas"
+      ],
+      c:1
+    },
+    {
+      p:"¿Dónde puedes buscar archivos descargados en un celular?",
+      o:[
+        "En Archivos o Descargas",
+        "En la cámara únicamente",
+        "En el volumen"
+      ],
+      c:0
+    },
+    {
+      p:"¿Las funciones de Gemini y ChatGPT pueden cambiar según cuenta o plan?",
+      o:[
+        "Sí",
+        "Nunca",
+        "Son exactamente iguales siempre"
+      ],
+      c:0
+    },
+    {
+      p:"¿Qué queremos aprender principalmente?",
+      o:[
+        "Habilidades para trabajar con IA",
+        "Memorizar botones",
+        "Reparar teléfonos"
+      ],
+      c:0
+    }
+  ]
+
 };
 
 
-/* Compatibilidad con progreso de versión anterior */
+/* ==================================================
+   PROGRESO
+================================================== */
 
-if(!progreso.leccionesCompletas){
+let progreso = JSON.parse(
+  localStorage.getItem("maestraIAProgreso")
+) || {};
+
+if(!Array.isArray(progreso.leccionesCompletas)){
   progreso.leccionesCompletas=[];
 }
 
-if(typeof progreso.ultimaLeccion !== "number"){
-  progreso.ultimaLeccion=0;
-}
-
-if(!progreso.modulo2Completas){
+if(!Array.isArray(progreso.modulo2Completas)){
   progreso.modulo2Completas=[];
 }
 
-if(typeof progreso.ultimaLeccion2 !== "number"){
+if(typeof progreso.ultimaLeccion!=="number"){
+  progreso.ultimaLeccion=0;
+}
+
+if(typeof progreso.ultimaLeccion2!=="number"){
   progreso.ultimaLeccion2=0;
 }
 
+if(!progreso.examenes){
+  progreso.examenes={};
+}
 
-function guardarProgreso(){
-
+function guardar(){
   localStorage.setItem(
     "maestraIAProgreso",
     JSON.stringify(progreso)
   );
+}
 
+function aprobado(modulo){
+  return progreso.examenes[modulo] &&
+         progreso.examenes[modulo].mejorNota>=70;
+}
+
+function leccionesCompletas(modulo){
+
+  if(modulo===1){
+    return progreso.leccionesCompletas.length>=modulo1.length;
+  }
+
+  if(modulo===2){
+    return progreso.modulo2Completas.length>=modulo2.length;
+  }
+
+  return false;
+}
+
+function moduloDesbloqueado(n){
+
+  if(n===1) return true;
+
+  if(n===2) return aprobado(1);
+
+  /*
+    Módulos 3 a 12 se irán activando
+    cuando construyamos su contenido.
+  */
+
+  return false;
 }
 
 
-/* =====================================================
-   ESTADOS
-===================================================== */
-
-function modulo1Completo(){
-
-  return progreso.leccionesCompletas.length >= lecciones1.length;
-
-}
-
-
-function modulo2Completo(){
-
-  return progreso.modulo2Completas.length >= lecciones2.length;
-
-}
-
-
-/* =====================================================
+/* ==================================================
    NAVEGACION
-===================================================== */
+================================================== */
 
-function ocultarTodo(){
+function ocultar(){
 
-  document.getElementById("inicio").style.display="none";
-  document.getElementById("aula").style.display="none";
-  document.getElementById("modulo1").style.display="none";
-  document.getElementById("modulo2").style.display="none";
-
-}
-
-
-function mostrarInicio(){
-
-  ocultarTodo();
-
-  document.getElementById("inicio").style.display="block";
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
+  ["inicio","curso","aula","examen"].forEach(id=>{
+    document.getElementById(id).style.display="none";
   });
 
 }
 
+function mostrarInicio(){
+
+  ocultar();
+
+  document.getElementById("inicio").style.display="block";
+
+  window.scrollTo(0,0);
+}
 
 function abrirCurso(){
 
-  ocultarTodo();
+  ocultar();
 
-  document.getElementById("aula").style.display="block";
+  document.getElementById("curso").style.display="block";
 
   renderModulos();
   actualizarProgreso();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+  window.scrollTo(0,0);
 }
 
 
-/* =====================================================
-   RENDER MODULOS
-===================================================== */
+/* ==================================================
+   LISTA MODULOS
+================================================== */
 
 function renderModulos(){
 
@@ -1739,99 +1749,84 @@ function renderModulos(){
 
   modulos.forEach((m,i)=>{
 
-    let disponible=false;
-    let completo=false;
-    let accion="";
-    let textoBoton="";
+    const numero=i+1;
+    const disponible=moduloDesbloqueado(numero);
+    const completo=aprobado(numero);
 
-    if(i===0){
+    let boton="";
 
-      disponible=true;
-      completo=modulo1Completo();
-      accion="abrirModuloUno()";
+    if(numero===1 || numero===2){
 
-      textoBoton=
-        completo
-        ? "Repasar ✓"
-        : progreso.leccionesCompletas.length
-          ? "Continuar →"
-          : "Comenzar →";
+      if(disponible){
+
+        boton=`
+          <button
+            class="btn-principal ${completo ? "btn-verde":""}"
+            onclick="abrirModulo(${numero})">
+            ${completo ? "Repasar ✓":"Comenzar →"}
+          </button>
+        `;
+
+      }else{
+
+        boton=`
+          <div class="bloqueo">
+            🔒 Aprueba el módulo anterior
+          </div>
+        `;
+
+      }
+
+    }else{
+
+      boton=`
+        <div class="bloqueo">
+          🔒 Próximamente
+        </div>
+      `;
 
     }
 
+    html+=`
 
-    if(i===1){
-
-      disponible=modulo1Completo();
-      completo=modulo2Completo();
-      accion="abrirModuloDos()";
-
-      textoBoton=
-        completo
-        ? "Repasar ✓"
-        : progreso.modulo2Completas.length
-          ? "Continuar →"
-          : "Comenzar →";
-
-    }
-
-
-    html += `
-
-      <div class="
-        modulo
-        ${!disponible ? "bloqueado" : ""}
-        ${completo ? "completado" : ""}
-      ">
+      <div class="modulo
+           ${!disponible ? "bloqueado":""}
+           ${completo ? "completado":""}">
 
         <div class="modulo-icon">
           ${m.icono}
         </div>
 
-
         <div class="modulo-info">
 
           <div class="modulo-num">
-            MÓDULO ${i+1}
-            ${completo ? " · COMPLETADO ✓" : ""}
+            MÓDULO ${numero}
+            ${completo ? " · APROBADO ✓":""}
           </div>
 
-          <h3>
-            ${m.titulo}
-          </h3>
+          <h3>${m.titulo}</h3>
 
-          <p>
-            ${m.descripcion}
-          </p>
+          <p>${m.descripcion}</p>
 
           <div class="tiempo">
             ⏱ ${m.tiempo}
           </div>
 
+          ${
+            progreso.examenes[numero]
+            ?
+            `<div class="tiempo">
+               🏆 Mejor nota:
+               ${progreso.examenes[numero].mejorNota}/100
+               · Intentos:
+               ${progreso.examenes[numero].intentos}
+             </div>`
+            :""
+          }
+
         </div>
 
-
-        ${
-          disponible
-
-          ?
-
-          `<button
-             class="btn-principal ${completo ? "btn-verde" : ""}"
-             onclick="${accion}">
-             ${textoBoton}
-           </button>`
-
-          :
-
-          `<div class="bloqueo">
-             🔒 ${
-               i===1
-               ? "Completa el Módulo 1"
-               : "Próximamente"
-             }
-           </div>`
-        }
+        ${boton}
 
       </div>
 
@@ -1839,165 +1834,230 @@ function renderModulos(){
 
   });
 
-
   document.getElementById("listaModulos").innerHTML=html;
-
 }
-
-
-/* =====================================================
-   PROGRESO GENERAL
-===================================================== */
 
 function actualizarProgreso(){
 
-  const totalCurso =
-    lecciones1.length +
-    lecciones2.length;
+  let aprobados=0;
 
-  const hechas =
-    progreso.leccionesCompletas.length +
-    progreso.modulo2Completas.length;
+  for(let i=1;i<=12;i++){
+    if(aprobado(i)) aprobados++;
+  }
 
-  /*
-    Por ahora tenemos construidos los dos primeros
-    módulos. Estos representan el 20% del curso total.
-  */
+  const porcentaje=Math.round((aprobados/12)*100);
 
-  const porcentaje =
-    Math.round(
-      (hechas / totalCurso) * 20
-    );
-
-
-  document.getElementById("barraProgreso").style.width =
+  document.getElementById("barraGeneral").style.width=
     porcentaje+"%";
 
-
-  document.getElementById("textoProgreso").innerHTML =
-    "Tu progreso general del curso: " +
-    porcentaje +
-    "% · " +
-    hechas +
-    " actividades completadas";
-
+  document.getElementById("textoGeneral").innerHTML=
+    `Progreso general: ${porcentaje}% · ${aprobados} de 12 módulos aprobados`;
 }
 
 
-/* =====================================================
-   MODULO 1
-===================================================== */
+/* ==================================================
+   ABRIR MODULO
+================================================== */
 
-function abrirModuloUno(indice=null){
+let moduloActual=1;
+let leccionActual=0;
 
-  ocultarTodo();
+function datosModulo(n){
 
-  document.getElementById("modulo1").style.display="block";
+  if(n===1) return modulo1;
+  if(n===2) return modulo2;
 
-  const destino =
-    indice===null
-    ? progreso.ultimaLeccion
-    : indice;
-
-  renderMenuLecciones1(destino);
-  mostrarLeccion1(destino);
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+  return [];
 }
 
+function completasModulo(n){
 
-function renderMenuLecciones1(activa){
+  if(n===1) return progreso.leccionesCompletas;
+  if(n===2) return progreso.modulo2Completas;
+
+  return [];
+}
+
+function ultimaModulo(n){
+
+  if(n===1) return progreso.ultimaLeccion;
+  if(n===2) return progreso.ultimaLeccion2;
+
+  return 0;
+}
+
+function establecerUltima(n,i){
+
+  if(n===1) progreso.ultimaLeccion=i;
+  if(n===2) progreso.ultimaLeccion2=i;
+
+  guardar();
+}
+
+function abrirModulo(n){
+
+  if(!moduloDesbloqueado(n)){
+    return;
+  }
+
+  moduloActual=n;
+  leccionActual=ultimaModulo(n);
+
+  ocultar();
+
+  document.getElementById("aula").style.display="block";
+
+  document.getElementById("tituloMenu").innerHTML=
+    `${modulos[n-1].icono} ${modulos[n-1].titulo}`;
+
+  renderMenu();
+  mostrarLeccion(leccionActual);
+
+  window.scrollTo(0,0);
+}
+
+function renderMenu(){
+
+  const datos=datosModulo(moduloActual);
+  const completas=completasModulo(moduloActual);
 
   let html="";
 
-  lecciones1.forEach((l,i)=>{
+  datos.forEach((l,i)=>{
 
-    const completa =
-      progreso.leccionesCompletas.includes(i);
-
-    html += `
-
+    html+=`
       <button
-        class="
-          leccion-menu
-          ${i===activa ? "activa" : ""}
-          ${completa ? "completa" : ""}
-        "
-        onclick="cambiarLeccion1(${i})">
+        class="leccion-menu
+        ${i===leccionActual ? "activa":""}
+        ${completas.includes(i) ? "completa":""}"
+        onclick="cambiarLeccion(${i})">
 
         ${i+1}. ${l.titulo}
 
       </button>
-
     `;
 
   });
 
+  html+=`
+    <button
+      class="leccion-menu
+      ${leccionesCompletas(moduloActual) ? "":"bloqueado"}"
+      onclick="abrirEvaluacion(${moduloActual})">
 
-  document.getElementById("menuLecciones1").innerHTML=html;
+      📝 Evaluación final
 
+      ${aprobado(moduloActual) ? " ✓":""}
+
+    </button>
+  `;
+
+  document.getElementById("menuLecciones").innerHTML=html;
+}
+
+function cambiarLeccion(i){
+
+  leccionActual=i;
+
+  establecerUltima(moduloActual,i);
+
+  renderMenu();
+  mostrarLeccion(i);
+
+  window.scrollTo(0,0);
 }
 
 
-function cambiarLeccion1(i){
+/* ==================================================
+   MOSTRAR LECCION
+================================================== */
 
-  progreso.ultimaLeccion=i;
+function mostrarLeccion(i){
 
-  guardarProgreso();
+  const datos=datosModulo(moduloActual);
+  const l=datos[i];
+  const completas=completasModulo(moduloActual);
 
-  renderMenuLecciones1(i);
+  const badgeClase=
+    moduloActual===2
+    ? "mini-badge badge-cel"
+    : "mini-badge";
 
-  mostrarLeccion1(i);
+  let extra="";
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  if(moduloActual===2 && (i===5 || i===6)){
 
-}
+    extra=`
+      <div class="bloque">
 
+        <h2>🤖 Dos caminos para practicar</h2>
 
-function mostrarLeccion1(i){
+        <div class="herramientas">
 
-  const l=lecciones1[i];
+          <div class="herramienta gemini">
 
-  document.getElementById("contenidoLeccion1").innerHTML=`
+            <span class="principal-tag">
+              PRÁCTICA PRINCIPAL DEL CURSO
+            </span>
 
-    <span class="mini-badge">
-      🌱 MÓDULO 1 · LECCIÓN ${i+1} DE ${lecciones1.length}
+            <h3>✨ Gemini</h3>
+
+            <p>
+              Utilizaremos Gemini como herramienta principal
+              en muchas de nuestras prácticas guiadas.
+            </p>
+
+          </div>
+
+          <div class="herramienta chatgpt">
+
+            <h3>💬 ChatGPT</h3>
+
+            <p>
+              También aprenderás cómo realizar tareas
+              equivalentes utilizando ChatGPT.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="caja caja-amarilla">
+          💡 Las funciones disponibles pueden cambiar según
+          la herramienta, la cuenta, el dispositivo, el plan
+          y las actualizaciones del servicio.
+        </div>
+
+      </div>
+    `;
+
+  }
+
+  document.getElementById("contenidoLeccion").innerHTML=`
+
+    <span class="${badgeClase}">
+      ${modulos[moduloActual-1].icono}
+      MÓDULO ${moduloActual}
+      · LECCIÓN ${i+1} DE ${datos.length}
     </span>
 
-    <h1>
-      ${l.titulo}
-    </h1>
+    <h1>${l.titulo}</h1>
 
     <p class="leccion-intro">
       ${l.intro}
     </p>
 
-
     <div class="bloque">
 
-      <h2>
-        👩‍🏫 Te explico
-      </h2>
+      <h2>👩‍🏫 Te explico</h2>
 
-      <p>
-        ${l.explicacion}
-      </p>
+      <p>${l.explicacion}</p>
 
     </div>
 
-
     <div class="bloque">
 
-      <h2>
-        👀 Mira este ejemplo
-      </h2>
+      <h2>👀 Mira este ejemplo</h2>
 
       <div class="caja caja-morada">
         ${l.ejemplo}
@@ -2005,40 +2065,34 @@ function mostrarLeccion1(i){
 
     </div>
 
-
     <div class="bloque">
 
-      <h2>
-        🤝 Hagámoslo juntas
-      </h2>
+      <h2>🤝 Hagámoslo juntas</h2>
 
       <div class="caja caja-azul pasos">
 
-        ${l.pasos.map(
-          (p,n)=>
-          `<p>
-             <strong>${n+1}.</strong>
-             ${p}
-           </p>`
-        ).join("")}
+        ${l.pasos.map((p,n)=>`
+          <p>
+            <strong>${n+1}.</strong>
+            ${p}
+          </p>
+        `).join("")}
 
       </div>
 
     </div>
 
+    ${extra}
 
     <div class="bloque">
 
-      <h2>
-        🌟 Ahora practica tú
-      </h2>
+      <h2>🌟 Practica tú</h2>
 
       <div class="caja caja-verde">
         ${l.practica}
       </div>
 
     </div>
-
 
     <div class="acciones-leccion">
 
@@ -2050,22 +2104,20 @@ function mostrarLeccion1(i){
 
       </button>
 
-
       <button
         class="btn-ayuda"
-        onclick="ayudaModulo1(${i})">
+        onclick="necesitoAyuda()">
 
         🙋 Necesito ayuda
 
       </button>
 
-
       <button
         class="btn-logrado"
-        onclick="completarLeccion1(${i})">
+        onclick="completarLeccion(${i})">
 
         ${
-          progreso.leccionesCompletas.includes(i)
+          completas.includes(i)
           ? "✅ Lección completada"
           : "🎉 ¡Ya lo hice!"
         }
@@ -2074,1057 +2126,556 @@ function mostrarLeccion1(i){
 
     </div>
 
-
-    <div class="mensaje"
-         id="mensajeLeccion1">
-    </div>
-
+    <div id="mensajeLeccion"></div>
 
     <div class="navegacion">
 
       <button
         class="anterior"
-        onclick="anterior1(${i})"
-        ${i===0 ? "disabled" : ""}>
+        ${i===0 ? "disabled":""}
+        onclick="anterior()">
 
         ← Anterior
 
       </button>
 
-
       <button
         class="siguiente"
-        onclick="siguiente1(${i})">
+        onclick="siguiente()">
 
         ${
-          i===lecciones1.length-1
-          ? "Finalizar módulo ✓"
+          i===datos.length-1
+          ? "Ir a evaluación 📝"
           : "Siguiente →"
         }
 
       </button>
 
     </div>
-
   `;
-
 }
 
 
-function completarLeccion1(i){
+/* ==================================================
+   COMPLETAR LECCION
+================================================== */
 
-  if(!progreso.leccionesCompletas.includes(i)){
+function completarLeccion(i){
 
-    progreso.leccionesCompletas.push(i);
+  const completas=completasModulo(moduloActual);
 
+  if(!completas.includes(i)){
+    completas.push(i);
   }
 
-  if(i < lecciones1.length-1){
+  guardar();
+  renderMenu();
 
-    progreso.ultimaLeccion=i+1;
-
-  }
-
-  guardarProgreso();
-
-  renderMenuLecciones1(i);
-
-
-  document.getElementById("mensajeLeccion1").innerHTML=`
-
+  document.getElementById("mensajeLeccion").innerHTML=`
     <div class="felicitacion">
-
-      <div style="font-size:36px">
-        🎉
-      </div>
-
-      <h3>
-        ¡Excelente, maestra!
-      </h3>
-
-      <p style="margin-top:6px">
+      <div style="font-size:36px">🎉</div>
+      <h3>¡Muy bien, maestra!</h3>
+      <p style="margin-top:7px">
         Esta práctica quedó completada.
       </p>
-
     </div>
-
   `;
 
-
-  if(modulo1Completo()){
+  if(leccionesCompletas(moduloActual)){
 
     setTimeout(()=>{
 
       abrirModalPersonalizado(
-
-        "🏆 ¡Módulo 1 completado!",
-
-        `
-        Ya tienes las habilidades digitales básicas
-        que utilizaremos durante el curso.<br><br>
-
-        <strong>¡Acabas de desbloquear el Módulo 2!</strong><br><br>
-
-        Ahora conoceremos qué es realmente la
-        Inteligencia Artificial.
-        `
-
+        "📝 ¡Ya puedes presentar la evaluación!",
+        `Has completado todas las lecciones del
+        Módulo ${moduloActual}.<br><br>
+        Ahora podrás comprobar lo que aprendiste.
+        Necesitas <strong>70/100</strong> para aprobar
+        y desbloquear el siguiente módulo.`
       );
 
     },400);
 
   }
-
 }
 
+function anterior(){
 
-function anterior1(i){
-
-  if(i>0){
-    cambiarLeccion1(i-1);
+  if(leccionActual>0){
+    cambiarLeccion(leccionActual-1);
   }
-
 }
 
+function siguiente(){
 
-function siguiente1(i){
+  const datos=datosModulo(moduloActual);
 
-  if(i < lecciones1.length-1){
+  if(leccionActual < datos.length-1){
 
-    cambiarLeccion1(i+1);
+    cambiarLeccion(leccionActual+1);
 
   }else{
 
-    completarLeccion1(i);
+    if(!completasModulo(moduloActual).includes(leccionActual)){
+      completarLeccion(leccionActual);
+    }
 
+    if(leccionesCompletas(moduloActual)){
+      abrirEvaluacion(moduloActual);
+    }
   }
-
 }
 
 
-/* =====================================================
-   AYUDA MODULO 1
-===================================================== */
+/* ==================================================
+   EXAMEN
+================================================== */
 
-function ayudaModulo1(i){
+let examenModulo=1;
+let preguntaActual=0;
+let respuestas=[];
 
-  const ayudas=[
+function abrirEvaluacion(n){
 
-    "Busca arriba de esta misma página. Allí encontrarás la barra del navegador.",
-
-    "En computadora utiliza el mouse. En teléfono toca suavemente la pantalla con un dedo.",
-
-    "Puedes practicar en una aplicación sencilla como Notas. No tienes que escribir rápido.",
-
-    "Mantén presionado mientras recorres con el cursor las palabras que quieres seleccionar.",
-
-    "En Windows: Ctrl + C copia y Ctrl + V pega. En teléfono mantén presionado el texto para ver las opciones.",
-
-    "Busca el símbolo + junto a las pestañas de tu navegador.",
-
-    "Busca una carpeta llamada Descargas o Downloads. En teléfono puede estar dentro de Archivos.",
-
-    "Si todavía no sabes crear una carpeta, puedes pedir ayuda y regresar después a esta lección.",
-
-    "Puedes repetir todas estas prácticas las veces que necesites."
-
-  ];
-
-
-  abrirModalPersonalizado(
-    "🙋 Estoy aquí para ayudarte",
-    ayudas[i]
-  );
-
-}
-
-
-/* =====================================================
-   MODULO 2
-===================================================== */
-
-function abrirModuloDos(indice=null){
-
-  if(!modulo1Completo()){
+  if(!leccionesCompletas(n)){
 
     abrirModalPersonalizado(
-      "🌱 Primero terminemos el Módulo 1",
-      "Completa las nueve prácticas iniciales para desbloquear este módulo."
+      "🌱 Aún falta un poquito",
+      "Completa primero todas las lecciones de este módulo para presentar la evaluación."
     );
 
     return;
-
   }
 
+  examenModulo=n;
+  preguntaActual=0;
+  respuestas=[];
 
-  ocultarTodo();
+  ocultar();
 
-  document.getElementById("modulo2").style.display="block";
+  document.getElementById("examen").style.display="block";
 
+  mostrarPortadaExamen();
 
-  const destino =
-    indice===null
-    ? progreso.ultimaLeccion2
-    : indice;
-
-
-  renderMenuLecciones2(destino);
-  mostrarLeccion2(destino);
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+  window.scrollTo(0,0);
 }
 
+function mostrarPortadaExamen(){
 
-function renderMenuLecciones2(activa){
+  const preguntas=examenes[examenModulo];
 
-  let html="";
+  if(!preguntas){
 
-  lecciones2.forEach((l,i)=>{
-
-    const completa =
-      progreso.modulo2Completas.includes(i);
-
-    html += `
-
-      <button
-        class="
-          leccion-menu
-          ${i===activa ? "activa" : ""}
-          ${completa ? "completa" : ""}
-        "
-        onclick="cambiarLeccion2(${i})">
-
-        ${i+1}. ${l.titulo}
-
-      </button>
-
+    document.getElementById("contenidoExamen").innerHTML=`
+      <div class="examen-portada">
+        <div class="examen-icono">🚧</div>
+        <h1>Evaluación en preparación</h1>
+        <p class="leccion-intro">
+          Esta evaluación será incorporada cuando construyamos
+          el contenido completo de este módulo.
+        </p>
+      </div>
     `;
 
-  });
-
-
-  document.getElementById("menuLecciones2").innerHTML=html;
-
-}
-
-
-function cambiarLeccion2(i){
-
-  progreso.ultimaLeccion2=i;
-
-  guardarProgreso();
-
-  renderMenuLecciones2(i);
-
-  mostrarLeccion2(i);
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function mostrarLeccion2(i){
-
-  const l=lecciones2[i];
-
-  let actividad="";
-
-
-  if(l.tipo==="retoIA"){
-
-    actividad=crearRetoIA();
-
-  }else if(l.tipo==="seguridad"){
-
-    actividad=crearSeguridad(l);
-
-  }else if(l.tipo==="primeraPeticion"){
-
-    actividad=crearPrimeraPeticion();
-
-  }else{
-
-    actividad=crearLeccionNormal2(l);
-
+    return;
   }
 
+  const registro=progreso.examenes[examenModulo];
 
-  document.getElementById("contenidoLeccion2").innerHTML=`
+  document.getElementById("contenidoExamen").innerHTML=`
 
-    <span class="mini-badge badge-ia">
+    <div class="examen-portada">
 
-      🤖 MÓDULO 2 ·
-      LECCIÓN ${i+1} DE ${lecciones2.length}
+      <div class="examen-icono">
+        📝
+      </div>
 
-    </span>
+      <span class="mini-badge">
+        EVALUACIÓN FINAL · MÓDULO ${examenModulo}
+      </span>
 
+      <h1>
+        Demuestra lo que aprendiste
+      </h1>
 
-    <h1>
-      ${l.titulo}
-    </h1>
-
-
-    <p class="leccion-intro">
-      ${l.intro}
-    </p>
-
-
-    ${actividad}
-
-
-    <div class="acciones-leccion">
-
-      <button
-        class="btn-repetir"
-        onclick="explicarOtraVez()">
-
-        🔄 Explícame otra vez
-
-      </button>
-
-
-      <button
-        class="btn-ayuda"
-        onclick="ayudaModulo2(${i})">
-
-        🙋 Necesito ayuda
-
-      </button>
-
-
-      <button
-        class="btn-logrado"
-        onclick="completarLeccion2(${i})">
-
-        ${
-          progreso.modulo2Completas.includes(i)
-          ? "✅ Lección completada"
-          : "🎉 ¡Lo comprendí!"
-        }
-
-      </button>
-
-    </div>
-
-
-    <div class="mensaje"
-         id="mensajeLeccion2">
-    </div>
-
-
-    <div class="navegacion">
-
-      <button
-        class="anterior"
-        onclick="anterior2(${i})"
-        ${i===0 ? "disabled" : ""}>
-
-        ← Anterior
-
-      </button>
-
-
-      <button
-        class="siguiente"
-        onclick="siguiente2(${i})">
-
-        ${
-          i===lecciones2.length-1
-          ? "Finalizar módulo ✓"
-          : "Siguiente →"
-        }
-
-      </button>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   LECCION NORMAL MODULO 2
-===================================================== */
-
-function crearLeccionNormal2(l){
-
-  return `
-
-    <div class="bloque">
-
-      <h2>
-        👩‍🏫 Te explico
-      </h2>
-
-      <p>
-        ${l.explicacion}
+      <p class="leccion-intro">
+        Lee cada pregunta con calma y selecciona
+        la respuesta que consideres correcta.
       </p>
 
-    </div>
+      <div class="examen-info">
 
+        <span class="pildora">
+          📋 ${preguntas.length} preguntas
+        </span>
 
-    <div class="bloque">
+        <span class="pildora">
+          🎯 Aprobación: 70/100
+        </span>
 
-      <h2>
-        👀 Mira este ejemplo
-      </h2>
-
-      <div class="caja caja-morada">
-        ${l.ejemplo}
-      </div>
-
-    </div>
-
-
-    <div class="bloque">
-
-      <h2>
-        🤝 Hagámoslo juntas
-      </h2>
-
-      <div class="caja caja-azul pasos">
-
-        ${l.pasos.map(
-          (p,n)=>
-          `<p>
-             <strong>${n+1}.</strong>
-             ${p}
-           </p>`
-        ).join("")}
+        <span class="pildora">
+          🔄 Puedes reintentar
+        </span>
 
       </div>
 
+      ${
+        registro
+        ?
+        `<div class="caja caja-morada">
+           🏆 Tu mejor nota hasta ahora:
+           <strong>${registro.mejorNota}/100</strong>
+           · Intentos: ${registro.intentos}
+         </div>`
+        :""
+      }
+
+      <br>
+
+      <button
+        class="btn-examen"
+        onclick="iniciarExamen()">
+
+        Comenzar evaluación →
+
+      </button>
+
     </div>
-
-
-    <div class="bloque">
-
-      <h2>
-        🌟 Quédate con esta idea
-      </h2>
-
-      <div class="caja caja-verde">
-        ${l.practica}
-      </div>
-
-    </div>
-
   `;
-
 }
 
+function iniciarExamen(){
 
-/* =====================================================
-   RETO IA O NO IA
-===================================================== */
+  preguntaActual=0;
+  respuestas=[];
 
-const preguntasIA=[
-
-{
-texto:"Un teléfono reconoce tu rostro para desbloquearse.",
-respuesta:true
-},
-
-{
-texto:"Una calculadora realiza 8 × 7.",
-respuesta:false
-},
-
-{
-texto:"Una aplicación convierte automáticamente tu voz en texto.",
-respuesta:true
-},
-
-{
-texto:"Un reloj de pared tradicional marca las 3:00.",
-respuesta:false
+  mostrarPregunta();
 }
 
-];
+function mostrarPregunta(){
 
+  const preguntas=examenes[examenModulo];
+  const p=preguntas[preguntaActual];
 
-function crearRetoIA(){
+  const porcentaje=
+    ((preguntaActual+1)/preguntas.length)*100;
 
-  return `
+  document.getElementById("contenidoExamen").innerHTML=`
 
-    <div class="bloque">
+    <div class="examen-top">
+
+      <span class="mini-badge">
+        📝 MÓDULO ${examenModulo}
+      </span>
+
+      <strong>
+        Pregunta ${preguntaActual+1} de ${preguntas.length}
+      </strong>
+
+    </div>
+
+    <div class="examen-barra">
+      <div style="width:${porcentaje}%"></div>
+    </div>
+
+    <div class="pregunta-examen">
 
       <h2>
-        🎯 Reto: ¿IA o NO IA?
+        ${p.p}
       </h2>
 
-      <p>
-        Lee cada situación y selecciona una respuesta.
-      </p>
+      <div id="opciones">
 
-      <div id="retoIA">
+        ${p.o.map((op,i)=>`
 
-        ${preguntasIA.map((p,i)=>`
+          <button
+            class="opcion-examen"
+            onclick="seleccionarRespuesta(${i},this)">
 
-          <div class="caja caja-morada"
-               style="margin-bottom:12px">
+            ${String.fromCharCode(65+i)}. ${op}
 
-            <strong>
-              ${i+1}. ${p.texto}
-            </strong>
-
-            <div class="reto-grid">
-
-              <button
-                class="reto-opcion"
-                onclick="responderIA(${i},true,this)">
-                🤖 Utiliza IA
-              </button>
-
-              <button
-                class="reto-opcion"
-                onclick="responderIA(${i},false,this)">
-                ⚙️ No necesariamente es IA
-              </button>
-
-            </div>
-
-            <div id="respuestaIA${i}"
-                 style="margin-top:10px">
-            </div>
-
-          </div>
+          </button>
 
         `).join("")}
 
       </div>
 
-      <div class="caja caja-verde">
+      <div style="text-align:right;margin-top:22px">
 
-        💡 <strong>Importante:</strong>
-        no todo lo que hace una computadora es inteligencia artificial.
+        <button
+          id="btnContinuarExamen"
+          class="btn-examen"
+          onclick="continuarExamen()"
+          disabled>
+
+          ${
+            preguntaActual===preguntas.length-1
+            ? "Finalizar evaluación ✓"
+            : "Siguiente →"
+          }
+
+        </button>
 
       </div>
 
     </div>
-
   `;
-
 }
 
+function seleccionarRespuesta(indice,boton){
 
-function responderIA(indice,respuesta,boton){
+  respuestas[preguntaActual]=indice;
 
-  const correcta =
-    preguntasIA[indice].respuesta===respuesta;
+  document.querySelectorAll(".opcion-examen")
+    .forEach(b=>b.classList.remove("seleccionada"));
 
+  boton.classList.add("seleccionada");
 
-  const contenedor =
-    boton.parentElement;
-
-
-  contenedor
-    .querySelectorAll("button")
-    .forEach(b=>{
-
-      b.classList.remove(
-        "correcta",
-        "incorrecta"
-      );
-
-    });
-
-
-  boton.classList.add(
-    correcta
-    ? "correcta"
-    : "incorrecta"
-  );
-
-
-  document.getElementById(
-    "respuestaIA"+indice
-  ).innerHTML = correcta
-
-    ? "✅ ¡Muy bien!"
-
-    : "💡 Inténtalo nuevamente. Recuerda que una operación automática sencilla no siempre significa que exista IA.";
-
+  document.getElementById("btnContinuarExamen").disabled=false;
 }
 
+function continuarExamen(){
 
-/* =====================================================
-   SEGURIDAD
-===================================================== */
+  const preguntas=examenes[examenModulo];
 
-function crearSeguridad(l){
-
-  return `
-
-    <div class="bloque">
-
-      <h2>
-        🔐 Protegemos nuestra información
-      </h2>
-
-      <p>
-        ${l.explicacion}
-      </p>
-
-      <div class="alerta">
-
-        <strong>
-          Nunca escribas en una IA:
-        </strong>
-
-        <br><br>
-
-        🔑 Contraseñas<br>
-        🪪 Documentos de identidad<br>
-        🏠 Direcciones privadas innecesarias<br>
-        🩺 Información médica identificable<br>
-        👧 Datos privados de estudiantes
-
-      </div>
-
-    </div>
-
-
-    <div class="bloque">
-
-      <h2>
-        👀 Mira la diferencia
-      </h2>
-
-
-      <div class="caja"
-           style="background:#fee2e2">
-
-        ❌ <strong>No recomendado:</strong><br><br>
-
-        “Mi estudiante Ana Pérez, C.I. 00.000.000,
-        tiene este problema familiar...”
-
-      </div>
-
-
-      <div class="caja caja-verde">
-
-        ✅ <strong>Mucho mejor:</strong><br><br>
-
-        “Tengo un estudiante de primaria que necesita
-        apoyo para mantener la atención durante actividades
-        largas. Dame estrategias generales para el aula.”
-
-      </div>
-
-    </div>
-
-
-    <div class="bloque">
-
-      <h2>
-        🌟 Regla de oro
-      </h2>
-
-      <div class="caja caja-amarilla">
-        ${l.practica}
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   PRIMERA PETICION
-===================================================== */
-
-function crearPrimeraPeticion(){
-
-  return `
-
-    <div class="bloque">
-
-      <h2>
-        👩‍🏫 Te explico
-      </h2>
-
-      <p>
-        No tienes que aprender comandos complicados.
-        Vamos a comenzar respondiendo tres preguntas.
-      </p>
-
-    </div>
-
-
-    <div class="caja caja-morada">
-
-      <label>
-        <strong>
-          1. ¿Qué grado atiendes?
-        </strong>
-      </label>
-
-      <input
-        id="gradoPeticion"
-        placeholder="Ejemplo: 3.º grado"
-        style="
-          width:100%;
-          margin:8px 0 18px;
-          padding:13px;
-          border:1px solid #ddd;
-          border-radius:12px;
-        ">
-
-
-      <label>
-        <strong>
-          2. ¿Qué tema quieres trabajar?
-        </strong>
-      </label>
-
-      <input
-        id="temaPeticion"
-        placeholder="Ejemplo: El ciclo del agua"
-        style="
-          width:100%;
-          margin:8px 0 18px;
-          padding:13px;
-          border:1px solid #ddd;
-          border-radius:12px;
-        ">
-
-
-      <label>
-        <strong>
-          3. ¿Qué necesitas?
-        </strong>
-      </label>
-
-      <input
-        id="necesidadPeticion"
-        placeholder="Ejemplo: una actividad divertida"
-        style="
-          width:100%;
-          margin:8px 0 18px;
-          padding:13px;
-          border:1px solid #ddd;
-          border-radius:12px;
-        ">
-
-
-      <button
-        class="btn-principal"
-        onclick="construirPrimeraPeticion()">
-
-        ✨ Construir mi petición
-
-      </button>
-
-    </div>
-
-
-    <div id="resultadoPeticion">
-    </div>
-
-  `;
-
-}
-
-
-function construirPrimeraPeticion(){
-
-  const grado =
-    document
-      .getElementById("gradoPeticion")
-      .value.trim();
-
-
-  const tema =
-    document
-      .getElementById("temaPeticion")
-      .value.trim();
-
-
-  const necesidad =
-    document
-      .getElementById("necesidadPeticion")
-      .value.trim();
-
-
-  if(!grado || !tema || !necesidad){
-
-    document.getElementById(
-      "resultadoPeticion"
-    ).innerHTML=`
-
-      <div class="caja caja-amarilla">
-        🌸 Completa primero las tres preguntas.
-      </div>
-
-    `;
-
+  if(respuestas[preguntaActual]===undefined){
     return;
-
   }
 
+  if(preguntaActual<preguntas.length-1){
 
-  const peticion =
-    `Soy maestra de ${grado}. ` +
-    `Estoy trabajando el tema ${tema}. ` +
-    `Necesito ${necesidad}. ` +
-    `Explícalo de forma clara, sencilla y apropiada para mis estudiantes.`;
-
-
-  document.getElementById(
-    "resultadoPeticion"
-  ).innerHTML=`
-
-    <div class="bloque">
-
-      <h2>
-        🎉 ¡Mira lo que acabas de crear!
-      </h2>
-
-      <div class="ejemplo-prompt">
-        ${peticion}
-      </div>
-
-      <div class="caja caja-verde">
-
-        💜 Esto ya es una instrucción para conversar
-        con una inteligencia artificial.
-
-        <br><br>
-
-        En los próximos módulos aprenderás a mejorarla
-        muchísimo más.
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   COMPLETAR MODULO 2
-===================================================== */
-
-function completarLeccion2(i){
-
-  if(!progreso.modulo2Completas.includes(i)){
-
-    progreso.modulo2Completas.push(i);
-
-  }
-
-
-  if(i < lecciones2.length-1){
-
-    progreso.ultimaLeccion2=i+1;
-
-  }
-
-
-  guardarProgreso();
-
-  renderMenuLecciones2(i);
-
-
-  document.getElementById(
-    "mensajeLeccion2"
-  ).innerHTML=`
-
-    <div class="felicitacion">
-
-      <div style="font-size:36px">
-        🌟
-      </div>
-
-      <h3>
-        ¡Muy bien!
-      </h3>
-
-      <p style="margin-top:6px">
-        Acabas de avanzar un paso más en tu aprendizaje.
-      </p>
-
-    </div>
-
-  `;
-
-
-  if(modulo2Completo()){
-
-    setTimeout(()=>{
-
-      abrirModalPersonalizado(
-
-        "🤖 ¡Módulo 2 completado!",
-
-        `
-        Ahora ya sabes que la Inteligencia Artificial
-        es una herramienta, no una maestra que decide por ti.<br><br>
-
-        Aprendiste que puede ayudarte, pero también
-        puede equivocarse y debemos proteger la información
-        de nuestros estudiantes.<br><br>
-
-        <strong>
-          Tu siguiente aventura será aprender a conversar
-          correctamente con una IA.
-        </strong>
-        `
-
-      );
-
-    },400);
-
-  }
-
-}
-
-
-function anterior2(i){
-
-  if(i>0){
-    cambiarLeccion2(i-1);
-  }
-
-}
-
-
-function siguiente2(i){
-
-  if(i < lecciones2.length-1){
-
-    cambiarLeccion2(i+1);
+    preguntaActual++;
+    mostrarPregunta();
 
   }else{
 
-    completarLeccion2(i);
-
+    calcularResultado();
   }
-
 }
 
+function calcularResultado(){
 
-/* =====================================================
-   AYUDAS MODULO 2
-===================================================== */
+  const preguntas=examenes[examenModulo];
 
-function ayudaModulo2(i){
+  let correctas=0;
 
-  const ayudas=[
+  preguntas.forEach((p,i)=>{
+    if(respuestas[i]===p.c){
+      correctas++;
+    }
+  });
 
-    "Piensa en la IA como una herramienta digital capaz de trabajar con información y seguir instrucciones. No necesitas aprender una definición complicada.",
-
-    "Pregúntate si la herramienta solamente ejecuta una función fija o si analiza información para reconocer, generar o predecir algo.",
-
-    "ChatGPT permite conversar con una IA utilizando lenguaje cotidiano. Puedes escribirle como explicarías una tarea claramente a otra persona.",
-
-    "Comienza pensando en algo que haces repetidamente: actividades, preguntas, ideas, explicaciones o borradores.",
-
-    "No necesitas contar datos privados para pedir ayuda. Describe el problema de forma general.",
-
-    "Si una respuesta contiene un dato importante, compruébalo. Una respuesta bien redactada no garantiza que todo sea correcto.",
-
-    "Solo responde las tres preguntas. MAESTRA IA construirá el texto por ti."
-
-  ];
-
-
-  abrirModalPersonalizado(
-    "🙋 Te ayudo paso a paso",
-    ayudas[i]
+  const nota=Math.round(
+    (correctas/preguntas.length)*100
   );
 
+  if(!progreso.examenes[examenModulo]){
+
+    progreso.examenes[examenModulo]={
+      intentos:0,
+      mejorNota:0,
+      ultimaNota:0
+    };
+  }
+
+  const registro=progreso.examenes[examenModulo];
+
+  registro.intentos++;
+  registro.ultimaNota=nota;
+
+  if(nota>registro.mejorNota){
+    registro.mejorNota=nota;
+  }
+
+  registro.fecha=new Date().toISOString();
+
+  guardar();
+
+  mostrarResultado(nota,correctas,preguntas.length);
+}
+
+function mostrarResultado(nota,correctas,total){
+
+  const aprobo=nota>=70;
+
+  document.getElementById("contenidoExamen").innerHTML=`
+
+    <div class="resultado">
+
+      <div class="${aprobo ? "confeti":"estrellas"}">
+        ${aprobo ? "🎉 🎊 🌟 🎊 🎉":"💜 🌱 💜"}
+      </div>
+
+      <h1>
+        ${
+          aprobo
+          ? "¡Felicitaciones, maestra!"
+          : "Vamos a reforzar un poquito"
+        }
+      </h1>
+
+      <div class="nota-grande">
+        ${nota}
+      </div>
+
+      <h2>
+        puntos de 100
+      </h2>
+
+      <div class="caja
+           ${aprobo ? "resultado-aprobado":"resultado-repasar"}">
+
+        <strong>
+          ${correctas} de ${total} respuestas correctas
+        </strong>
+
+        <br><br>
+
+        ${
+          aprobo
+          ?
+          `🏆 ¡Aprobaste el Módulo ${examenModulo}!<br>
+           Tu avance quedó guardado.`
+
+          :
+
+          `Necesitas 70 puntos para aprobar.<br>
+           Puedes volver al módulo, repasar y presentar
+           nuevamente la evaluación.`
+        }
+
+      </div>
+
+      <div class="examen-info">
+
+        <span class="pildora">
+          🔄 Intentos:
+          ${progreso.examenes[examenModulo].intentos}
+        </span>
+
+        <span class="pildora">
+          🏆 Mejor nota:
+          ${progreso.examenes[examenModulo].mejorNota}/100
+        </span>
+
+      </div>
+
+      <div style="
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:10px;
+        margin-top:20px;
+      ">
+
+        ${
+          aprobo
+          ?
+          `<button
+             class="btn-examen"
+             onclick="abrirCurso()">
+             Ver mis módulos →
+           </button>`
+
+          :
+
+          `<button
+             class="btn-repetir"
+             onclick="abrirModulo(${examenModulo})">
+             📚 Repasar módulo
+           </button>
+
+           <button
+             class="btn-examen"
+             onclick="iniciarExamen()">
+             🔄 Reintentar evaluación
+           </button>`
+        }
+
+      </div>
+
+    </div>
+  `;
+}
+
+function volverModuloDesdeExamen(){
+
+  abrirModulo(examenModulo);
 }
 
 
-/* =====================================================
-   AYUDA GENERAL
-===================================================== */
+/* ==================================================
+   AYUDA
+================================================== */
 
 function explicarOtraVez(){
 
   abrirModalPersonalizado(
-
     "🔄 Vamos otra vez",
-
-    `
-    No tienes que memorizar todo.<br><br>
-
-    Lee solamente una idea a la vez.
-    Cuando la comprendas, continúa con la siguiente.<br><br>
-
-    Puedes repetir esta lección todas las veces que quieras.
-    `
-
+    `No necesitas memorizarlo.<br><br>
+     Lee una instrucción a la vez, realiza ese paso
+     y después continúa con el siguiente.<br><br>
+     Puedes repetir cada lección todas las veces que necesites.`
   );
-
 }
 
+function necesitoAyuda(){
 
-/* =====================================================
-   MODALES
-===================================================== */
+  let mensaje="";
 
-function abrirModal(tipo){
+  if(moduloActual===1){
 
-  if(tipo==="principiante"){
+    mensaje=
+      `Practica solamente una acción a la vez.
+       Si algo no sale a la primera, vuelve a intentarlo.
+       Estas habilidades se aprenden practicando.`;
 
-    abrirModalPersonalizado(
+  }else{
 
-      "🌸 Bienvenida al Modo Principiante",
-
-      `
-      MAESTRA IA está diseñada para acompañarte
-      desde el principio.<br><br>
-
-      <strong>1.</strong> Lee una instrucción a la vez.<br><br>
-
-      <strong>2.</strong> Practica sin miedo.<br><br>
-
-      <strong>3.</strong> Marca lo que ya lograste.<br><br>
-
-      <strong>4.</strong> Si algo no se entiende,
-      pulsa <strong>Necesito ayuda</strong>.<br><br>
-
-      No necesitas saber programación ni utilizar
-      palabras técnicas.
-      `
-
-    );
+    mensaje=
+      `Si estás utilizando un celular, recuerda que tocar
+       sustituye muchas veces al clic del mouse.
+       Mantener presionado suele mostrar opciones como copiar,
+       pegar o seleccionar.`;
 
   }
 
+  abrirModalPersonalizado(
+    "🙋 Estoy aquí para ayudarte",
+    mensaje
+  );
 }
 
 
+/* ==================================================
+   MODALES
+================================================== */
+
+function modalPrincipiante(){
+
+  abrirModalPersonalizado(
+    "🌸 Bienvenida al Modo Principiante",
+    `
+    Aquí no suponemos que ya sabes utilizar tecnología.<br><br>
+
+    <strong>1.</strong> Lee una instrucción a la vez.<br><br>
+    <strong>2.</strong> Practica sin miedo.<br><br>
+    <strong>3.</strong> Marca lo que logres.<br><br>
+    <strong>4.</strong> Presenta la evaluación al terminar cada módulo.<br><br>
+    <strong>5.</strong> Si no alcanzas 70 puntos, podrás repasar y volver a intentarlo.<br><br>
+
+    Puedes realizar el curso desde computadora o celular.
+    `
+  );
+}
+
 function abrirModalPersonalizado(titulo,texto){
 
-  document.getElementById(
-    "modalContenido"
-  ).innerHTML=`
+  document.getElementById("modalContenido").innerHTML=`
 
-    <h3>
-      ${titulo}
-    </h3>
+    <h3>${titulo}</h3>
 
-    <p>
-      ${texto}
-    </p>
+    <p>${texto}</p>
 
     <button
       class="cerrar"
@@ -3133,46 +2684,30 @@ function abrirModalPersonalizado(titulo,texto){
       Entendido 💜
 
     </button>
-
   `;
 
-
-  document.getElementById(
-    "modal"
-  ).style.display="flex";
-
+  document.getElementById("modal").style.display="flex";
 }
-
 
 function cerrarModal(){
 
-  document.getElementById(
-    "modal"
-  ).style.display="none";
-
+  document.getElementById("modal").style.display="none";
 }
-
 
 function proximamente(nombre){
 
   abrirModalPersonalizado(
-
     nombre,
-
-    `
-    Esta herramienta formará parte de MAESTRA IA.
-    La iremos activando mientras avanzamos en la construcción
-    de la plataforma.
-    `
-
+    `Esta herramienta se activará en una próxima etapa
+     de MAESTRA IA. Primero estamos construyendo el curso
+     y su sistema de aprendizaje.`
   );
-
 }
 
 
-/* =====================================================
-   ARRANQUE
-===================================================== */
+/* ==================================================
+   INICIO
+================================================== */
 
 mostrarInicio();
 
