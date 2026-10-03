@@ -1808,6 +1808,86 @@ const modulo6 = [
 
 
 /* ==================================================
+   MODULO 7 - PLANIFICA CONMIGO
+================================================== */
+
+const modulo7 = [
+  {
+    titulo:"La IA como apoyo para planificar",
+    intro:"Llegamos a una de las aplicaciones más útiles de la inteligencia artificial para una maestra.",
+    explicacion:"La IA puede ayudarte a preparar un primer borrador de una planificación, ordenar ideas y proponer actividades. La planificación final debe responder a tu realidad, tus estudiantes, el currículo que corresponda y tu criterio profesional.",
+    ejemplo:"Puedes pedir: «Ayúdame a crear un borrador de planificación para 3.º grado sobre el ciclo del agua». Después revisarás y adaptarás cada parte.",
+    pasos:["Define qué necesitas planificar.","Indica grado, área y tema.","Pide un primer borrador.","Revisa antes de utilizarlo."],
+    practica:"Piensa en una clase real que necesites planificar."
+  },
+  {
+    titulo:"Paso 1: grado, área y tema",
+    intro:"Una buena planificación comienza dando a la IA el contexto básico.",
+    explicacion:"Indicar el grado, el área y el tema ayuda a evitar respuestas demasiado generales. También puedes agregar duración, propósito o condiciones importantes de tu grupo.",
+    ejemplo:"«Planifica una clase para 4.º grado, área Ciencias Naturales, sobre el sistema solar, con una duración de 45 minutos».",
+    pasos:["Selecciona el grado.","Indica el área.","Escribe el tema específico.","Agrega la duración si la conoces."],
+    practica:"Construye la primera parte de tu solicitud: grado + área + tema."
+  },
+  {
+    titulo:"Paso 2: definir el propósito",
+    intro:"Antes de pensar en actividades debemos saber qué esperamos que aprendan los estudiantes.",
+    explicacion:"El propósito expresa de forma clara qué aprendizaje o desempeño queremos favorecer. Puedes pedir a la IA una propuesta, pero debes comprobar que sea coherente con tu intención pedagógica y con los referentes curriculares que utilices.",
+    ejemplo:"«Propón un propósito de aprendizaje sencillo para esta clase, centrado en reconocer los planetas y algunas de sus características».",
+    pasos:["Piensa qué quieres lograr.","Pide una propuesta clara.","Evita propósitos demasiado amplios.","Adáptalo a tu contexto curricular."],
+    practica:"Escribe en una oración qué esperas que logren tus estudiantes."
+  },
+  {
+    titulo:"Paso 3: inicio de la clase",
+    intro:"El inicio debe ayudar a despertar interés y conectar con conocimientos previos.",
+    explicacion:"Puedes pedir ideas de preguntas, imágenes, situaciones, juegos breves o conversaciones iniciales. El inicio no necesita ser largo: debe preparar a los estudiantes para el aprendizaje.",
+    ejemplo:"«Propón un inicio de 8 minutos con dos preguntas para explorar lo que los estudiantes ya saben sobre el sistema solar».",
+    pasos:["Indica cuánto tiempo tienes.","Pide una actividad breve.","Conecta con saberes previos.","Revisa que sea apropiada para el grupo."],
+    practica:"Pide a la IA dos opciones diferentes para iniciar tu clase."
+  },
+  {
+    titulo:"Paso 4: desarrollo",
+    intro:"En el desarrollo ocurre la mayor parte de la experiencia de aprendizaje.",
+    explicacion:"La IA puede ayudarte a organizar actividades, explicaciones, ejemplos y participación. Conviene indicar tiempo, modalidad de trabajo y materiales disponibles para recibir propuestas más realistas.",
+    ejemplo:"«Diseña un desarrollo de 25 minutos con explicación breve, trabajo en parejas y una actividad que pueda realizarse con papel y lápiz».",
+    pasos:["Define el tiempo disponible.","Indica cómo quieres trabajar.","Menciona los recursos disponibles.","Pide instrucciones claras y ordenadas."],
+    practica:"Solicita un desarrollo que pueda realizarse realmente en tu salón."
+  },
+  {
+    titulo:"Paso 5: cierre",
+    intro:"El cierre permite recuperar lo aprendido y observar qué comprendieron los estudiantes.",
+    explicacion:"Puedes pedir una pregunta final, una breve reflexión, un ticket de salida, una demostración, un pequeño reto o una síntesis. Debe relacionarse con el propósito de la clase.",
+    ejemplo:"«Crea un cierre de 7 minutos con tres preguntas sencillas para comprobar qué aprendieron sobre el sistema solar».",
+    pasos:["Vuelve a leer el propósito.","Elige una forma breve de cierre.","Pide preguntas o una actividad final.","Comprueba que permita observar el aprendizaje."],
+    practica:"Diseña con IA un cierre breve relacionado con tu propósito."
+  },
+  {
+    titulo:"Paso 6: recursos y evaluación",
+    intro:"Una planificación útil también debe considerar con qué trabajaremos y cómo observaremos el aprendizaje.",
+    explicacion:"Pide recursos que realmente tengas disponibles y una estrategia de evaluación coherente con la actividad. La IA puede sugerir preguntas, criterios, listas de cotejo u otras opciones, pero debes revisarlas antes de aplicarlas.",
+    ejemplo:"«Indica recursos sencillos disponibles en un salón y propone tres criterios para observar la participación y comprensión de los estudiantes».",
+    pasos:["Indica qué materiales tienes.","Pide recursos realistas.","Define qué aprendizaje observarás.","Revisa los criterios propuestos."],
+    practica:"Solicita recursos y una forma sencilla de evaluación para tu clase."
+  },
+  {
+    titulo:"Paso 7: adaptaciones y diversidad",
+    intro:"Una planificación debe poder ajustarse a las necesidades reales del grupo.",
+    explicacion:"Puedes pedir alternativas de apoyo, instrucciones más sencillas, diferentes formas de participación o variaciones en la dificultad. Describe la necesidad de forma general y evita compartir diagnósticos, expedientes o datos sensibles innecesarios.",
+    ejemplo:"«Propón dos formas de hacer esta actividad más accesible para estudiantes que necesitan instrucciones más breves y apoyo visual».",
+    pasos:["Identifica una necesidad pedagógica general.","Descríbela sin datos personales.","Pide alternativas concretas.","Selecciona y adapta las que sean apropiadas."],
+    practica:"Pide una adaptación general para una necesidad frecuente en el aula."
+  },
+  {
+    titulo:"Práctica final: mi planificación completa",
+    intro:"Ahora reunirás todas las partes en una planificación que puedas revisar y adaptar.",
+    explicacion:"Utilizarás un prompt completo con grado, área, tema, duración, propósito, inicio, desarrollo, cierre, recursos, evaluación y posibles adaptaciones. La IA generará un borrador; tú harás la revisión final.",
+    ejemplo:"«Actúa como apoyo para una docente de primaria. Elabora un borrador de planificación para 3.º grado sobre el ciclo del agua, de 45 minutos. Incluye propósito, inicio, desarrollo, cierre, recursos, evaluación y una adaptación sencilla. Usa lenguaje claro y actividades realizables en el aula».",
+    pasos:["Construye el prompt completo.","Pruébalo en Gemini o ChatGPT.","Revisa cada sección.","Corrige y adapta el borrador antes de considerarlo terminado."],
+    practica:"Crea una planificación completa y después realiza la evaluación del módulo."
+  }
+];
+
+
+/* ==================================================
    EXAMENES
 ================================================== */
 
@@ -2134,6 +2214,20 @@ const examenes = {
     {p:"¿Cómo mejoramos «Haz una clase de Matemática»?",o:["Agregando grado, tema, detalles y formato necesarios","Escribiéndolo muchas veces","Añadiendo datos personales"],c:0},
     {p:"Después de probar un prompt, ¿qué podemos hacer?",o:["Revisar el resultado y ajustar el prompt","Aceptar siempre la primera respuesta","Eliminar todos los detalles"],c:0}
   ]
+,
+
+  7:[
+    {p:"¿Cuál es el papel de la IA al elaborar una planificación?",o:["Apoyar con un borrador que la maestra revisa y adapta","Sustituir completamente el criterio docente","Decidir por sí sola qué necesitan los estudiantes"],c:0},
+    {p:"¿Qué información básica conviene indicar al comenzar una planificación?",o:["Grado, área y tema","Contraseñas y datos privados","Solo el nombre de la maestra"],c:0},
+    {p:"¿Qué expresa el propósito de aprendizaje?",o:["Lo que esperamos favorecer o lograr con los estudiantes","El color del material","La contraseña del documento"],c:0},
+    {p:"¿Qué puede hacer un buen inicio de clase?",o:["Activar interés y conocimientos previos","Sustituir toda la clase","Evitar que participen los estudiantes"],c:0},
+    {p:"¿Qué información ayuda a crear un desarrollo más realista?",o:["Tiempo, modalidad de trabajo y recursos disponibles","Datos personales de cada estudiante","Contraseñas"],c:0},
+    {p:"¿Con qué debe relacionarse el cierre?",o:["Con el propósito y lo aprendido","Solamente con la duración","Con datos privados"],c:0},
+    {p:"¿Qué debemos considerar al pedir recursos a la IA?",o:["Que sean realmente accesibles en nuestro contexto","Que sean siempre costosos","Que requieran obligatoriamente Internet"],c:0},
+    {p:"¿Cómo podemos pedir adaptaciones de forma responsable?",o:["Describiendo necesidades pedagógicas generales sin datos sensibles innecesarios","Pegando expedientes completos","Compartiendo diagnósticos con nombres completos"],c:0},
+    {p:"¿Una planificación generada por IA está lista para aplicar automáticamente?",o:["No; debe revisarse y adaptarse","Sí, siempre","Solo si es larga"],c:0},
+    {p:"¿Qué partes puede incluir una planificación completa trabajada en este módulo?",o:["Propósito, inicio, desarrollo, cierre, recursos, evaluación y adaptaciones","Solo título y fecha","Únicamente una actividad"],c:0}
+  ]
 
 };
 
@@ -2170,6 +2264,10 @@ if(!Array.isArray(progreso.modulo6Completas)){
   progreso.modulo6Completas=[];
 }
 
+if(!Array.isArray(progreso.modulo7Completas)){
+  progreso.modulo7Completas=[];
+}
+
 if(typeof progreso.ultimaLeccion!=="number"){
   progreso.ultimaLeccion=0;
 }
@@ -2192,6 +2290,10 @@ if(typeof progreso.ultimaLeccion5!=="number"){
 
 if(typeof progreso.ultimaLeccion6!=="number"){
   progreso.ultimaLeccion6=0;
+}
+
+if(typeof progreso.ultimaLeccion7!=="number"){
+  progreso.ultimaLeccion7=0;
 }
 
 if(!progreso.examenes){
@@ -2235,6 +2337,10 @@ function leccionesCompletas(modulo){
 
   if(modulo===6){
     return progreso.modulo6Completas.length>=modulo6.length;
+  }
+
+  if(modulo===7){
+    return progreso.modulo7Completas.length>=modulo7.length;
   }
 
   return false;
@@ -2298,7 +2404,7 @@ function renderModulos(){
 
     let boton="";
 
-    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5 || numero===6){
+    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5 || numero===6 || numero===7){
 
       if(disponible){
 
@@ -2413,6 +2519,7 @@ function datosModulo(n){
   if(n===4) return modulo4;
   if(n===5) return modulo5;
   if(n===6) return modulo6;
+  if(n===7) return modulo7;
 
   return [];
 }
@@ -2425,6 +2532,7 @@ function completasModulo(n){
   if(n===4) return progreso.modulo4Completas;
   if(n===5) return progreso.modulo5Completas;
   if(n===6) return progreso.modulo6Completas;
+  if(n===7) return progreso.modulo7Completas;
 
   return [];
 }
@@ -2437,6 +2545,7 @@ function ultimaModulo(n){
   if(n===4) return progreso.ultimaLeccion4;
   if(n===5) return progreso.ultimaLeccion5;
   if(n===6) return progreso.ultimaLeccion6;
+  if(n===7) return progreso.ultimaLeccion7;
 
   return 0;
 }
@@ -2449,6 +2558,7 @@ function establecerUltima(n,i){
   if(n===4) progreso.ultimaLeccion4=i;
   if(n===5) progreso.ultimaLeccion5=i;
   if(n===6) progreso.ultimaLeccion6=i;
+  if(n===7) progreso.ultimaLeccion7=i;
 
   guardar();
 }
