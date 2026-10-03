@@ -1648,6 +1648,86 @@ const modulo4 = [
 
 
 /* ==================================================
+   MODULO 5 - APRENDIENDO A CONVERSAR CON LA IA
+================================================== */
+
+const modulo5 = [
+  {
+    titulo:"Conversar con la IA es trabajar por pasos",
+    intro:"Ya sabes hacer una primera consulta. Ahora aprenderás a convertir esa consulta en una conversación realmente útil.",
+    explicacion:"No necesitas pedir todo de una sola vez. Puedes comenzar con una necesidad sencilla, leer la respuesta y continuar dando nuevas indicaciones. Cada mensaje puede ayudarte a acercarte más al resultado que necesitas.",
+    ejemplo:"Primero: «Ayúdame con una actividad sobre los animales para 2.º grado». Después: «Hazla para 20 minutos». Luego: «Agrega una actividad de cierre».",
+    pasos:["Piensa en una necesidad de tu aula.","Escribe una primera solicitud sencilla.","Lee la respuesta completa.","Continúa con una segunda indicación para mejorarla."],
+    practica:"Realiza una conversación de al menos dos mensajes relacionados con una misma tarea."
+  },
+  {
+    titulo:"Decir exactamente qué necesito",
+    intro:"Una buena conversación comienza cuando expresamos claramente nuestro objetivo.",
+    explicacion:"Palabras como «ayúdame», «crea», «explica», «resume», «propón», «adapta» o «compara» ayudan a indicar la tarea. Después podemos añadir para quién es, sobre qué tema y qué resultado esperamos.",
+    ejemplo:"En lugar de «Matemática 3.º», escribe: «Ayúdame a crear una actividad sencilla de Matemática para 3.º grado sobre multiplicación».",
+    pasos:["Indica la acción que necesitas.","Menciona el grado.","Especifica el área o tema.","Describe brevemente el resultado que esperas."],
+    practica:"Escribe una solicitud que incluya acción, grado y tema."
+  },
+  {
+    titulo:"Agregar detalles sin complicarnos",
+    intro:"Unos pocos detalles útiles pueden mejorar mucho una respuesta.",
+    explicacion:"Puedes indicar duración, cantidad de estudiantes, materiales disponibles, nivel de dificultad, formato o tipo de actividad. No es necesario llenar la solicitud de información que no cambia el resultado.",
+    ejemplo:"«Crea un juego de 15 minutos para practicar sumas en 1.º grado, sin imprimir materiales y usando objetos del salón».",
+    pasos:["Parte de una solicitud sencilla.","Agrega una duración.","Añade una condición real de tu aula.","Evita incluir datos personales innecesarios."],
+    practica:"Mejora una solicitud agregando dos detalles útiles."
+  },
+  {
+    titulo:"Pedir ejemplos cuando algo no está claro",
+    intro:"Si una explicación no te ayuda, puedes pedir otra forma de explicarla.",
+    explicacion:"Puedes pedir ejemplos, comparaciones, pasos o una explicación más sencilla. Conversar con la IA también significa saber decir «no entendí» o «muéstrame un ejemplo».",
+    ejemplo:"«Explícamelo nuevamente con palabras más sencillas y dame un ejemplo que pueda usar con niños de 4.º grado».",
+    pasos:["Identifica una parte poco clara.","Pide una explicación más sencilla.","Solicita un ejemplo concreto.","Comprueba si la nueva respuesta te ayuda más."],
+    practica:"Pide a la IA que explique de otra manera una idea."
+  },
+  {
+    titulo:"Corregir el rumbo de la conversación",
+    intro:"Si la respuesta no es lo que querías, no significa que debas empezar de nuevo.",
+    explicacion:"Puedes señalar qué parte no te sirve y explicar qué deseas cambiar. Una corrección específica suele ser más útil que escribir solamente «está mal».",
+    ejemplo:"«La actividad es demasiado larga. Mantén la misma idea, pero redúcela a 15 minutos y usa instrucciones más sencillas».",
+    pasos:["Identifica exactamente qué no te sirve.","Explica qué quieres conservar.","Indica qué debe cambiar.","Lee la nueva versión y vuelve a ajustar si es necesario."],
+    practica:"Corrige una respuesta dando una indicación específica."
+  },
+  {
+    titulo:"Pedir opciones para poder elegir",
+    intro:"La IA también puede ayudarte a explorar varias posibilidades antes de decidir.",
+    explicacion:"En lugar de pedir una sola idea, puedes solicitar varias alternativas. Después tú comparas y seleccionas la que mejor se adapte a tus estudiantes.",
+    ejemplo:"«Dame 4 formas diferentes de iniciar una clase de Ciencias sobre el sistema solar para 5.º grado».",
+    pasos:["Pide varias opciones.","Lee todas antes de elegir.","Selecciona la que mejor se adapte a tu grupo.","Pide que desarrolle solamente la opción elegida."],
+    practica:"Solicita tres opciones para una misma necesidad docente y elige una."
+  },
+  {
+    titulo:"Pedir un formato específico",
+    intro:"También podemos decirle a la IA cómo queremos recibir la información.",
+    explicacion:"Puedes pedir una tabla, una lista, pasos numerados, preguntas, un pequeño guion o secciones con títulos. El formato adecuado facilita copiar, revisar y utilizar el resultado.",
+    ejemplo:"«Organiza la actividad en una tabla con cuatro columnas: momento, actividad, recursos y tiempo».",
+    pasos:["Piensa cómo necesitas utilizar la información.","Elige un formato sencillo.","Inclúyelo en tu solicitud.","Comprueba que el resultado sea fácil de leer."],
+    practica:"Pide que una respuesta sea reorganizada como lista, tabla o pasos."
+  },
+  {
+    titulo:"Comparar y mejorar sin entregar el control",
+    intro:"La IA puede proponerte alternativas, pero la decisión pedagógica sigue siendo tuya.",
+    explicacion:"Puedes pedir ventajas, diferencias o sugerencias, pero debes valorar el contexto de tu grupo. La IA no conoce por sí sola todas las necesidades reales de tus estudiantes.",
+    ejemplo:"«Compara estas dos actividades y dime qué aspectos debería revisar para decidir cuál se adapta mejor a estudiantes de 2.º grado».",
+    pasos:["Pide una comparación cuando te resulte útil.","Lee los criterios sugeridos.","Piensa en la realidad de tus estudiantes.","Toma tú la decisión final."],
+    practica:"Compara dos ideas y decide cuál adaptarías para tu aula."
+  },
+  {
+    titulo:"Práctica final: de una idea a un resultado útil",
+    intro:"Ahora realizarás una conversación completa utilizando todo lo aprendido.",
+    explicacion:"Comenzarás con una necesidad, añadirás contexto, pedirás una mejora y terminarás solicitando un formato que puedas utilizar. Este proceso será la base para los próximos módulos.",
+    ejemplo:"1) «Necesito una actividad sobre reciclaje para 4.º grado». 2) «Debe durar 25 minutos y trabajar en equipos». 3) «Hazla más participativa». 4) «Organízala en pasos numerados».",
+    pasos:["Haz una solicitud inicial.","Añade dos detalles importantes.","Pide una mejora concreta.","Solicita el formato final que te resulte más útil."],
+    practica:"Completa una conversación de cuatro pasos y luego realiza la evaluación."
+  }
+];
+
+
+/* ==================================================
    EXAMENES
 ================================================== */
 
@@ -1946,6 +2026,20 @@ const examenes = {
     {p:"¿Qué podemos hacer con una parte útil de una respuesta?",o:["Copiarla, pegarla, revisarla y adaptarla","Publicarla sin revisar","Compartir datos privados junto con ella"],c:0},
     {p:"¿Cuál es el objetivo principal de este módulo?",o:["Aprender a iniciar, revisar y continuar una conversación educativa con IA","Memorizar todos los botones de una aplicación","Dejar todas las decisiones a la IA"],c:0}
   ]
+,
+
+  5:[
+    {p:"¿Cómo podemos trabajar una tarea compleja con la IA?",o:["Por pasos, continuando la conversación","Pidiendo todo obligatoriamente en un solo mensaje","Compartiendo datos privados"],c:0},
+    {p:"¿Cuál es una forma más clara de pedir ayuda?",o:["«Matemática»","«Ayúdame a crear una actividad de Matemática para 3.º grado sobre multiplicación»","«Haz algo»"],c:1},
+    {p:"¿Qué detalle puede ser útil al pedir una actividad?",o:["La duración disponible","Una contraseña","Datos personales innecesarios"],c:0},
+    {p:"Si una explicación no está clara, ¿qué podemos hacer?",o:["Pedir otra explicación y un ejemplo","Aceptar que nunca la entenderemos","Cerrar la herramienta"],c:0},
+    {p:"Si una respuesta no sirve, ¿cómo podemos corregirla mejor?",o:["Explicando específicamente qué queremos cambiar","Escribiendo solamente «mal»","Compartiendo más datos personales"],c:0},
+    {p:"¿Para qué sirve pedir varias opciones?",o:["Para comparar y elegir una alternativa adecuada","Para que la IA decida todo","Para evitar leer las respuestas"],c:0},
+    {p:"¿Podemos pedir a la IA un formato determinado?",o:["Sí, por ejemplo una tabla, lista o pasos","No","Solamente imágenes"],c:0},
+    {p:"¿Quién toma la decisión pedagógica final?",o:["La maestra","La IA siempre","El dispositivo"],c:0},
+    {p:"¿Qué conviene hacer después de añadir contexto a una solicitud?",o:["Revisar la respuesta y seguir ajustando si hace falta","Usarla sin leer","Borrar toda la conversación"],c:0},
+    {p:"¿Qué habilidad estamos desarrollando principalmente en este módulo?",o:["Mantener conversaciones claras y progresivas con la IA","Programar aplicaciones","Memorizar respuestas"],c:0}
+  ]
 
 };
 
@@ -1974,6 +2068,10 @@ if(!Array.isArray(progreso.modulo4Completas)){
   progreso.modulo4Completas=[];
 }
 
+if(!Array.isArray(progreso.modulo5Completas)){
+  progreso.modulo5Completas=[];
+}
+
 if(typeof progreso.ultimaLeccion!=="number"){
   progreso.ultimaLeccion=0;
 }
@@ -1988,6 +2086,10 @@ if(typeof progreso.ultimaLeccion3!=="number"){
 
 if(typeof progreso.ultimaLeccion4!=="number"){
   progreso.ultimaLeccion4=0;
+}
+
+if(typeof progreso.ultimaLeccion5!=="number"){
+  progreso.ultimaLeccion5=0;
 }
 
 if(!progreso.examenes){
@@ -2023,6 +2125,10 @@ function leccionesCompletas(modulo){
 
   if(modulo===4){
     return progreso.modulo4Completas.length>=modulo4.length;
+  }
+
+  if(modulo===5){
+    return progreso.modulo5Completas.length>=modulo5.length;
   }
 
   return false;
@@ -2086,7 +2192,7 @@ function renderModulos(){
 
     let boton="";
 
-    if(numero===1 || numero===2 || numero===3 || numero===4){
+    if(numero===1 || numero===2 || numero===3 || numero===4 || numero===5){
 
       if(disponible){
 
@@ -2199,6 +2305,7 @@ function datosModulo(n){
   if(n===2) return modulo2;
   if(n===3) return modulo3;
   if(n===4) return modulo4;
+  if(n===5) return modulo5;
 
   return [];
 }
@@ -2209,6 +2316,7 @@ function completasModulo(n){
   if(n===2) return progreso.modulo2Completas;
   if(n===3) return progreso.modulo3Completas;
   if(n===4) return progreso.modulo4Completas;
+  if(n===5) return progreso.modulo5Completas;
 
   return [];
 }
@@ -2219,6 +2327,7 @@ function ultimaModulo(n){
   if(n===2) return progreso.ultimaLeccion2;
   if(n===3) return progreso.ultimaLeccion3;
   if(n===4) return progreso.ultimaLeccion4;
+  if(n===5) return progreso.ultimaLeccion5;
 
   return 0;
 }
@@ -2229,6 +2338,7 @@ function establecerUltima(n,i){
   if(n===2) progreso.ultimaLeccion2=i;
   if(n===3) progreso.ultimaLeccion3=i;
   if(n===4) progreso.ultimaLeccion4=i;
+  if(n===5) progreso.ultimaLeccion5=i;
 
   guardar();
 }
