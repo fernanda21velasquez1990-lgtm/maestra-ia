@@ -5080,6 +5080,407 @@ function tarjetaProgresoModulo(n,nombre){
 }
 
 </script>
+<!-- =====================================================
+     MAESTRA IA - PERFIL DE LA MAESTRA
+     PEGAR TODO ESTE BLOQUE ANTES DE </body>
+====================================================== -->
 
+<style>
+
+.perfil-wrap{
+  max-width:760px;
+  margin:auto;
+  padding:25px 18px 60px;
+}
+
+.perfil-card{
+  margin-top:22px;
+  background:white;
+  border-radius:28px;
+  padding:35px;
+  box-shadow:0 12px 35px rgba(0,0,0,.10);
+}
+
+.perfil-icono{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 15px;
+  font-size:45px;
+  background:#f7e9ff;
+}
+
+.perfil-card h2{
+  text-align:center;
+  margin-bottom:10px;
+  font-size:28px;
+}
+
+.perfil-texto{
+  text-align:center;
+  line-height:1.6;
+  margin-bottom:28px;
+  color:#555;
+}
+
+.perfil-card label{
+  display:block;
+  font-weight:700;
+  margin-top:18px;
+  margin-bottom:7px;
+}
+
+.perfil-card label small{
+  font-weight:400;
+  color:#777;
+}
+
+.perfil-card input{
+  width:100%;
+  box-sizing:border-box;
+  padding:15px;
+  border:2px solid #e7e7e7;
+  border-radius:14px;
+  font-size:16px;
+  outline:none;
+}
+
+.perfil-card input:focus{
+  border-color:#9c6ade;
+}
+
+.perfil-guardar{
+  width:100%;
+  margin-top:28px;
+  padding:16px;
+  border:0;
+  border-radius:16px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  background:#6f42c1;
+  color:white;
+}
+
+.perfil-guardar:hover{
+  transform:translateY(-1px);
+}
+
+.perfil-seguridad{
+  margin-top:22px;
+  padding:15px;
+  border-radius:14px;
+  background:#f6f2ff;
+  line-height:1.5;
+  font-size:14px;
+}
+
+@media(max-width:600px){
+
+  .perfil-card{
+    padding:24px 18px;
+  }
+
+  .perfil-card h2{
+    font-size:24px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* ==================================================
+   PERFIL DE LA MAESTRA
+================================================== */
+
+function obtenerPerfilMaestra(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("maestraIAPerfil")
+    ) || null;
+
+  }catch(e){
+
+    return null;
+
+  }
+
+}
+
+
+/* ==================================================
+   GUARDAR PERFIL
+================================================== */
+
+function guardarPerfilMaestra(){
+
+  const nombre =
+    document.getElementById("perfilNombre")
+    .value.trim();
+
+  const correo =
+    document.getElementById("perfilCorreo")
+    .value.trim()
+    .toLowerCase();
+
+  const institucion =
+    document.getElementById("perfilInstitucion")
+    .value.trim();
+
+
+  if(nombre.length < 3){
+
+    alert("✏️ Escribe tu nombre y apellido.");
+
+    return;
+
+  }
+
+
+  if(
+    !correo ||
+    !correo.includes("@") ||
+    !correo.includes(".")
+  ){
+
+    alert(
+      "📧 Escribe un correo electrónico válido."
+    );
+
+    return;
+
+  }
+
+
+  const perfilAnterior =
+    obtenerPerfilMaestra();
+
+
+  const perfil = {
+
+    nombre:nombre,
+
+    correo:correo,
+
+    institucion:institucion,
+
+    fechaRegistro:
+      perfilAnterior &&
+      perfilAnterior.fechaRegistro
+
+        ? perfilAnterior.fechaRegistro
+
+        : new Date().toISOString(),
+
+    ultimaActualizacion:
+      new Date().toISOString()
+
+  };
+
+
+  localStorage.setItem(
+    "maestraIAPerfil",
+    JSON.stringify(perfil)
+  );
+
+
+  alert(
+    "🌷 ¡Tu información fue guardada correctamente!"
+  );
+
+
+  location.reload();
+
+}
+
+
+/* ==================================================
+   ABRIR MI PERFIL
+================================================== */
+
+function editarPerfilMaestra(){
+
+  const perfil =
+    obtenerPerfilMaestra();
+
+
+  document.body.innerHTML = `
+
+  <div class="perfil-wrap">
+
+    <div style="margin-bottom:16px">
+
+      <button
+        class="btn-volver"
+        onclick="location.reload()">
+
+        ← Volver al inicio
+
+      </button>
+
+    </div>
+
+
+    <div class="perfil-card">
+
+
+      <div class="perfil-icono">
+
+        👩‍🏫
+
+      </div>
+
+
+      <h2>
+
+        Mi perfil en MAESTRA IA
+
+      </h2>
+
+
+      <p class="perfil-texto">
+
+        Registra tus datos para que
+        MAESTRA IA pueda identificar
+        tu progreso, tus módulos
+        aprobados y tus trabajos.
+
+      </p>
+
+
+      <label>
+
+        Nombre y apellido
+
+      </label>
+
+
+      <input
+        id="perfilNombre"
+        type="text"
+        autocomplete="name"
+        placeholder="Ejemplo: María González"
+        value="${
+          perfil
+          ? escaparPerfil(perfil.nombre)
+          : ""
+        }"
+      >
+
+
+      <label>
+
+        Correo electrónico
+
+      </label>
+
+
+      <input
+        id="perfilCorreo"
+        type="email"
+        autocomplete="email"
+        placeholder="Ejemplo: maria@gmail.com"
+        value="${
+          perfil
+          ? escaparPerfil(perfil.correo)
+          : ""
+        }"
+      >
+
+
+      <label>
+
+        Escuela o institución
+
+        <small>
+          (opcional)
+        </small>
+
+      </label>
+
+
+      <input
+        id="perfilInstitucion"
+        type="text"
+        placeholder="Nombre de tu escuela"
+        value="${
+          perfil
+          ? escaparPerfil(
+              perfil.institucion || ""
+            )
+          : ""
+        }"
+      >
+
+
+      <button
+        class="perfil-guardar"
+        onclick="guardarPerfilMaestra()">
+
+        💾 Guardar mi información
+
+      </button>
+
+
+      <div class="perfil-seguridad">
+
+        🔒
+        <b>
+          Tu privacidad es importante.
+        </b>
+
+        <br><br>
+
+        No escribas contraseñas,
+        documentos de identidad
+        ni información privada
+        de tus estudiantes.
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+  `;
+
+
+  window.scrollTo(0,0);
+
+}
+
+
+/* ==================================================
+   SEGURIDAD PARA MOSTRAR DATOS
+================================================== */
+
+function escaparPerfil(texto){
+
+  return String(texto || "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+<!-- FIN PERFIL MAESTRA IA -->
 </body>
 </html>
