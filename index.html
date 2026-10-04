@@ -1087,6 +1087,28 @@ footer{
 .prog-mini{height:9px;background:#eee8f2;border-radius:999px;overflow:hidden;margin:11px 0}.prog-mini div{height:100%;background:#a855f7;border-radius:999px}.prog-note{margin-top:20px;background:#fffbeb;border:1px solid #fde68a;border-radius:18px;padding:16px;color:#66572e;line-height:1.55}
 @media(max-width:800px){.prog-summary{grid-template-columns:repeat(2,1fr)}.prog-mods{grid-template-columns:1fr}.prog-hero h2{font-size:25px}}
 
+
+/* ==================================================
+   MI PERFIL
+================================================== */
+.perfil-wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+.perfil-card{margin-top:10px;background:#fff;border:1px solid #eadff4;border-radius:28px;padding:35px;box-shadow:0 12px 35px rgba(80,40,110,.10)}
+.perfil-icono{width:85px;height:85px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-size:45px;background:#f3e8ff}
+.perfil-card h2{text-align:center;margin-bottom:10px;font-size:28px;color:#5b21b6}
+.perfil-texto{text-align:center;line-height:1.6;margin-bottom:28px;color:#62596a}
+.perfil-card label{display:block;font-weight:800;margin-top:18px;margin-bottom:7px;color:#40204f}
+.perfil-card label small{font-weight:400;color:#777}
+.perfil-card input{width:100%;padding:15px;border:2px solid #e7dcef;border-radius:14px;font-size:16px;outline:none;background:#fff}
+.perfil-card input:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.12)}
+.perfil-guardar{width:100%;margin-top:28px;padding:16px;border:0;border-radius:16px;font-size:17px;font-weight:800;background:linear-gradient(90deg,#7e22ce,#db2777);color:#fff}
+.perfil-seguridad{margin-top:22px;padding:15px;border-radius:14px;background:#f6f2ff;line-height:1.5;font-size:14px;color:#5f5367}
+.perfil-bienvenida{background:linear-gradient(135deg,#f7efff,#fff);border:1px solid #eadcff;border-radius:18px;padding:16px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.perfil-bienvenida-icono{width:48px;height:48px;min-width:48px;border-radius:50%;background:#eee1ff;display:flex;align-items:center;justify-content:center;font-size:25px}
+.perfil-bienvenida-texto{line-height:1.4}
+.perfil-bienvenida-texto strong{display:block;font-size:17px;margin-bottom:2px}
+.perfil-bienvenida-texto span{font-size:14px;color:#666}
+@media(max-width:600px){.perfil-card{padding:24px 18px}.perfil-card h2{font-size:24px}}
+
 </style>
 </head>
 
@@ -1183,6 +1205,13 @@ footer{
         <div class="icono lila">📊</div>
         <h4>Mi progreso</h4>
         <p>Consulta tus avances, evaluaciones y mejores notas.</p>
+      </div>
+
+
+      <div class="tarjeta" onclick="editarPerfilMaestra()">
+        <div class="icono rosa">👩‍🏫</div>
+        <h4>Mi perfil</h4>
+        <p>Registra o actualiza tus datos en MAESTRA IA.</p>
       </div>
 
     </div>
@@ -5079,792 +5108,122 @@ function tarjetaProgresoModulo(n,nombre){
   return `<article class="prog-card ${ok?"aprobado":(!desbloq?"bloqueado":"")}"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><h3>Módulo ${n}: ${nombre}</h3>${badge}</div><div class="prog-line"><span>Lecciones</span><b>${lecciones}/9</b></div><div class="prog-mini"><div style="width:${pct}%"></div></div><div class="prog-line"><span>Mejor nota</span><b>${intentos?nota+"/100":"Aún sin examen"}</b></div><div class="prog-line"><span>Intentos</span><b>${intentos}</b></div></article>`;
 }
 
-</script>
-<!-- =====================================================
-     MAESTRA IA - PERFIL DE LA MAESTRA
-     PEGAR TODO ESTE BLOQUE ANTES DE </body>
-====================================================== -->
 
-<style>
-
-.perfil-wrap{
-  max-width:760px;
-  margin:auto;
-  padding:25px 18px 60px;
-}
-
-.perfil-card{
-  margin-top:22px;
-  background:white;
-  border-radius:28px;
-  padding:35px;
-  box-shadow:0 12px 35px rgba(0,0,0,.10);
-}
-
-.perfil-icono{
-  width:85px;
-  height:85px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 15px;
-  font-size:45px;
-  background:#f7e9ff;
-}
-
-.perfil-card h2{
-  text-align:center;
-  margin-bottom:10px;
-  font-size:28px;
-}
-
-.perfil-texto{
-  text-align:center;
-  line-height:1.6;
-  margin-bottom:28px;
-  color:#555;
-}
-
-.perfil-card label{
-  display:block;
-  font-weight:700;
-  margin-top:18px;
-  margin-bottom:7px;
-}
-
-.perfil-card label small{
-  font-weight:400;
-  color:#777;
-}
-
-.perfil-card input{
-  width:100%;
-  box-sizing:border-box;
-  padding:15px;
-  border:2px solid #e7e7e7;
-  border-radius:14px;
-  font-size:16px;
-  outline:none;
-}
-
-.perfil-card input:focus{
-  border-color:#9c6ade;
-}
-
-.perfil-guardar{
-  width:100%;
-  margin-top:28px;
-  padding:16px;
-  border:0;
-  border-radius:16px;
-  font-size:17px;
-  font-weight:700;
-  cursor:pointer;
-  background:#6f42c1;
-  color:white;
-}
-
-.perfil-guardar:hover{
-  transform:translateY(-1px);
-}
-
-.perfil-seguridad{
-  margin-top:22px;
-  padding:15px;
-  border-radius:14px;
-  background:#f6f2ff;
-  line-height:1.5;
-  font-size:14px;
-}
-
-@media(max-width:600px){
-
-  .perfil-card{
-    padding:24px 18px;
-  }
-
-  .perfil-card h2{
-    font-size:24px;
-  }
-
-}
-
-</style>
-
-
-<script>
 
 /* ==================================================
    PERFIL DE LA MAESTRA
 ================================================== */
-
 function obtenerPerfilMaestra(){
-
   try{
-
-    return JSON.parse(
-      localStorage.getItem("maestraIAPerfil")
-    ) || null;
-
+    return JSON.parse(localStorage.getItem("maestraIAPerfil")) || null;
   }catch(e){
-
     return null;
-
   }
-
 }
-
-
-/* ==================================================
-   GUARDAR PERFIL
-================================================== */
-
-function guardarPerfilMaestra(){
-
-  const nombre =
-    document.getElementById("perfilNombre")
-    .value.trim();
-
-  const correo =
-    document.getElementById("perfilCorreo")
-    .value.trim()
-    .toLowerCase();
-
-  const institucion =
-    document.getElementById("perfilInstitucion")
-    .value.trim();
-
-
-  if(nombre.length < 3){
-
-    alert("✏️ Escribe tu nombre y apellido.");
-
-    return;
-
-  }
-
-
-  if(
-    !correo ||
-    !correo.includes("@") ||
-    !correo.includes(".")
-  ){
-
-    alert(
-      "📧 Escribe un correo electrónico válido."
-    );
-
-    return;
-
-  }
-
-
-  const perfilAnterior =
-    obtenerPerfilMaestra();
-
-
-  const perfil = {
-
-    nombre:nombre,
-
-    correo:correo,
-
-    institucion:institucion,
-
-    fechaRegistro:
-      perfilAnterior &&
-      perfilAnterior.fechaRegistro
-
-        ? perfilAnterior.fechaRegistro
-
-        : new Date().toISOString(),
-
-    ultimaActualizacion:
-      new Date().toISOString()
-
-  };
-
-
-  localStorage.setItem(
-    "maestraIAPerfil",
-    JSON.stringify(perfil)
-  );
-
-
-  alert(
-    "🌷 ¡Tu información fue guardada correctamente!"
-  );
-
-
-  location.reload();
-
-}
-
-
-/* ==================================================
-   ABRIR MI PERFIL
-================================================== */
-
-function editarPerfilMaestra(){
-
-  const perfil =
-    obtenerPerfilMaestra();
-
-
-  document.body.innerHTML = `
-
-  <div class="perfil-wrap">
-
-    <div style="margin-bottom:16px">
-
-      <button
-        class="btn-volver"
-        onclick="location.reload()">
-
-        ← Volver al inicio
-
-      </button>
-
-    </div>
-
-
-    <div class="perfil-card">
-
-
-      <div class="perfil-icono">
-
-        👩‍🏫
-
-      </div>
-
-
-      <h2>
-
-        Mi perfil en MAESTRA IA
-
-      </h2>
-
-
-      <p class="perfil-texto">
-
-        Registra tus datos para que
-        MAESTRA IA pueda identificar
-        tu progreso, tus módulos
-        aprobados y tus trabajos.
-
-      </p>
-
-
-      <label>
-
-        Nombre y apellido
-
-      </label>
-
-
-      <input
-        id="perfilNombre"
-        type="text"
-        autocomplete="name"
-        placeholder="Ejemplo: María González"
-        value="${
-          perfil
-          ? escaparPerfil(perfil.nombre)
-          : ""
-        }"
-      >
-
-
-      <label>
-
-        Correo electrónico
-
-      </label>
-
-
-      <input
-        id="perfilCorreo"
-        type="email"
-        autocomplete="email"
-        placeholder="Ejemplo: maria@gmail.com"
-        value="${
-          perfil
-          ? escaparPerfil(perfil.correo)
-          : ""
-        }"
-      >
-
-
-      <label>
-
-        Escuela o institución
-
-        <small>
-          (opcional)
-        </small>
-
-      </label>
-
-
-      <input
-        id="perfilInstitucion"
-        type="text"
-        placeholder="Nombre de tu escuela"
-        value="${
-          perfil
-          ? escaparPerfil(
-              perfil.institucion || ""
-            )
-          : ""
-        }"
-      >
-
-
-      <button
-        class="perfil-guardar"
-        onclick="guardarPerfilMaestra()">
-
-        💾 Guardar mi información
-
-      </button>
-
-
-      <div class="perfil-seguridad">
-
-        🔒
-        <b>
-          Tu privacidad es importante.
-        </b>
-
-        <br><br>
-
-        No escribas contraseñas,
-        documentos de identidad
-        ni información privada
-        de tus estudiantes.
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-  `;
-
-
-  window.scrollTo(0,0);
-
-}
-
-
-/* ==================================================
-   SEGURIDAD PARA MOSTRAR DATOS
-================================================== */
 
 function escaparPerfil(texto){
-
   return String(texto || "")
-
     .replace(/&/g,"&amp;")
-
     .replace(/</g,"&lt;")
-
     .replace(/>/g,"&gt;")
-
     .replace(/"/g,"&quot;")
-
     .replace(/'/g,"&#039;");
-
 }
 
-</script>
+function guardarPerfilMaestra(){
+  const nombre=document.getElementById("perfilNombre").value.trim();
+  const correo=document.getElementById("perfilCorreo").value.trim().toLowerCase();
+  const institucion=document.getElementById("perfilInstitucion").value.trim();
 
-<!-- FIN PERFIL MAESTRA IA -->
-  <!-- =====================================================
-     MAESTRA IA
-     MI PERFIL + NOMBRE EN MI PROGRESO
-     PEGAR ANTES DE </body>
-====================================================== -->
-
-<style>
-
-.tarjeta-perfil-maestra{
-  position:relative;
-}
-
-.perfil-bienvenida{
-  background:linear-gradient(135deg,#f7efff,#fff);
-  border:1px solid #eadcff;
-  border-radius:18px;
-  padding:16px 18px;
-  margin-bottom:18px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.perfil-bienvenida-icono{
-  width:48px;
-  height:48px;
-  min-width:48px;
-  border-radius:50%;
-  background:#eee1ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-}
-
-.perfil-bienvenida-texto{
-  line-height:1.4;
-}
-
-.perfil-bienvenida-texto strong{
-  display:block;
-  font-size:17px;
-  margin-bottom:2px;
-}
-
-.perfil-bienvenida-texto span{
-  font-size:14px;
-  color:#666;
-}
-
-</style>
-
-
-<script>
-
-/* ==================================================
-   AGREGAR MI PERFIL AL INICIO
-================================================== */
-
-function agregarTarjetaMiPerfil(){
-
-  if(document.getElementById("tarjetaMiPerfil")){
+  if(nombre.length<3){
+    alert("✏️ Escribe tu nombre y apellido.");
+    return;
+  }
+  if(!correo || !correo.includes("@") || !correo.includes(".")){
+    alert("📧 Escribe un correo electrónico válido.");
     return;
   }
 
-  /*
-     Buscamos la tarjeta de Mi progreso
-     para colocar Mi perfil junto a las
-     herramientas principales.
-  */
-
-  const elementos =
-    Array.from(document.querySelectorAll("*"));
-
-  const progresoElemento =
-    elementos.find(el => {
-
-      const texto =
-        (el.textContent || "").trim();
-
-      return (
-        texto.includes("Mi progreso") &&
-        el.children.length > 0
-      );
-
-    });
-
-
-  /*
-     Si encontramos el contenedor de tarjetas,
-     intentamos insertar la nueva tarjeta.
-  */
-
-  let contenedor = null;
-
-  const candidatos =
-    Array.from(document.querySelectorAll(
-      ".cards, .grid, .herramientas, .opciones, .menu-grid, .inicio-grid"
-    ));
-
-  if(candidatos.length){
-
-    contenedor =
-      candidatos.find(c =>
-        (c.textContent || "").includes("Mi progreso")
-      ) || candidatos[0];
-
-  }
-
-
-  /*
-     Segunda forma de encontrar el contenedor
-     usando el botón que abre Mi progreso.
-  */
-
-  if(!contenedor){
-
-    const botonProgreso =
-      document.querySelector(
-        '[onclick*="abrirMiProgreso"]'
-      );
-
-    if(botonProgreso){
-
-      contenedor =
-        botonProgreso.parentElement;
-
-      /*
-        Subimos hasta encontrar el contenedor
-        que contiene varias tarjetas.
-      */
-
-      let padre =
-        botonProgreso.parentElement;
-
-      while(
-        padre &&
-        padre !== document.body
-      ){
-
-        if(
-          padre.children &&
-          padre.children.length >= 3
-        ){
-
-          contenedor = padre;
-
-        }
-
-        padre = padre.parentElement;
-
-      }
-
-    }
-
-  }
-
-
-  if(!contenedor){
-    return;
-  }
-
-
-  /*
-     Tomamos como modelo una tarjeta existente
-     para conservar el diseño original.
-  */
-
-  const botonProgreso =
-    document.querySelector(
-      '[onclick*="abrirMiProgreso"]'
-    );
-
-
-  let tarjetaModelo = null;
-
-
-  if(botonProgreso){
-
-    tarjetaModelo =
-      botonProgreso.closest(
-        ".card, .tarjeta, article"
-      );
-
-  }
-
-
-  if(tarjetaModelo){
-
-    const nueva =
-      tarjetaModelo.cloneNode(true);
-
-    nueva.id =
-      "tarjetaMiPerfil";
-
-    nueva.classList.add(
-      "tarjeta-perfil-maestra"
-    );
-
-
-    /*
-       Eliminamos identificadores duplicados
-       que pudiera tener la tarjeta copiada.
-    */
-
-    nueva.querySelectorAll("[id]")
-      .forEach(el => el.removeAttribute("id"));
-
-
-    /*
-       Cambiamos los textos.
-    */
-
-    const titulo =
-      nueva.querySelector(
-        "h2,h3,h4,strong"
-      );
-
-    if(titulo){
-
-      titulo.textContent =
-        "👩‍🏫 Mi perfil";
-
-    }
-
-
-    const parrafo =
-      nueva.querySelector("p");
-
-    if(parrafo){
-
-      parrafo.textContent =
-        "Registra o actualiza tus datos en MAESTRA IA.";
-
-    }
-
-
-    /*
-       Cambiamos el botón o elemento que abre
-       la tarjeta.
-    */
-
-    const clickable =
-      nueva.querySelector(
-        '[onclick]'
-      ) || nueva;
-
-
-    clickable.setAttribute(
-      "onclick",
-      "editarPerfilMaestra()"
-    );
-
-
-    /*
-       Si la propia tarjeta tiene onclick,
-       también lo cambiamos.
-    */
-
-    if(
-      nueva.hasAttribute("onclick")
-    ){
-
-      nueva.setAttribute(
-        "onclick",
-        "editarPerfilMaestra()"
-      );
-
-    }
-
-
-    contenedor.appendChild(nueva);
-
-  }
-
+  const anterior=obtenerPerfilMaestra();
+  const perfil={
+    nombre,
+    correo,
+    institucion,
+    fechaRegistro: anterior && anterior.fechaRegistro ? anterior.fechaRegistro : new Date().toISOString(),
+    ultimaActualizacion:new Date().toISOString()
+  };
+
+  localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
+  alert("🌷 ¡Tu información fue guardada correctamente!");
+  location.reload();
 }
 
+function editarPerfilMaestra(){
+  const perfil=obtenerPerfilMaestra();
 
-/* ==================================================
-   MOSTRAR NOMBRE EN MI PROGRESO
-================================================== */
+  document.body.innerHTML=`
+    <div class="perfil-wrap">
+      <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
 
-if(
-  typeof window.abrirMiProgreso === "function"
-){
+      <section class="perfil-card">
+        <div class="perfil-icono">👩‍🏫</div>
+        <h2>Mi perfil en MAESTRA IA</h2>
+        <p class="perfil-texto">
+          Registra tus datos para que MAESTRA IA pueda identificar tu progreso,
+          tus módulos aprobados y tus trabajos.
+        </p>
 
-  const abrirMiProgresoOriginal =
-    window.abrirMiProgreso;
+        <label for="perfilNombre">Nombre y apellido</label>
+        <input id="perfilNombre" type="text" autocomplete="name"
+          placeholder="Ejemplo: María González"
+          value="${perfil ? escaparPerfil(perfil.nombre) : ""}">
 
+        <label for="perfilCorreo">Correo electrónico</label>
+        <input id="perfilCorreo" type="email" autocomplete="email"
+          placeholder="Ejemplo: maria@gmail.com"
+          value="${perfil ? escaparPerfil(perfil.correo) : ""}">
 
-  window.abrirMiProgreso =
-    function(){
+        <label for="perfilInstitucion">Escuela o institución <small>(opcional)</small></label>
+        <input id="perfilInstitucion" type="text"
+          placeholder="Nombre de tu escuela"
+          value="${perfil ? escaparPerfil(perfil.institucion || "") : ""}">
 
-      abrirMiProgresoOriginal();
+        <button class="perfil-guardar" onclick="guardarPerfilMaestra()">
+          💾 Guardar mi información
+        </button>
 
-
-      const perfil =
-        typeof obtenerPerfilMaestra === "function"
-          ? obtenerPerfilMaestra()
-          : null;
-
-
-      const hero =
-        document.querySelector(
-          ".prog-hero"
-        );
-
-
-      if(!hero){
-        return;
-      }
-
-
-      const nombre =
-        perfil && perfil.nombre
-          ? perfil.nombre
-          : "Maestra";
-
-
-      const institucion =
-        perfil &&
-        perfil.institucion
-          ? perfil.institucion
-          : "MAESTRA IA";
-
-
-      const bienvenida =
-        document.createElement("div");
-
-
-      bienvenida.className =
-        "perfil-bienvenida";
-
-
-      bienvenida.innerHTML = `
-
-        <div class="perfil-bienvenida-icono">
-          👩‍🏫
+        <div class="perfil-seguridad">
+          🔒 <b>Tu privacidad es importante.</b><br><br>
+          No escribas contraseñas, documentos de identidad ni información privada de tus estudiantes.
         </div>
-
-        <div class="perfil-bienvenida-texto">
-
-          <strong>
-            ¡Hola, ${escaparPerfil(nombre)}!
-          </strong>
-
-          <span>
-            ${escaparPerfil(institucion)}
-          </span>
-
-        </div>
-
-      `;
-
-
-      hero.insertAdjacentElement(
-        "afterend",
-        bienvenida
-      );
-
-    };
-
+      </section>
+    </div>`;
+  window.scrollTo(0,0);
 }
 
+/* Añade la identificación de la maestra a Mi progreso sin alterar el cálculo existente. */
+const abrirMiProgresoBase=abrirMiProgreso;
+abrirMiProgreso=function(){
+  abrirMiProgresoBase();
 
-/* ==================================================
-   INICIAR PERFIL EN PÁGINA PRINCIPAL
-================================================== */
+  const perfil=obtenerPerfilMaestra();
+  const hero=document.querySelector(".prog-hero");
+  if(!hero) return;
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
+  const nombre=perfil && perfil.nombre ? perfil.nombre : "Maestra";
+  const institucion=perfil && perfil.institucion ? perfil.institucion : "MAESTRA IA";
 
-    setTimeout(
-      agregarTarjetaMiPerfil,
-      300
-    );
-
-  }
-);
+  hero.insertAdjacentHTML("afterend",`
+    <div class="perfil-bienvenida">
+      <div class="perfil-bienvenida-icono">👩‍🏫</div>
+      <div class="perfil-bienvenida-texto">
+        <strong>¡Hola, ${escaparPerfil(nombre)}!</strong>
+        <span>${escaparPerfil(institucion)}</span>
+      </div>
+    </div>`);
+};
 
 </script>
 
-<!-- FIN MI PERFIL + MI PROGRESO -->
 </body>
 </html>
