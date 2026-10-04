@@ -5482,5 +5482,389 @@ function escaparPerfil(texto){
 </script>
 
 <!-- FIN PERFIL MAESTRA IA -->
+  <!-- =====================================================
+     MAESTRA IA
+     MI PERFIL + NOMBRE EN MI PROGRESO
+     PEGAR ANTES DE </body>
+====================================================== -->
+
+<style>
+
+.tarjeta-perfil-maestra{
+  position:relative;
+}
+
+.perfil-bienvenida{
+  background:linear-gradient(135deg,#f7efff,#fff);
+  border:1px solid #eadcff;
+  border-radius:18px;
+  padding:16px 18px;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.perfil-bienvenida-icono{
+  width:48px;
+  height:48px;
+  min-width:48px;
+  border-radius:50%;
+  background:#eee1ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.perfil-bienvenida-texto{
+  line-height:1.4;
+}
+
+.perfil-bienvenida-texto strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:2px;
+}
+
+.perfil-bienvenida-texto span{
+  font-size:14px;
+  color:#666;
+}
+
+</style>
+
+
+<script>
+
+/* ==================================================
+   AGREGAR MI PERFIL AL INICIO
+================================================== */
+
+function agregarTarjetaMiPerfil(){
+
+  if(document.getElementById("tarjetaMiPerfil")){
+    return;
+  }
+
+  /*
+     Buscamos la tarjeta de Mi progreso
+     para colocar Mi perfil junto a las
+     herramientas principales.
+  */
+
+  const elementos =
+    Array.from(document.querySelectorAll("*"));
+
+  const progresoElemento =
+    elementos.find(el => {
+
+      const texto =
+        (el.textContent || "").trim();
+
+      return (
+        texto.includes("Mi progreso") &&
+        el.children.length > 0
+      );
+
+    });
+
+
+  /*
+     Si encontramos el contenedor de tarjetas,
+     intentamos insertar la nueva tarjeta.
+  */
+
+  let contenedor = null;
+
+  const candidatos =
+    Array.from(document.querySelectorAll(
+      ".cards, .grid, .herramientas, .opciones, .menu-grid, .inicio-grid"
+    ));
+
+  if(candidatos.length){
+
+    contenedor =
+      candidatos.find(c =>
+        (c.textContent || "").includes("Mi progreso")
+      ) || candidatos[0];
+
+  }
+
+
+  /*
+     Segunda forma de encontrar el contenedor
+     usando el botón que abre Mi progreso.
+  */
+
+  if(!contenedor){
+
+    const botonProgreso =
+      document.querySelector(
+        '[onclick*="abrirMiProgreso"]'
+      );
+
+    if(botonProgreso){
+
+      contenedor =
+        botonProgreso.parentElement;
+
+      /*
+        Subimos hasta encontrar el contenedor
+        que contiene varias tarjetas.
+      */
+
+      let padre =
+        botonProgreso.parentElement;
+
+      while(
+        padre &&
+        padre !== document.body
+      ){
+
+        if(
+          padre.children &&
+          padre.children.length >= 3
+        ){
+
+          contenedor = padre;
+
+        }
+
+        padre = padre.parentElement;
+
+      }
+
+    }
+
+  }
+
+
+  if(!contenedor){
+    return;
+  }
+
+
+  /*
+     Tomamos como modelo una tarjeta existente
+     para conservar el diseño original.
+  */
+
+  const botonProgreso =
+    document.querySelector(
+      '[onclick*="abrirMiProgreso"]'
+    );
+
+
+  let tarjetaModelo = null;
+
+
+  if(botonProgreso){
+
+    tarjetaModelo =
+      botonProgreso.closest(
+        ".card, .tarjeta, article"
+      );
+
+  }
+
+
+  if(tarjetaModelo){
+
+    const nueva =
+      tarjetaModelo.cloneNode(true);
+
+    nueva.id =
+      "tarjetaMiPerfil";
+
+    nueva.classList.add(
+      "tarjeta-perfil-maestra"
+    );
+
+
+    /*
+       Eliminamos identificadores duplicados
+       que pudiera tener la tarjeta copiada.
+    */
+
+    nueva.querySelectorAll("[id]")
+      .forEach(el => el.removeAttribute("id"));
+
+
+    /*
+       Cambiamos los textos.
+    */
+
+    const titulo =
+      nueva.querySelector(
+        "h2,h3,h4,strong"
+      );
+
+    if(titulo){
+
+      titulo.textContent =
+        "👩‍🏫 Mi perfil";
+
+    }
+
+
+    const parrafo =
+      nueva.querySelector("p");
+
+    if(parrafo){
+
+      parrafo.textContent =
+        "Registra o actualiza tus datos en MAESTRA IA.";
+
+    }
+
+
+    /*
+       Cambiamos el botón o elemento que abre
+       la tarjeta.
+    */
+
+    const clickable =
+      nueva.querySelector(
+        '[onclick]'
+      ) || nueva;
+
+
+    clickable.setAttribute(
+      "onclick",
+      "editarPerfilMaestra()"
+    );
+
+
+    /*
+       Si la propia tarjeta tiene onclick,
+       también lo cambiamos.
+    */
+
+    if(
+      nueva.hasAttribute("onclick")
+    ){
+
+      nueva.setAttribute(
+        "onclick",
+        "editarPerfilMaestra()"
+      );
+
+    }
+
+
+    contenedor.appendChild(nueva);
+
+  }
+
+}
+
+
+/* ==================================================
+   MOSTRAR NOMBRE EN MI PROGRESO
+================================================== */
+
+if(
+  typeof window.abrirMiProgreso === "function"
+){
+
+  const abrirMiProgresoOriginal =
+    window.abrirMiProgreso;
+
+
+  window.abrirMiProgreso =
+    function(){
+
+      abrirMiProgresoOriginal();
+
+
+      const perfil =
+        typeof obtenerPerfilMaestra === "function"
+          ? obtenerPerfilMaestra()
+          : null;
+
+
+      const hero =
+        document.querySelector(
+          ".prog-hero"
+        );
+
+
+      if(!hero){
+        return;
+      }
+
+
+      const nombre =
+        perfil && perfil.nombre
+          ? perfil.nombre
+          : "Maestra";
+
+
+      const institucion =
+        perfil &&
+        perfil.institucion
+          ? perfil.institucion
+          : "MAESTRA IA";
+
+
+      const bienvenida =
+        document.createElement("div");
+
+
+      bienvenida.className =
+        "perfil-bienvenida";
+
+
+      bienvenida.innerHTML = `
+
+        <div class="perfil-bienvenida-icono">
+          👩‍🏫
+        </div>
+
+        <div class="perfil-bienvenida-texto">
+
+          <strong>
+            ¡Hola, ${escaparPerfil(nombre)}!
+          </strong>
+
+          <span>
+            ${escaparPerfil(institucion)}
+          </span>
+
+        </div>
+
+      `;
+
+
+      hero.insertAdjacentElement(
+        "afterend",
+        bienvenida
+      );
+
+    };
+
+}
+
+
+/* ==================================================
+   INICIAR PERFIL EN PÁGINA PRINCIPAL
+================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    setTimeout(
+      agregarTarjetaMiPerfil,
+      300
+    );
+
+  }
+);
+
+</script>
+
+<!-- FIN MI PERFIL + MI PROGRESO -->
 </body>
 </html>
