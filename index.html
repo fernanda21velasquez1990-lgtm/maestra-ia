@@ -1307,6 +1307,67 @@ body.acceso-activo{overflow-x:hidden}
 }
 @media(max-width:500px){.ruta-maestra-visible{grid-template-columns:1fr}}
 
+
+
+/* ==================================================
+   MAESTRA IA · TEMA PASTEL COLORIDO 2026
+   Inspirado en el panel visual aprobado por la usuaria.
+================================================== */
+body{
+ background:
+  radial-gradient(circle at 7% 19%,rgba(253,186,116,.24),transparent 19%),
+  radial-gradient(circle at 92% 25%,rgba(244,114,182,.20),transparent 18%),
+  radial-gradient(circle at 13% 78%,rgba(110,231,183,.18),transparent 18%),
+  radial-gradient(circle at 88% 80%,rgba(125,211,252,.22),transparent 20%),
+  linear-gradient(135deg,#fff2f7 0%,#fff8e8 30%,#f2f8ff 62%,#f8efff 100%)!important;
+}
+header{background:rgba(255,255,255,.92)!important;border-bottom:1px solid #f5d9ec}
+#inicio .hero{
+ position:relative;overflow:hidden;margin:0 auto;padding:34px 20px 30px;
+ background:linear-gradient(110deg,#fff1f5 0%,#fff8e8 35%,#f8efff 68%,#eef9ff 100%);
+ border-bottom:1px solid #f3dbe9;
+}
+#inicio .hero:before,#inicio .hero:after{position:absolute;font-size:76px;opacity:.92;pointer-events:none}
+#inicio .hero:before{content:"🌸  📚";left:18px;bottom:4px;transform:rotate(-5deg)}
+#inicio .hero:after{content:"✏️  💗";right:22px;bottom:8px;transform:rotate(5deg)}
+#inicio .hero>*{position:relative;z-index:1}
+#inicio .hero .badge{background:#efe2ff!important;color:#6d28d9!important}
+#inicio .hero h2{color:#17134f;font-weight:900}
+#inicio .hero p{color:#39547a!important;font-weight:500}
+#inicio .contenedor{max-width:1180px}
+.ruta-maestra-visible{
+ background:rgba(255,255,255,.76)!important;border:1px solid #f2d6e7!important;
+ box-shadow:0 12px 30px rgba(126,34,206,.06);padding:14px!important
+}
+.ruta-paso{box-shadow:0 7px 18px rgba(70,40,90,.05);border-width:1.5px!important}
+.ruta-paso:nth-of-type(1){background:linear-gradient(135deg,#fff0f7,#ffe6f1)!important;border-color:#f9b7d5!important}
+.ruta-paso:nth-of-type(3){background:linear-gradient(135deg,#fff9df,#fff1bd)!important;border-color:#f8d87b!important}
+.ruta-paso:nth-of-type(5){background:linear-gradient(135deg,#eafff4,#d7fae8)!important;border-color:#9ee7c0!important}
+.ruta-paso:nth-of-type(7){background:linear-gradient(135deg,#f4edff,#e9dcff)!important;border-color:#cbb4ff!important}
+.ruta-paso:nth-of-type(1) b{background:#ec4899!important}.ruta-paso:nth-of-type(3) b{background:#f59e0b!important}.ruta-paso:nth-of-type(5) b{background:#16a34a!important}.ruta-paso:nth-of-type(7) b{background:#7c3aed!important}
+.titulo-seccion h3{color:#17134f}
+#inicio .grid{gap:18px}
+#inicio .tarjeta{border:1.5px solid transparent!important;box-shadow:0 9px 22px rgba(70,40,90,.07)!important;position:relative;overflow:hidden}
+#inicio .tarjeta:nth-child(1){background:linear-gradient(145deg,#fff1f6,#ffe7f0)!important;border-color:#f8bfd5!important}
+#inicio .tarjeta:nth-child(2){background:linear-gradient(145deg,#fff9e8,#fff1c9)!important;border-color:#f4d783!important}
+#inicio .tarjeta:nth-child(3){background:linear-gradient(145deg,#eefdff,#dff5ff)!important;border-color:#a9def5!important}
+#inicio .tarjeta:nth-child(4){background:linear-gradient(145deg,#fff0f4,#ffe2eb)!important;border-color:#f5b7ca!important}
+#inicio .tarjeta:nth-child(5){background:linear-gradient(145deg,#edfff6,#d9fae9)!important;border-color:#9ee7c0!important}
+#inicio .tarjeta:nth-child(6){background:linear-gradient(145deg,#f7efff,#eadfff)!important;border-color:#cfb6f7!important}
+#inicio .tarjeta:nth-child(7){background:linear-gradient(145deg,#eafaff,#d7f3ff)!important;border-color:#9eddf6!important}
+#inicio .tarjeta:nth-child(8){background:linear-gradient(145deg,#fff1f7,#ffe5ef)!important;border-color:#f7bad2!important}
+#inicio .tarjeta:nth-child(9){background:linear-gradient(145deg,#fff8df,#ffedbd)!important;border-color:#f4d376!important}
+#inicio .tarjeta:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 15px 30px rgba(126,34,206,.13)!important}
+#inicio .tarjeta h4{color:#17134f;font-weight:900}
+#inicio .tarjeta p{color:#536078!important}
+#inicio .icono{box-shadow:0 5px 12px rgba(50,40,80,.08)}
+.guia{background:linear-gradient(110deg,#7c3aed,#c026d3,#ec4899)!important;box-shadow:0 12px 30px rgba(126,34,206,.18)}
+/* Dar color también a las pantallas internas sin alterar su funcionamiento */
+.pantalla .ancho,.asistente-wrap,.planificador-wrap,.salon-wrap,.eval-wrap,.biblio-wrap,.biblioteca-wrap,.trab-wrap,.prog-wrap,.perfil-wrap{position:relative}
+.modulo,.leccion,.menu-lecciones,.paso-ia,.plan-card,.salon-card,.eval-card,.prompt-card-lib,.prompt-docente-card,.trab-card,.prog-card,.perfil-card{background:rgba(255,255,255,.94)!important}
+.banner-curso{background:linear-gradient(120deg,#7c3aed,#c026d3,#ec4899)!important}
+@media(max-width:760px){#inicio .hero:before,#inicio .hero:after{font-size:40px;opacity:.38}.ruta-maestra-visible{padding:10px!important}}
+
 </style>
 </head>
 
