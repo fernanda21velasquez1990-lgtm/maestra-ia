@@ -1263,6 +1263,18 @@ body.acceso-activo{overflow-x:hidden}
   min-height:50px!important;font-size:15px!important
 }
 
+
+.panel-resumen-progreso{max-width:1100px;margin:18px auto 24px;background:#fff;border:1px solid #eadcff;border-radius:24px;padding:24px;box-shadow:0 12px 30px rgba(91,33,182,.07)}
+.progreso-saludo{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.progreso-saludo small{font-weight:900;color:#8b5cf6}.progreso-saludo h2{margin:6px 0;color:#3b164f;font-size:28px}.progreso-saludo p{margin:0;color:#6d6472}
+.progreso-circulo{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#8b5cf6 var(--avance),#f0e7ff 0);position:relative;flex:0 0 auto}
+.progreso-circulo:before{content:"";position:absolute;width:70px;height:70px;border-radius:50%;background:#fff}.progreso-circulo span{position:relative;font-weight:900;color:#6d28d9}
+.progreso-barra{height:12px;background:#f0e7ff;border-radius:99px;overflow:hidden;margin:20px 0}.progreso-barra span{display:block;height:100%;background:linear-gradient(90deg,#7e22ce,#db2777);border-radius:99px}
+.progreso-estadisticas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.progreso-estadisticas>div{background:#faf7ff;border-radius:16px;padding:15px;text-align:center}
+.progreso-estadisticas b{display:block;font-size:24px;color:#7e22ce}.progreso-estadisticas span{font-size:12px;color:#6d6472}
+.progreso-mensaje{margin-top:16px;padding:13px 15px;border-radius:14px;background:#f4efff;color:#5b21b6;font-weight:800}
+@media(max-width:760px){.progreso-estadisticas{grid-template-columns:1fr 1fr}.progreso-saludo h2{font-size:22px}}
+
 </style>
 </head>
 
@@ -5673,7 +5685,44 @@ function contarLeccionesModuloProgreso(n){
   const v=n===1 ? progreso.leccionesCompletas : progreso["modulo"+n+"Completas"];
   return Array.isArray(v)?v.length:0;
 }
+
+function mejorarPanelProgreso(){
+  const p=obtenerProgreso();
+  const totalLecciones=108;
+  let hechas=0, aprobados=0, examenes=0, sumaNotas=0, notas=0;
+  for(let n=1;n<=12;n++){
+    const m=p["m"+n]||{};
+    hechas+=Array.isArray(m.lecciones)?m.lecciones.filter(Boolean).length:0;
+    const ex=m.examen||{};
+    if(ex.aprobado)aprobados++;
+    if((ex.intentos||0)>0)examenes++;
+    if(Number(ex.mejorNota)>0){sumaNotas+=Number(ex.mejorNota);notas++;}
+  }
+  const porcentaje=Math.round((hechas/totalLecciones)*100);
+  const promedio=notas?Math.round(sumaNotas/notas):0;
+  const destino=document.querySelector(".progreso-wrap,.progress-wrap,#progreso,.curso-wrap,main")||document.body;
+  if(document.getElementById("panelResumenProgreso"))return;
+  const panel=document.createElement("section");
+  panel.id="panelResumenProgreso"; panel.className="panel-resumen-progreso";
+  panel.innerHTML=`
+    <div class="progreso-saludo">
+      <div><small>📊 TU AVANCE EN MAESTRA IA</small><h2>${porcentaje}% del curso completado</h2>
+      <p>${hechas} de ${totalLecciones} lecciones · ${aprobados} de 12 módulos aprobados</p></div>
+      <div class="progreso-circulo" style="--avance:${porcentaje*3.6}deg"><span>${porcentaje}%</span></div>
+    </div>
+    <div class="progreso-barra"><span style="width:${porcentaje}%"></span></div>
+    <div class="progreso-estadisticas">
+      <div><b>${hechas}</b><span>Lecciones completadas</span></div>
+      <div><b>${aprobados}/12</b><span>Módulos aprobados</span></div>
+      <div><b>${examenes}/12</b><span>Evaluaciones realizadas</span></div>
+      <div><b>${promedio||"—"}</b><span>Promedio de mejores notas</span></div>
+    </div>
+    <div class="progreso-mensaje">${porcentaje>=100?"🏆 ¡Curso completado!":aprobados>=6?"🌟 ¡Vas muy bien! Continúa con el próximo módulo.":"🌱 Cada lección cuenta. Continúa avanzando a tu ritmo."}</div>`;
+  destino.prepend(panel);
+}
+
 function abrirMiProgreso(){
+  setTimeout(mejorarPanelProgreso,100);
   const aprobados=nombresModulosProgreso.filter((_,i)=>aprobado(i+1)).length;
   const lecciones=nombresModulosProgreso.reduce((a,_,i)=>a+Math.min(9,contarLeccionesModuloProgreso(i+1)),0);
   const examenesHechos=nombresModulosProgreso.filter((_,i)=>{const e=progreso.examenes&&progreso.examenes[i+1];return e&&Number(e.intentos||0)>0}).length;
