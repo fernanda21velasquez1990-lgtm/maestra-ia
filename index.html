@@ -1162,6 +1162,12 @@ body.acceso-activo{overflow-x:hidden}
 .docente-contexto{margin-top:12px;padding:11px 14px;border-radius:14px;background:#f7f2ff;color:#5b21b6;font-weight:700}
 @media(max-width:650px){.perfil-grid2{grid-template-columns:1fr}}
 
+
+.pass-visor{position:relative}
+.pass-visor input{padding-right:54px!important}
+.pass-ojo{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:#f3e8ff;color:#5b21b6;width:38px;height:38px;border-radius:11px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.pass-ojo:hover{background:#e9d5ff}
+
 </style>
 </head>
 
@@ -5565,9 +5571,9 @@ async function editarPerfilMaestra(){
         <p>${p.tieneContrasena?"Tu cuenta ya tiene contraseña. Puedes cambiarla aquí.":"Crea una contraseña para proteger tu cuenta."}</p>
         <button class="perfil-pass-btn" onclick="document.getElementById('panelPass').classList.toggle('visible')">${p.tieneContrasena?"🔑 Cambiar mi contraseña":"🔑 Crear mi contraseña"}</button>
         <div id="panelPass" class="perfil-pass-panel">
-          ${p.tieneContrasena?'<label>Contraseña actual</label><input id="pvPassActual" type="password" autocomplete="current-password">':'<input id="pvPassActual" type="hidden" value="">'}
-          <label>Nueva contraseña</label><input id="pvPassNueva" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
-          <label>Confirmar nueva contraseña</label><input id="pvPassConfirmar" type="password" autocomplete="new-password">
+          ${p.tieneContrasena?'<label>Contraseña actual</label><div class="pass-visor"><input id="pvPassActual" type="password" autocomplete="current-password"><button type="button" class="pass-ojo" onclick="alternarVerPass(\'pvPassActual\',this)" title="Ver contraseña">👁️</button></div>':'<input id="pvPassActual" type="hidden" value="">'}
+          <label>Nueva contraseña</label><div class="pass-visor"><input id="pvPassNueva" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"><button type="button" class="pass-ojo" onclick="alternarVerPass('pvPassNueva',this)" title="Ver contraseña">👁️</button></div>
+          <label>Confirmar nueva contraseña</label><div class="pass-visor"><input id="pvPassConfirmar" type="password" autocomplete="new-password"><button type="button" class="pass-ojo" onclick="alternarVerPass('pvPassConfirmar',this)" title="Ver contraseña">👁️</button></div>
           <button class="perfil-guardar" onclick="cambiarContrasenaPerfilV2()">🔒 Guardar contraseña</button>
         </div>
       </div>
@@ -5600,6 +5606,18 @@ async function guardarPerfilDocenteV2(){
     localStorage.setItem("maestraIAPerfil",JSON.stringify(p));
     alert("🌷 ¡Perfil docente actualizado!"); location.reload();
   }catch(err){alert(err.message||"No se pudo guardar el perfil.");}
+}
+
+function alternarVerPass(id,boton){
+  const campo=document.getElementById(id);
+  if(!campo)return;
+  const mostrando=campo.type==="text";
+  campo.type=mostrando?"password":"text";
+  if(boton){
+    boton.textContent=mostrando?"👁️":"🙈";
+    boton.title=mostrando?"Ver contraseña":"Ocultar contraseña";
+    boton.setAttribute("aria-label",boton.title);
+  }
 }
 
 async function cambiarContrasenaPerfilV2(){
@@ -5951,8 +5969,8 @@ function mostrarAccesoMaestra(forzar=false){
             value="${escaparPerfil(correo)}">
 
           <label>Contraseña</label>
-          <input id="accesoContrasena" type="password" autocomplete="current-password"
-            placeholder="Si ya tienes contraseña, escríbela aquí">
+          <div class="pass-visor"><input id="accesoContrasena" type="password" autocomplete="current-password"
+            placeholder="Si ya tienes contraseña, escríbela aquí"><button type="button" class="pass-ojo" onclick="alternarVerPass('accesoContrasena',this)" title="Ver contraseña">👁️</button></div>
 
           <label>Escuela o institución <small>(opcional)</small></label>
           <input id="accesoInstitucion" type="text"
