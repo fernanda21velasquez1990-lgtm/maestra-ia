@@ -1175,6 +1175,17 @@ body.acceso-activo{overflow-x:hidden}
   font-size:14px;font-weight:700;line-height:1.45
 }
 
+
+.biblioteca-buscador{width:100%;margin-top:18px;padding:15px 18px;border:2px solid #e8d8ff;border-radius:16px;font-size:16px;background:#fff}
+.biblioteca-categorias{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.prompt-docente-card{background:#fff;border:1px solid #eadcff;border-radius:20px;padding:20px;box-shadow:0 8px 24px rgba(91,33,182,.06)}
+.prompt-docente-card small{font-weight:800;color:#8b5cf6}
+.prompt-docente-card h3{margin:7px 0 10px;color:#3b164f}
+.prompt-docente-card p{line-height:1.5;color:#5e5364;min-height:120px}
+.prompt-docente-card button{width:100%;border:0;border-radius:13px;padding:12px;background:linear-gradient(90deg,#7e22ce,#db2777);color:#fff;font-weight:900;cursor:pointer}
+.prompt-docente-icono{font-size:30px;margin-bottom:6px}
+.biblioteca-vacio{padding:30px;text-align:center;background:#fff;border-radius:18px}
+
 </style>
 </head>
 
@@ -5029,86 +5040,103 @@ const bibliotecaPrompts=[
 let promptBibliotecaActual=null;
 
 function abrirBibliotecaPrompts(){
+  const p=obtenerPerfilMaestra()||{};
+  const grado=String(p.gradoPrincipal||"").trim();
+  const area=String(p.areaMateria||"").trim();
+
+  const prompts=[
+    ["📚","Planificación","Planificar una clase","Crea una planificación de clase para {GRADO}, en el área de {AREA}, sobre el tema: [ESCRIBE EL TEMA]. Organízala con objetivo, inicio, desarrollo, cierre, recursos, tiempo, evaluación e indicadores observables."],
+    ["🎯","Actividades","Actividad divertida","Diseña una actividad divertida para estudiantes de {GRADO}, en {AREA}, sobre: [TEMA]. Incluye propósito, materiales sencillos, instrucciones paso a paso, duración y forma de comprobar el aprendizaje."],
+    ["📝","Evaluación","Evaluación breve","Crea una evaluación apropiada para {GRADO}, área {AREA}, sobre: [TEMA]. Incluye instrucciones claras, preguntas variadas, puntaje, respuestas esperadas y criterios de evaluación."],
+    ["🎨","Recursos","Ficha de trabajo","Crea una ficha de trabajo para {GRADO}, área {AREA}, sobre [TEMA]. Debe ser clara, visual, apropiada para la edad y contener instrucciones y ejercicios listos para usar."],
+    ["📖","Lectura","Comprensión lectora","Crea una lectura corta apropiada para {GRADO} relacionada con {AREA} y el tema [TEMA]. Añade preguntas literales, inferenciales y una actividad creativa."],
+    ["🎲","Juegos","Juego educativo","Diseña un juego educativo para {GRADO}, área {AREA}, que refuerce [TEMA]. Usa materiales sencillos e incluye reglas, pasos, duración y una forma de verificar lo aprendido."],
+    ["📚","Cuentos","Cuento educativo","Escribe un cuento educativo para estudiantes de {GRADO}, vinculado con {AREA}, sobre [TEMA]. Usa lenguaje adecuado a la edad y agrega tres preguntas de comprensión y una actividad final."],
+    ["💡","Explicaciones","Explicar un tema","Explica [TEMA] para estudiantes de {GRADO} en el área de {AREA}. Usa lenguaje sencillo, ejemplos cotidianos, una analogía y tres preguntas para comprobar comprensión."],
+    ["🌈","Inclusión","Adaptar una actividad","Adapta esta actividad para estudiantes de {GRADO} que necesitan diferentes niveles de apoyo: [PEGA AQUÍ LA ACTIVIDAD]. Propón una versión con mayor acompañamiento y otra con mayor reto, sin etiquetar a los estudiantes."],
+    ["👨‍👩‍👧","Familias","Mensaje para representantes","Redacta un mensaje claro, amable y breve para las familias de estudiantes de {GRADO} sobre [ASUNTO]. Evita datos personales y usa un tono respetuoso y cercano."],
+    ["📋","Docencia","Lista de cotejo","Crea una lista de cotejo sencilla para evaluar [APRENDIZAJE O ACTIVIDAD] en {GRADO}, área {AREA}. Incluye entre 5 y 8 indicadores observables y una escala fácil de utilizar."],
+    ["✨","Creatividad","Ideas para mi clase","Propón 10 ideas creativas, económicas y realistas para trabajar [TEMA] con estudiantes de {GRADO} en {AREA}. Prioriza actividades participativas y materiales disponibles en un aula."]
+  ];
+
+  window.promptsBibliotecaMaestra=prompts;
   document.body.innerHTML=`
-    <div class="biblio-wrap">
-      <div style="margin-bottom:16px"><button class="btn-volver" onclick="location.reload()">← Volver al inicio</button></div>
-      <section class="biblio-hero">
-        <h2>💬 Biblioteca de Prompts</h2>
-        <p>Elige un prompt preparado, personalízalo con tu grado, área y tema, y cópialo para utilizarlo en Gemini o ChatGPT.</p>
-      </section>
-
-      <div class="biblio-filtros">
-        <input id="buscarPrompt" class="biblio-input" placeholder="🔎 Buscar: cuento, evaluación, juego..." oninput="renderBiblioteca()">
-        <select id="filtroPrompt" class="biblio-select" onchange="renderBiblioteca()">
-          <option value="">Todas las categorías</option>
-          ${[...new Set(bibliotecaPrompts.map(p=>p.cat))].map(c=>`<option>${c}</option>`).join("")}
-        </select>
-        <select id="gradoBiblioteca" class="biblio-select">
-          <option value="">Grado para personalizar</option>
-          <option>1.º grado</option><option>2.º grado</option><option>3.º grado</option>
-          <option>4.º grado</option><option>5.º grado</option><option>6.º grado</option>
-        </select>
+  <div class="biblioteca-wrap">
+    <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+    <section class="biblioteca-hero">
+      <h2>📚 Biblioteca de Prompts</h2>
+      <p>Prompts listos para docentes. Elige uno, personalízalo y cópialo para usarlo en Gemini o ChatGPT.</p>
+      ${grado||area?`<div class="perfil-contexto-herramienta">👩‍🏫 Personalizada con tu perfil: ${[grado,area].filter(Boolean).join(" · ")}</div>`:""}
+      <input id="buscarPromptDocente" class="biblioteca-buscador" placeholder="🔎 Buscar: evaluación, cuento, juego, familias..." oninput="filtrarBibliotecaDocente()">
+      <div id="categoriasPromptDocente" class="biblioteca-categorias">
+        ${["Todos","Planificación","Actividades","Evaluación","Recursos","Lectura","Juegos","Cuentos","Explicaciones","Inclusión","Familias","Docencia","Creatividad"].map((c,i)=>`<button class="ia-chip ${i===0?"activo":""}" onclick="filtrarCategoriaPrompt('${c}',this)">${c}</button>`).join("")}
       </div>
-
-      <div id="bibliotecaGrid" class="biblio-grid"></div>
-
-      <section id="editorBiblioteca" class="biblio-editor">
-        <h3 id="tituloPromptBiblioteca" style="margin-top:0;color:#7e22ce"></h3>
-        <div class="biblio-editor-grid">
-          <div>
-            <label><b>Área</b></label>
-            <select id="areaBiblioteca" class="biblio-select">
-              <option value="">Selecciona</option>
-              <option>Lengua y Literatura</option><option>Matemática</option>
-              <option>Ciencias Naturales</option><option>Ciencias Sociales</option>
-              <option>Educación Física</option><option>Arte y Expresión</option>
-              <option>Orientación y Convivencia</option><option>Otra área</option>
-            </select>
-          </div>
-          <div>
-            <label><b>Tema</b></label>
-            <input id="temaBiblioteca" class="biblio-input" placeholder="Ejemplo: El ciclo del agua">
-          </div>
-          <div class="biblio-full">
-            <button style="width:100%;border:0;border-radius:14px;padding:13px;background:#a855f7;color:white;font-weight:900;cursor:pointer" onclick="personalizarPromptBiblioteca()">✨ Personalizar este prompt</button>
-          </div>
-        </div>
-        <div id="promptBibliotecaFinal" class="biblio-prompt">Selecciona área y tema, luego pulsa “Personalizar este prompt”.</div>
-        <div class="biblio-actions">
-          <button class="biblio-copy" onclick="copiarPromptBiblioteca()">📋 Copiar prompt</button>
-          <button class="biblio-back" onclick="cerrarEditorBiblioteca()">← Ver otros prompts</button>
-          <button class="biblio-home" onclick="location.reload()">🏠 Inicio</button>
-        </div>
-      </section>
-    </div>
-  `;
-  renderBiblioteca();
-  window.scrollTo({top:0,behavior:"smooth"});
+    </section>
+    <div id="gridPromptsDocente" class="biblioteca-grid"></div>
+  </div>`;
+  window.categoriaPromptActual="Todos";
+  renderBibliotecaDocente();
+  window.scrollTo(0,0);
 }
 
-function renderBiblioteca(){
-  const q=(document.getElementById("buscarPrompt")?.value||"").toLowerCase().trim();
-  const cat=document.getElementById("filtroPrompt")?.value||"";
-  const lista=bibliotecaPrompts.filter(p=>{
-    const coincideTexto=!q || (p.nombre+" "+p.desc+" "+p.cat).toLowerCase().includes(q);
-    const coincideCat=!cat || p.cat===cat;
-    return coincideTexto && coincideCat;
+function promptConPerfilDocente(texto){
+  const p=obtenerPerfilMaestra()||{};
+  return String(texto)
+    .replaceAll("{GRADO}",p.gradoPrincipal||"[GRADO]")
+    .replaceAll("{AREA}",p.areaMateria||"[ÁREA O MATERIA]");
+}
+
+function renderBibliotecaDocente(){
+  const grid=document.getElementById("gridPromptsDocente"); if(!grid)return;
+  const q=normalizarDatoDocente(document.getElementById("buscarPromptDocente")?.value||"");
+  const cat=window.categoriaPromptActual||"Todos";
+  const items=(window.promptsBibliotecaMaestra||[]).filter(x=>{
+    const coincideCat=cat==="Todos"||x[1]===cat;
+    const bolsa=normalizarDatoDocente(x.join(" "));
+    return coincideCat && (!q||bolsa.includes(q));
   });
-  const grid=document.getElementById("bibliotecaGrid");
-  if(!lista.length){
-    grid.innerHTML=`<div class="biblio-empty" style="grid-column:1/-1">No encontré prompts con ese filtro. Prueba otra palabra o categoría.</div>`;
-    return;
-  }
-  grid.innerHTML=lista.map(p=>`
-    <article class="prompt-card-lib">
-      <span class="prompt-cat">${p.cat}</span>
-      <h3>${p.icon} ${p.nombre}</h3>
-      <p>${p.desc}</p>
-      <button onclick="seleccionarPromptBiblioteca('${p.id}')">Usar este prompt →</button>
-    </article>
-  `).join("");
+  grid.innerHTML=items.length?items.map((x)=>{
+    const i=window.promptsBibliotecaMaestra.indexOf(x);
+    return `<article class="prompt-docente-card">
+      <div class="prompt-docente-icono">${x[0]}</div>
+      <small>${x[1]}</small>
+      <h3>${x[2]}</h3>
+      <p>${promptConPerfilDocente(x[3])}</p>
+      <button onclick="abrirPromptDocente(${i})">✨ Usar este prompt</button>
+    </article>`;
+  }).join(""):`<div class="biblioteca-vacio">No encontramos prompts con esa búsqueda.</div>`;
 }
 
+function filtrarBibliotecaDocente(){renderBibliotecaDocente();}
+function filtrarCategoriaPrompt(cat,btn){
+  window.categoriaPromptActual=cat;
+  document.querySelectorAll("#categoriasPromptDocente .ia-chip").forEach(b=>b.classList.remove("activo"));
+  btn?.classList.add("activo"); renderBibliotecaDocente();
+}
+
+function abrirPromptDocente(i){
+  const x=window.promptsBibliotecaMaestra?.[i]; if(!x)return;
+  const texto=promptConPerfilDocente(x[3]);
+  document.body.innerHTML=`
+    <div class="biblioteca-wrap">
+      <button class="btn-volver" onclick="abrirBibliotecaPrompts()">← Volver a la biblioteca</button>
+      <section class="perfil-card">
+        <div class="perfil-icono">${x[0]}</div>
+        <h2>${x[2]}</h2>
+        <p class="perfil-texto">Completa lo que aparece entre corchetes. El grado y el área ya fueron tomados de tu perfil.</p>
+        <textarea id="promptBibliotecaEditable" class="ia-textarea" style="min-height:300px">${texto.replace(/</g,"&lt;")}</textarea>
+        <button class="perfil-guardar" onclick="copiarPromptDocenteNuevo()">📋 Copiar prompt</button>
+        <button class="perfil-pass-btn" onclick="abrirBibliotecaPrompts()">📚 Elegir otro prompt</button>
+      </section>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+async function copiarPromptDocenteNuevo(){
+  const t=document.getElementById("promptBibliotecaEditable")?.value||"";
+  try{await navigator.clipboard.writeText(t);alert("📋 Prompt copiado. Ya puedes pegarlo en Gemini o ChatGPT.");}
+  catch(e){alert("Selecciona el texto y cópialo manualmente.");}
+}
 function seleccionarPromptBiblioteca(id){
   promptBibliotecaActual=bibliotecaPrompts.find(p=>p.id===id);
   if(!promptBibliotecaActual)return;
