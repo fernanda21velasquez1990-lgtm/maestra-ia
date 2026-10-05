@@ -1186,6 +1186,45 @@ body.acceso-activo{overflow-x:hidden}
 .prompt-docente-icono{font-size:30px;margin-bottom:6px}
 .biblioteca-vacio{padding:30px;text-align:center;background:#fff;border-radius:18px}
 
+
+/* BIBLIOTECA DE PROMPTS - DISEÑO COMPACTO */
+.biblioteca-wrap{max-width:1180px!important;margin:0 auto!important;padding:28px 20px 60px!important}
+.biblioteca-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  align-items:stretch!important;
+  margin-top:20px!important
+}
+.prompt-docente-card{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:330px!important;
+  padding:20px!important;
+  border-radius:20px!important;
+  overflow:hidden!important
+}
+.prompt-docente-card p{
+  display:-webkit-box!important;
+  -webkit-line-clamp:5!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
+  min-height:0!important;
+  margin-bottom:18px!important
+}
+.prompt-docente-card button{margin-top:auto!important}
+.prompt-docente-card h3{font-size:19px!important}
+.prompt-docente-icono{font-size:34px!important}
+.biblioteca-hero{margin-bottom:20px!important}
+@media(max-width:900px){
+  .biblioteca-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+  .biblioteca-wrap{padding:18px 12px 40px!important}
+  .biblioteca-grid{grid-template-columns:1fr!important}
+  .prompt-docente-card{min-height:auto!important}
+}
+
 </style>
 </head>
 
