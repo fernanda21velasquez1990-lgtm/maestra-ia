@@ -5917,6 +5917,22 @@ function normalizarDatoDocente(v){
     .replace(/[^a-z0-9]+/g," ").trim();
 }
 
+function equivalenciasAreaDocente(valor){
+  const v=normalizarDatoDocente(valor);
+  const grupos=[
+    ["lengua","lenguaje","castellano","lengua y literatura","literatura"],
+    ["matematica","matematicas"],
+    ["ciencias naturales","ciencia naturales","naturaleza","ciencias"],
+    ["ciencias sociales","sociales","geografia historia ciudadania","geografia historia"],
+    ["educacion fisica","deporte"],
+    ["arte","educacion artistica","artistica"],
+    ["ingles","idioma ingles"],
+    ["educacion integral","integral"]
+  ];
+  const g=grupos.find(arr=>arr.some(x=>v.includes(normalizarDatoDocente(x)) || normalizarDatoDocente(x).includes(v)));
+  return g ? g.map(normalizarDatoDocente) : [v];
+}
+
 function seleccionarPorPerfil(select,valor){
   if(!select || !valor)return false;
   const buscado=normalizarDatoDocente(valor);
@@ -5930,6 +5946,13 @@ function seleccionarPorPerfil(select,valor){
     mejor=[...select.options].find(o=>{
       const x=normalizarDatoDocente(o.textContent+" "+o.value);
       return x.includes(buscado) || buscado.includes(x);
+    });
+  }
+  if(!mejor){
+    const equivalentes=equivalenciasAreaDocente(valor);
+    mejor=[...select.options].find(o=>{
+      const x=normalizarDatoDocente(o.textContent+" "+o.value);
+      return equivalentes.some(eq=>x===eq || x.includes(eq) || eq.includes(x));
     });
   }
   if(mejor){
@@ -5978,7 +6001,7 @@ function aplicarPerfilEnHerramientas(){
     if(destino){
       const aviso=document.createElement("div");
       aviso.className="perfil-contexto-herramienta";
-      aviso.textContent="👩‍🏫 Datos tomados de tu perfil: "+[ctx.grado,ctx.area].filter(Boolean).join(" · ")+" — puedes cambiarlos para este trabajo.";
+      aviso.textContent="👩‍🏫 Datos tomados de tu perfil: "+[ctx.grado,ctx.area].filter(Boolean).join(" · ")+(ctx.area?" — puedes cambiarlos para este trabajo.":" — falta guardar tu área/materia principal en Mi perfil.");
       destino.prepend(aviso);
     }
   }
