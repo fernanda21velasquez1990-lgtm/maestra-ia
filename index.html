@@ -1109,6 +1109,18 @@ footer{
 .perfil-bienvenida-texto span{font-size:14px;color:#666}
 @media(max-width:600px){.perfil-card{padding:24px 18px}.perfil-card h2{font-size:24px}}
 
+
+/* ==================================================
+   SINCRONIZACION GOOGLE SHEETS
+================================================== */
+.sync-box{margin-top:18px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:18px;padding:16px;color:#166534;line-height:1.5}
+.sync-box.pendiente{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+.sync-box.error{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.sync-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.sync-btn{border:0;border-radius:14px;padding:11px 15px;font-weight:800;background:#15803d;color:#fff}
+.sync-btn.secundario{background:#ede9fe;color:#5b21b6}
+.sync-mini{font-size:13px;opacity:.9}
+
 </style>
 </head>
 
@@ -3032,6 +3044,11 @@ function guardar(){
     "maestraIAProgreso",
     JSON.stringify(progreso)
   );
+
+  /* Respaldo silencioso: el curso sigue funcionando aunque no haya Internet. */
+  if(typeof sincronizarProgresoBackend === "function"){
+    sincronizarProgresoBackend({silencioso:true});
+  }
 }
 
 function aprobado(modulo){
@@ -5097,7 +5114,7 @@ function abrirMiProgreso(){
     </div>
     <section class="prog-barbox"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><b>Avance del curso</b><b>${porcentaje}%</b></div><div class="prog-track"><div class="prog-fill" style="width:${porcentaje}%"></div></div></section>
     <div class="prog-mods">${nombresModulosProgreso.map((x,i)=>tarjetaProgresoModulo(i+1,x)).join("")}</div>
-    <div class="prog-note">💡 <b>Importante:</b> por ahora el progreso se guarda en este navegador y dispositivo. En la siguiente etapa lo conectaremos con Google Sheets para respaldar el avance de cada maestra.</div>
+    <div class="prog-note">☁️ <b>Respaldo activado:</b> MAESTRA IA conserva el avance en este dispositivo y, cuando tu perfil está conectado, también lo respalda en Google Sheets.</div>
   </div>`;
   window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -5130,12 +5147,12 @@ function escaparPerfil(texto){
     .replace(/'/g,"&#039;");
 }
 
-function guardarPerfilMaestra(){
-  const nombre=document.getElementById("perfilNombre").value.trim();
+async function guardarPerfilMaestra(){
+  const nombreCompleto=document.getElementById("perfilNombre").value.trim();
   const correo=document.getElementById("perfilCorreo").value.trim().toLowerCase();
   const institucion=document.getElementById("perfilInstitucion").value.trim();
 
-  if(nombre.length<3){
+  if(nombreCompleto.length<3){
     alert("✏️ Escribe tu nombre y apellido.");
     return;
   }
@@ -5145,19 +5162,60 @@ function guardarPerfilMaestra(){
   }
 
   const anterior=obtenerPerfilMaestra();
+  const partes=nombreCompleto.split(/\s+/);
+  const nombre=partes.shift() || nombreCompleto;
+  const apellido=partes.join(" ");
+
   const perfil={
-    nombre,
+    nombre:nombreCompleto,
     correo,
     institucion,
+    idMaestra: anterior && anterior.idMaestra ? anterior.idMaestra : "",
     fechaRegistro: anterior && anterior.fechaRegistro ? anterior.fechaRegistro : new Date().toISOString(),
     ultimaActualizacion:new Date().toISOString()
   };
 
   localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
-  alert("🌷 ¡Tu información fue guardada correctamente!");
-  location.reload();
-}
 
+  try{
+    const respuesta=await apiMaestraIA({
+      accion:"registrarMaestra",
+      nombre,
+      apellido,
+      correo,
+      escuela:institucion
+    });
+
+    if(!respuesta.ok || !respuesta.idMaestra){
+      throw new Error(respuesta.error || "No se pudo registrar el perfil.");
+    }
+
+    perfil.idMaestra=respuesta.idMaestra;
+    localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
+
+    /*
+      Si este navegador todavía no tiene avance, intentamos recuperar
+      el progreso guardado. Si ya tiene avance, lo respaldamos.
+    */
+    if(hayProgresoLocal()){
+      await sincronizarProgresoBackend({silencioso:true});
+    }else{
+      await recuperarProgresoBackend({silencioso:true});
+    }
+
+    alert("🌷 ¡Perfil guardado y conectado con MAESTRA IA!");
+    location.reload();
+
+  }catch(error){
+    console.error("MAESTRA IA · perfil:",error);
+    alert(
+      "🌷 Tu perfil quedó guardado en este dispositivo. " +
+      "No pudimos conectarlo con Google Sheets en este momento. " +
+      "Puedes seguir usando la plataforma y sincronizar después."
+    );
+    location.reload();
+  }
+}
 function editarPerfilMaestra(){
   const perfil=obtenerPerfilMaestra();
 
@@ -5221,7 +5279,224 @@ abrirMiProgreso=function(){
         <span>${escaparPerfil(institucion)}</span>
       </div>
     </div>`);
+
+  const conectado=perfil && perfil.idMaestra;
+  const bienvenida=document.querySelector(".perfil-bienvenida");
+  if(bienvenida){
+    bienvenida.insertAdjacentHTML("afterend",`
+      <div id="estadoSync" class="sync-box ${conectado ? "" : "pendiente"}">
+        <b>${conectado ? "☁️ Respaldo en Google Sheets activado" : "⚠️ Falta conectar tu perfil"}</b>
+        <div class="sync-mini">
+          ${conectado
+            ? "Tu progreso puede respaldarse y recuperarse con tu perfil."
+            : "Entra en Mi perfil, guarda tus datos y quedará conectado."}
+        </div>
+        ${conectado ? `
+          <div class="sync-actions">
+            <button class="sync-btn" onclick="sincronizarProgresoBackend()">☁️ Guardar mi progreso ahora</button>
+            <button class="sync-btn secundario" onclick="recuperarProgresoBackend()">↻ Recuperar respaldo</button>
+          </div>` : ""}
+      </div>`);
+  }
 };
+
+
+/* ==================================================
+   MAESTRA IA · CONEXION GOOGLE SHEETS
+================================================== */
+const MAESTRA_IA_API="https://script.google.com/macros/s/AKfycbwRivzNMtiaA4IbV6ZpHp2zTYWo6GJHJnX1DknV3faag4LQtSK3TcIefeRPwDWJZ_Q7JA/exec";
+
+async function apiMaestraIA(datos){
+  const respuesta=await fetch(MAESTRA_IA_API,{
+    method:"POST",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify(datos),
+    redirect:"follow"
+  });
+
+  if(!respuesta.ok){
+    throw new Error("Error de conexión: "+respuesta.status);
+  }
+
+  const texto=await respuesta.text();
+  try{
+    return JSON.parse(texto);
+  }catch(e){
+    throw new Error("El servidor no devolvió una respuesta válida.");
+  }
+}
+
+function hayProgresoLocal(){
+  for(let n=1;n<=12;n++){
+    const lista=n===1 ? progreso.leccionesCompletas : progreso["modulo"+n+"Completas"];
+    if(Array.isArray(lista) && lista.length) return true;
+  }
+  return Object.keys(progreso.examenes || {}).length>0;
+}
+
+async function asegurarIdMaestraBackend(){
+  let perfil=obtenerPerfilMaestra();
+  if(!perfil || !perfil.correo) return null;
+  if(perfil.idMaestra) return perfil.idMaestra;
+
+  const partes=String(perfil.nombre || "").trim().split(/\s+/);
+  const nombre=partes.shift() || "";
+  const apellido=partes.join(" ");
+
+  const r=await apiMaestraIA({
+    accion:"registrarMaestra",
+    nombre,
+    apellido,
+    correo:perfil.correo,
+    escuela:perfil.institucion || ""
+  });
+
+  if(!r.ok || !r.idMaestra) throw new Error(r.error || "No se obtuvo ID de maestra.");
+
+  perfil.idMaestra=r.idMaestra;
+  localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
+  return r.idMaestra;
+}
+
+function actualizarEstadoSync(tipo,mensaje){
+  const box=document.getElementById("estadoSync");
+  if(!box) return;
+  box.classList.remove("pendiente","error");
+  if(tipo==="pendiente") box.classList.add("pendiente");
+  if(tipo==="error") box.classList.add("error");
+  box.querySelector(".sync-mini")?.replaceChildren(document.createTextNode(mensaje));
+}
+
+async function sincronizarProgresoBackend(opciones={}){
+  const silencioso=!!opciones.silencioso;
+  const perfil=obtenerPerfilMaestra();
+
+  if(!perfil || !perfil.correo){
+    if(!silencioso) alert("Primero guarda tu correo en 👩‍🏫 Mi perfil.");
+    return false;
+  }
+
+  try{
+    actualizarEstadoSync("pendiente","Guardando tu progreso…");
+    const idMaestra=await asegurarIdMaestraBackend();
+    const r=await apiMaestraIA({
+      accion:"guardarProgreso",
+      idMaestra,
+      progreso
+    });
+
+    if(!r.ok) throw new Error(r.error || "No se pudo guardar el progreso.");
+
+    localStorage.setItem("maestraIAUltimaSync",new Date().toISOString());
+    actualizarEstadoSync("ok","✓ Progreso respaldado correctamente.");
+    if(!silencioso) alert("☁️ ¡Tu progreso quedó respaldado!");
+    return true;
+
+  }catch(error){
+    console.error("MAESTRA IA · sincronización:",error);
+    actualizarEstadoSync("error","No se pudo sincronizar. Tu avance sigue guardado en este dispositivo.");
+    if(!silencioso) alert("No pudimos conectar con el respaldo. Tu progreso local no se perdió.");
+    return false;
+  }
+}
+
+function aplicarRegistrosRemotos(registros){
+  if(!Array.isArray(registros) || !registros.length) return false;
+
+  let cambio=false;
+
+  registros.forEach(fila=>{
+    const idModulo=String(fila[3] || "");
+    const n=Number(idModulo.replace("MOD",""));
+    if(!n || n<1 || n>12) return;
+
+    const porcentaje=Number(fila[6] || 0);
+    const cantidad=Math.max(0,Math.min(9,Math.round((porcentaje/100)*9)));
+    const clave=n===1 ? "leccionesCompletas" : "modulo"+n+"Completas";
+    const local=Array.isArray(progreso[clave]) ? progreso[clave] : [];
+
+    /* Nunca reducimos el avance local. */
+    if(cantidad>local.length){
+      progreso[clave]=Array.from({length:cantidad},(_,i)=>i);
+      cambio=true;
+    }
+
+    let detalle={};
+    try{
+      detalle=typeof fila[9]==="string" ? JSON.parse(fila[9]) : {};
+    }catch(e){}
+
+    const remoto={
+      mejorNota:Number(detalle.mejorNota || 0),
+      ultimaNota:Number(detalle.ultimaNota || 0),
+      intentos:Number(detalle.intentos || 0),
+      fecha:detalle.fecha || ""
+    };
+
+    const actual=(progreso.examenes || {})[n] || {};
+    if(
+      remoto.mejorNota>Number(actual.mejorNota || 0) ||
+      remoto.intentos>Number(actual.intentos || 0)
+    ){
+      progreso.examenes[n]={
+        mejorNota:Math.max(remoto.mejorNota,Number(actual.mejorNota || 0)),
+        ultimaNota:remoto.ultimaNota || Number(actual.ultimaNota || 0),
+        intentos:Math.max(remoto.intentos,Number(actual.intentos || 0)),
+        fecha:remoto.fecha || actual.fecha || ""
+      };
+      cambio=true;
+    }
+  });
+
+  if(cambio){
+    localStorage.setItem("maestraIAProgreso",JSON.stringify(progreso));
+  }
+  return cambio;
+}
+
+async function recuperarProgresoBackend(opciones={}){
+  const silencioso=!!opciones.silencioso;
+  const perfil=obtenerPerfilMaestra();
+
+  if(!perfil || !perfil.correo){
+    if(!silencioso) alert("Primero guarda tu correo en 👩‍🏫 Mi perfil.");
+    return false;
+  }
+
+  try{
+    actualizarEstadoSync("pendiente","Buscando tu respaldo…");
+    const idMaestra=await asegurarIdMaestraBackend();
+    const r=await apiMaestraIA({
+      accion:"obtenerProgreso",
+      idMaestra
+    });
+
+    if(!r.ok) throw new Error(r.error || "No se pudo recuperar el progreso.");
+
+    if(!Array.isArray(r.registros) || !r.registros.length){
+      actualizarEstadoSync("ok","Todavía no hay un respaldo anterior. Tu avance local está seguro.");
+      if(!silencioso) alert("Aún no encontramos un progreso anterior para este perfil.");
+      return false;
+    }
+
+    const cambio=aplicarRegistrosRemotos(r.registros);
+    actualizarEstadoSync("ok","✓ Respaldo recuperado correctamente.");
+
+    if(!silencioso){
+      alert(cambio
+        ? "↻ ¡Recuperamos tu progreso! La página se actualizará."
+        : "✓ Tu dispositivo ya tiene el progreso más reciente.");
+      if(cambio) location.reload();
+    }
+    return true;
+
+  }catch(error){
+    console.error("MAESTRA IA · recuperación:",error);
+    actualizarEstadoSync("error","No se pudo recuperar el respaldo en este momento.");
+    if(!silencioso) alert("No pudimos recuperar el respaldo. Intenta nuevamente más tarde.");
+    return false;
+  }
+}
 
 </script>
 
