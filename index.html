@@ -4246,7 +4246,30 @@ mostrarInicio();
 let asistenteDatos = {grado:"", area:"", accion:""};
 
 function abrirAsistenteIA(){
-  asistenteDatos={grado:"",area:"",accion:""};
+  const perfil=obtenerPerfilMaestra()||{};
+  const gradoPerfil=String(perfil.gradoPrincipal||"").trim();
+  const areaPerfil=String(perfil.areaMateria||"").trim();
+
+  function gradoAsistenteDesdePerfil(v){
+    const n=normalizarDatoDocente(v);
+    const m=n.match(/\b([1-6])\b/);
+    return m ? m[1]+".º" : "";
+  }
+  function areaAsistenteDesdePerfil(v){
+    const equivalentes=equivalenciasAreaDocente(v);
+    const areas=["Lengua y Literatura","Matemática","Ciencias Naturales","Ciencias Sociales","Educación Física","Arte y Expresión","Orientación y Convivencia"];
+    return areas.find(a=>{
+      const x=normalizarDatoDocente(a);
+      return equivalentes.some(eq=>x===eq||x.includes(eq)||eq.includes(x));
+    }) || (v ? "Otra área" : "");
+  }
+
+  asistenteDatos={
+    grado:gradoAsistenteDesdePerfil(gradoPerfil),
+    area:areaAsistenteDesdePerfil(areaPerfil),
+    accion:""
+  };
+
   document.body.innerHTML=`
     <div class="asistente-wrap">
       <div style="margin-bottom:16px">
@@ -4254,15 +4277,16 @@ function abrirAsistenteIA(){
       </div>
 
       <section class="asistente-hero">
+        ${gradoPerfil||areaPerfil?`<div class="perfil-contexto-herramienta">👩‍🏫 Ya conozco tu perfil: ${[gradoPerfil,areaPerfil].filter(Boolean).join(" · ")}. Lo usaré como punto de partida, pero puedes cambiarlo para esta consulta.</div>`:""}
         <h2>✨ Mi Asistente IA</h2>
-        <p>No necesitas saber escribir un prompt. Cuéntame paso a paso qué necesitas y MAESTRA IA preparará una instrucción clara para que puedas usarla en Gemini o ChatGPT.</p>
+        <p>No necesitas repetir siempre quién eres ni qué grado impartes. Cuéntame qué necesitas y MAESTRA IA preparará una instrucción clara y adaptada a tu contexto docente para usarla en Gemini o ChatGPT.</p>
       </section>
 
       <div class="pasos-asistente">
         <section class="paso-ia">
           <h3><span class="paso-num">1</span>¿Para qué grado?</h3>
           <div class="ia-opciones" id="gradosIA">
-            ${["1.º","2.º","3.º","4.º","5.º","6.º"].map(g=>`<button class="ia-chip" onclick="elegirAsistente('grado','${g}',this)">${g} grado</button>`).join("")}
+            ${["1.º","2.º","3.º","4.º","5.º","6.º"].map(g=>`<button class="ia-chip ${asistenteDatos.grado===g?"activo":""}" onclick="elegirAsistente('grado','${g}',this)">${g} grado</button>`).join("")}
           </div>
         </section>
 
@@ -4270,14 +4294,7 @@ function abrirAsistenteIA(){
           <h3><span class="paso-num">2</span>¿Qué área trabajarás?</h3>
           <select id="areaIA" class="ia-select" onchange="asistenteDatos.area=this.value">
             <option value="">Selecciona un área</option>
-            <option>Lengua y Literatura</option>
-            <option>Matemática</option>
-            <option>Ciencias Naturales</option>
-            <option>Ciencias Sociales</option>
-            <option>Educación Física</option>
-            <option>Arte y Expresión</option>
-            <option>Orientación y Convivencia</option>
-            <option>Otra área</option>
+            ${["Lengua y Literatura","Matemática","Ciencias Naturales","Ciencias Sociales","Educación Física","Arte y Expresión","Orientación y Convivencia","Otra área"].map(a=>`<option ${asistenteDatos.area===a?"selected":""}>${a}</option>`).join("")}
           </select>
         </section>
 
@@ -4304,11 +4321,11 @@ function abrirAsistenteIA(){
         </section>
       </div>
 
-      <button class="generar-prompt" onclick="generarPromptAsistente()">✨ Crear mi prompt</button>
+      <button class="generar-prompt" onclick="generarPromptAsistente()">✨ Crear mi prompt personalizado</button>
 
       <section id="resultadoPromptIA" class="resultado-prompt">
-        <h3 style="margin-top:0;color:#7e22ce">💜 Tu prompt está listo</h3>
-        <p>Puedes copiarlo y pegarlo en Gemini o ChatGPT.</p>
+        <h3 style="margin-top:0;color:#7e22ce">💜 Tu prompt personalizado está listo</h3>
+        <p>MAESTRA IA tomó en cuenta tu perfil docente. Puedes copiarlo y pegarlo en Gemini o ChatGPT.</p>
         <div id="promptGeneradoIA" class="prompt-box"></div>
         <div class="prompt-actions">
           <button class="btn-copy" onclick="copiarPromptIA()">📋 Copiar prompt</button>
@@ -4321,7 +4338,6 @@ function abrirAsistenteIA(){
   `;
   window.scrollTo({top:0,behavior:"smooth"});
 }
-
 function elegirAsistente(tipo,valor,boton){
   asistenteDatos[tipo]=valor;
   const contenedor=boton.parentElement;
@@ -4348,9 +4364,16 @@ function generarPromptAsistente(){
     return;
   }
 
-  const prompt=`Actúa como apoyo para una docente de educación primaria.
+  const perfil=obtenerPerfilMaestra()||{};
+  const contextoPerfil=[
+    perfil.institucion ? `Institución: ${perfil.institucion}.` : "",
+    perfil.nivelTecnologico ? `Nivel de manejo tecnológico de la docente: ${perfil.nivelTecnologico}.` : ""
+  ].filter(Boolean).join("\n");
+
+  const prompt=`Actúa como apoyo pedagógico para una docente.
 
 Necesito crear una ${asistenteDatos.accion} para estudiantes de ${asistenteDatos.grado} grado, en el área de ${asistenteDatos.area}.
+${contextoPerfil ? "\nContexto de la docente:\n"+contextoPerfil : ""}
 
 Mi necesidad es la siguiente:
 ${necesidad}
