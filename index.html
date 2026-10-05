@@ -1121,6 +1121,33 @@ footer{
 .sync-btn.secundario{background:#ede9fe;color:#5b21b6}
 .sync-mini{font-size:13px;opacity:.9}
 
+
+/* ==================================================
+   ACCESO PRINCIPAL MAESTRA IA
+================================================== */
+body.acceso-activo{overflow-x:hidden}
+.acceso-maestra{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:34px 18px;background:linear-gradient(135deg,#fbf7ff 0%,#f4ecff 48%,#eefbff 100%)}
+.acceso-card{width:min(720px,100%);background:#fff;border:1px solid #eadff4;border-radius:32px;padding:38px;box-shadow:0 18px 55px rgba(88,45,120,.12)}
+.acceso-marca{text-align:center;margin-bottom:25px}
+.acceso-logo{width:92px;height:92px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f3e8ff;font-size:48px}
+.acceso-marca h1{margin:0;color:#6d28d9;font-size:32px}
+.acceso-marca p{margin:8px 0 0;color:#665b6d;line-height:1.5}
+.acceso-form label{display:block;font-weight:800;margin:17px 0 7px;color:#351742}
+.acceso-form input{width:100%;box-sizing:border-box;padding:15px 16px;border:2px solid #e7dcef;border-radius:14px;font-size:16px;outline:none;background:#fff}
+.acceso-form input:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.12)}
+.acceso-btn{width:100%;margin-top:25px;border:0;border-radius:16px;padding:16px;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(90deg,#7e22ce,#db2777);cursor:pointer}
+.acceso-ayuda{margin-top:18px;padding:14px 16px;border-radius:15px;background:#f8f5ff;color:#675b70;font-size:14px;line-height:1.5}
+.acceso-estado{display:none;margin-top:15px;padding:12px 14px;border-radius:14px;background:#fff7ed;color:#9a3412;font-weight:700}
+.acceso-estado.visible{display:block}
+.usuario-top{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #eadff4;border-radius:999px;padding:8px 12px;color:#4c1d5f;font-weight:800;box-shadow:0 5px 14px rgba(70,40,90,.06)}
+.usuario-top small{display:block;font-weight:500;color:#766a7d}
+.usuario-salir{border:0;background:#f3e8ff;color:#6d28d9;border-radius:999px;padding:7px 10px;font-weight:800;cursor:pointer}
+@media(max-width:650px){
+  .acceso-card{padding:26px 20px;border-radius:24px}
+  .acceso-marca h1{font-size:27px}
+  .usuario-top{font-size:13px}
+}
+
 </style>
 </head>
 
@@ -5448,27 +5475,21 @@ async function guardarPerfilMaestra(){
     perfil.idMaestra=respuesta.idMaestra;
     localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
 
-    /*
-      Si este navegador todavía no tiene avance, intentamos recuperar
-      el progreso guardado. Si ya tiene avance, lo respaldamos.
-    */
     if(hayProgresoLocal()){
       await sincronizarProgresoBackend({silencioso:true});
     }else{
       await recuperarProgresoBackend({silencioso:true});
     }
 
-    alert("🌷 ¡Perfil guardado y conectado con MAESTRA IA!");
+    localStorage.setItem("maestraIASesion","activa");
     location.reload();
 
   }catch(error){
     console.error("MAESTRA IA · perfil:",error);
     alert(
-      "🌷 Tu perfil quedó guardado en este dispositivo. " +
-      "No pudimos conectarlo con Google Sheets en este momento. " +
-      "Puedes seguir usando la plataforma y sincronizar después."
+      "Tus datos quedaron guardados en este dispositivo, pero no pudimos conectar con Google Sheets. " +
+      "Comprueba tu conexión e intenta nuevamente."
     );
-    location.reload();
   }
 }
 function editarPerfilMaestra(){
@@ -5752,6 +5773,201 @@ async function recuperarProgresoBackend(opciones={}){
     return false;
   }
 }
+
+
+/* ==================================================
+   ENTRADA PRINCIPAL + PLATAFORMA PERSONALIZADA
+================================================== */
+function perfilValidoMaestra(){
+  const p=obtenerPerfilMaestra();
+  return !!(p && p.nombre && p.correo && p.idMaestra);
+}
+
+function nombreCortoMaestra(){
+  const p=obtenerPerfilMaestra();
+  if(!p || !p.nombre)return "maestra";
+  return String(p.nombre).trim().split(/\s+/)[0] || "maestra";
+}
+
+function personalizarPlataforma(){
+  const p=obtenerPerfilMaestra();
+  if(!p)return;
+
+  /* Saludo principal */
+  const saludo=document.querySelector("#inicio .hero h2");
+  if(saludo){
+    saludo.innerHTML=`Hola, <span>${escaparPerfil(nombreCortoMaestra())}</span> 👋`;
+  }
+
+  /* Identificación permanente en el encabezado */
+  const header=document.querySelector("header");
+  if(header && !document.getElementById("usuarioTopMaestra")){
+    const caja=document.createElement("div");
+    caja.id="usuarioTopMaestra";
+    caja.className="usuario-top";
+    caja.innerHTML=`
+      <span>👩‍🏫</span>
+      <span>${escaparPerfil(nombreCortoMaestra())}
+        <small>${escaparPerfil(p.institucion || "MAESTRA IA")}</small>
+      </span>
+      <button class="usuario-salir" onclick="cerrarSesionMaestra()" title="Salir">Salir</button>`;
+    header.appendChild(caja);
+  }
+}
+
+function cerrarSesionMaestra(){
+  if(!confirm("¿Quieres salir de MAESTRA IA en este dispositivo?"))return;
+
+  /*
+    Cerramos la sesión, pero NO borramos el perfil ni el progreso.
+    Así la maestra puede volver a entrar sin perder su información.
+  */
+  localStorage.removeItem("maestraIASesion");
+  mostrarAccesoMaestra(true);
+}
+
+function mostrarAccesoMaestra(forzar=false){
+  if(!forzar && perfilValidoMaestra()){
+    localStorage.setItem("maestraIASesion","activa");
+    personalizarPlataforma();
+    return;
+  }
+
+  const anterior=obtenerPerfilMaestra();
+  const nombre=anterior && anterior.nombre ? anterior.nombre : "";
+  const correo=anterior && anterior.correo ? anterior.correo : "";
+  const institucion=anterior && anterior.institucion ? anterior.institucion : "";
+
+  document.body.classList.add("acceso-activo");
+  document.body.innerHTML=`
+    <main class="acceso-maestra">
+      <section class="acceso-card">
+        <div class="acceso-marca">
+          <div class="acceso-logo">👩‍🏫</div>
+          <h1>Bienvenida a MAESTRA IA</h1>
+          <p>
+            Tu compañera inteligente para enseñar.<br>
+            Ingresa con tu nombre y correo. Si ya tienes una cuenta,
+            recuperaremos tu información y tu progreso.
+          </p>
+        </div>
+
+        <div class="acceso-form">
+          <label>Nombre y apellido</label>
+          <input id="accesoNombre" type="text" autocomplete="name"
+            placeholder="Ejemplo: María González"
+            value="${escaparPerfil(nombre)}">
+
+          <label>Correo electrónico</label>
+          <input id="accesoCorreo" type="email" autocomplete="email"
+            placeholder="Ejemplo: maria@gmail.com"
+            value="${escaparPerfil(correo)}">
+
+          <label>Escuela o institución <small>(opcional)</small></label>
+          <input id="accesoInstitucion" type="text"
+            placeholder="Nombre de tu escuela"
+            value="${escaparPerfil(institucion)}">
+
+          <button id="btnAccesoMaestra" class="acceso-btn" onclick="ingresarMaestraIA()">
+            ✨ Ingresar a MAESTRA IA
+          </button>
+
+          <div id="estadoAccesoMaestra" class="acceso-estado"></div>
+
+          <div class="acceso-ayuda">
+            🔒 <b>Tu privacidad es importante.</b>
+            No escribas contraseñas, documentos de identidad ni información privada de tus estudiantes.
+          </div>
+        </div>
+      </section>
+    </main>`;
+}
+
+async function ingresarMaestraIA(){
+  const nombreCompleto=document.getElementById("accesoNombre").value.trim();
+  const correo=document.getElementById("accesoCorreo").value.trim().toLowerCase();
+  const institucion=document.getElementById("accesoInstitucion").value.trim();
+  const estado=document.getElementById("estadoAccesoMaestra");
+  const boton=document.getElementById("btnAccesoMaestra");
+
+  if(nombreCompleto.length<3){
+    alert("✏️ Escribe tu nombre y apellido.");
+    return;
+  }
+  if(!correo || !correo.includes("@") || !correo.includes(".")){
+    alert("📧 Escribe un correo electrónico válido.");
+    return;
+  }
+
+  estado.textContent="Conectando con tu perfil y recuperando tu información…";
+  estado.classList.add("visible");
+  boton.disabled=true;
+
+  try{
+    const partes=nombreCompleto.split(/\s+/);
+    const nombre=partes.shift() || nombreCompleto;
+    const apellido=partes.join(" ");
+
+    const r=await apiMaestraIA({
+      accion:"registrarMaestra",
+      nombre,
+      apellido,
+      correo,
+      escuela:institucion
+    });
+
+    if(!r.ok || !r.idMaestra){
+      throw new Error(r.error || "No se pudo identificar a la maestra.");
+    }
+
+    const previo=obtenerPerfilMaestra();
+    const perfil={
+      nombre:nombreCompleto,
+      correo,
+      institucion,
+      idMaestra:r.idMaestra,
+      fechaRegistro:previo && previo.fechaRegistro ? previo.fechaRegistro : new Date().toISOString(),
+      ultimaActualizacion:new Date().toISOString()
+    };
+
+    localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
+    localStorage.setItem("maestraIASesion","activa");
+
+    /*
+      Si es un navegador nuevo recuperamos la nube.
+      Si ya tiene progreso local, conservamos primero ese avance y lo respaldamos.
+    */
+    if(hayProgresoLocal()){
+      await sincronizarProgresoBackend({silencioso:true});
+      await recuperarProgresoBackend({silencioso:true});
+    }else{
+      await recuperarProgresoBackend({silencioso:true});
+    }
+
+    await recuperarTrabajosBackend(true);
+    location.reload();
+
+  }catch(error){
+    console.error("MAESTRA IA · acceso:",error);
+    estado.textContent="No pudimos conectar con MAESTRA IA. Revisa tu conexión e intenta nuevamente.";
+    estado.classList.add("visible");
+    boton.disabled=false;
+  }
+}
+
+/*
+  Al cargar:
+  - Si este dispositivo ya conoce a la maestra, entra directamente.
+  - Si es nuevo, la pantalla de identificación es lo primero que aparece.
+*/
+document.addEventListener("DOMContentLoaded",function(){
+  if(perfilValidoMaestra()){
+    localStorage.setItem("maestraIASesion","activa");
+    personalizarPlataforma();
+  }else{
+    mostrarAccesoMaestra();
+  }
+});
 
 </script>
 
