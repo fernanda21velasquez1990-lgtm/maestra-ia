@@ -1148,6 +1148,20 @@ body.acceso-activo{overflow-x:hidden}
   .usuario-top{font-size:13px}
 }
 
+
+/* PERFIL DOCENTE V2 */
+.perfil-seccion{margin-top:24px;padding-top:22px;border-top:1px solid #eee4f5}
+.perfil-seccion h3{margin:0 0 8px;color:#5b21b6}
+.perfil-seccion p{color:#6d6472;line-height:1.5}
+.perfil-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.perfil-card select{width:100%;padding:15px;border:2px solid #e7dcef;border-radius:14px;font-size:16px;background:#fff}
+.perfil-email-bloqueado{background:#f7f4fa!important;color:#6b6470}
+.perfil-pass-btn{width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:#ede9fe;color:#5b21b6;font-weight:900;cursor:pointer}
+.perfil-pass-panel{display:none;margin-top:14px;padding:16px;background:#faf8ff;border-radius:16px}
+.perfil-pass-panel.visible{display:block}
+.docente-contexto{margin-top:12px;padding:11px 14px;border-radius:14px;background:#f7f2ff;color:#5b21b6;font-weight:700}
+@media(max-width:650px){.perfil-grid2{grid-template-columns:1fr}}
+
 </style>
 </head>
 
@@ -5492,47 +5506,115 @@ async function guardarPerfilMaestra(){
     );
   }
 }
-function editarPerfilMaestra(){
-  const perfil=obtenerPerfilMaestra();
+async function editarPerfilMaestra(){
+  let p=obtenerPerfilMaestra()||{};
+  try{
+    if(p.idMaestra){
+      const r=await apiMaestraIA({accion:"obtenerPerfil",idMaestra:p.idMaestra});
+      if(r.ok&&r.perfil){
+        const q=r.perfil;
+        p={...p,nombre:[q.nombre,q.apellido].filter(Boolean).join(" ").trim()||p.nombre,
+          correo:q.correo||p.correo,institucion:q.escuela||p.institucion,telefono:q.telefono||"",
+          ciudad:q.ciudad||"",estadoPais:q.estadoPais||"",gradoPrincipal:q.gradoPrincipal||"",
+          nivelTecnologico:q.nivelTecnologico||"PRINCIPIANTE",areaMateria:q.areaMateria||"",
+          tieneContrasena:!!q.tieneContrasena};
+        localStorage.setItem("maestraIAPerfil",JSON.stringify(p));
+      }
+    }
+  }catch(err){console.warn(err);}
 
+  const partes=String(p.nombre||"").trim().split(/\s+/).filter(Boolean);
+  const nombre=partes.shift()||"", apellido=partes.join(" ");
+  const grados=["","Preescolar","1.er grado","2.º grado","3.er grado","4.º grado","5.º grado","6.º grado","Secundaria","Universidad","Otro"];
   document.body.innerHTML=`
-    <div class="perfil-wrap">
-      <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+  <div class="perfil-wrap">
+    <button class="btn-volver" onclick="location.reload()">← Volver al inicio</button>
+    <section class="perfil-card">
+      <div class="perfil-icono">👩‍🏫</div>
+      <h2>Mi perfil docente</h2>
+      <p class="perfil-texto">Completa tu ficha para que MAESTRA IA adapte mejor las planificaciones, actividades, evaluaciones y recursos a tu trabajo.</p>
 
-      <section class="perfil-card">
-        <div class="perfil-icono">👩‍🏫</div>
-        <h2>Mi perfil en MAESTRA IA</h2>
-        <p class="perfil-texto">
-          Registra tus datos para que MAESTRA IA pueda identificar tu progreso,
-          tus módulos aprobados y tus trabajos.
-        </p>
-
-        <label for="perfilNombre">Nombre y apellido</label>
-        <input id="perfilNombre" type="text" autocomplete="name"
-          placeholder="Ejemplo: María González"
-          value="${perfil ? escaparPerfil(perfil.nombre) : ""}">
-
-        <label for="perfilCorreo">Correo electrónico</label>
-        <input id="perfilCorreo" type="email" autocomplete="email"
-          placeholder="Ejemplo: maria@gmail.com"
-          value="${perfil ? escaparPerfil(perfil.correo) : ""}">
-
-        <label for="perfilInstitucion">Escuela o institución <small>(opcional)</small></label>
-        <input id="perfilInstitucion" type="text"
-          placeholder="Nombre de tu escuela"
-          value="${perfil ? escaparPerfil(perfil.institucion || "") : ""}">
-
-        <button class="perfil-guardar" onclick="guardarPerfilMaestra()">
-          💾 Guardar mi información
-        </button>
-
-        <div class="perfil-seguridad">
-          🔒 <b>Tu privacidad es importante.</b><br><br>
-          No escribas contraseñas, documentos de identidad ni información privada de tus estudiantes.
+      <div class="perfil-seccion"><h3>👤 Datos personales</h3>
+        <div class="perfil-grid2">
+          <div><label>Nombre</label><input id="pvNombre" value="${escaparPerfil(nombre)}"></div>
+          <div><label>Apellido</label><input id="pvApellido" value="${escaparPerfil(apellido)}"></div>
         </div>
-      </section>
-    </div>`;
+        <label>Correo de registro</label><input class="perfil-email-bloqueado" value="${escaparPerfil(p.correo||"")}" disabled>
+        <div class="perfil-grid2">
+          <div><label>Teléfono <small>(opcional)</small></label><input id="pvTelefono" value="${escaparPerfil(p.telefono||"")}"></div>
+          <div><label>Institución</label><input id="pvEscuela" value="${escaparPerfil(p.institucion||"")}"></div>
+        </div>
+      </div>
+
+      <div class="perfil-seccion"><h3>📚 Mi trabajo como docente</h3>
+        <div class="perfil-grid2">
+          <div><label>Grado principal que impartes</label>
+            <select id="pvGrado">${grados.map(x=>`<option value="${x}" ${String(p.gradoPrincipal||"")===x?"selected":""}>${x||"Selecciona..."}</option>`).join("")}</select>
+          </div>
+          <div><label>Área o materia principal</label><input id="pvArea" value="${escaparPerfil(p.areaMateria||"")}" placeholder="Ej.: Educación Integral"></div>
+          <div><label>Ciudad</label><input id="pvCiudad" value="${escaparPerfil(p.ciudad||"")}"></div>
+          <div><label>Estado / País</label><input id="pvEstado" value="${escaparPerfil(p.estadoPais||"")}"></div>
+        </div>
+        <label>Nivel de manejo tecnológico</label>
+        <select id="pvNivel">${["PRINCIPIANTE","INTERMEDIO","AVANZADO"].map(x=>`<option ${String(p.nivelTecnologico||"PRINCIPIANTE")===x?"selected":""}>${x}</option>`).join("")}</select>
+      </div>
+
+      <button class="perfil-guardar" onclick="guardarPerfilDocenteV2()">💾 Guardar mi perfil docente</button>
+
+      <div class="perfil-seccion"><h3>🔐 Seguridad de mi cuenta</h3>
+        <p>${p.tieneContrasena?"Tu cuenta ya tiene contraseña. Puedes cambiarla aquí.":"Crea una contraseña para proteger tu cuenta."}</p>
+        <button class="perfil-pass-btn" onclick="document.getElementById('panelPass').classList.toggle('visible')">${p.tieneContrasena?"🔑 Cambiar mi contraseña":"🔑 Crear mi contraseña"}</button>
+        <div id="panelPass" class="perfil-pass-panel">
+          ${p.tieneContrasena?'<label>Contraseña actual</label><input id="pvPassActual" type="password" autocomplete="current-password">':'<input id="pvPassActual" type="hidden" value="">'}
+          <label>Nueva contraseña</label><input id="pvPassNueva" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+          <label>Confirmar nueva contraseña</label><input id="pvPassConfirmar" type="password" autocomplete="new-password">
+          <button class="perfil-guardar" onclick="cambiarContrasenaPerfilV2()">🔒 Guardar contraseña</button>
+        </div>
+      </div>
+      <div class="perfil-seguridad">🔒 La contraseña no se guarda visible en la plataforma ni en Google Sheets.</div>
+    </section>
+  </div>`;
   window.scrollTo(0,0);
+}
+
+async function guardarPerfilDocenteV2(){
+  const p=obtenerPerfilMaestra(); if(!p||!p.idMaestra)return alert("No encontramos tu cuenta.");
+  const datos={
+    accion:"actualizarPerfil",idMaestra:p.idMaestra,
+    nombre:document.getElementById("pvNombre").value.trim(),
+    apellido:document.getElementById("pvApellido").value.trim(),
+    telefono:document.getElementById("pvTelefono").value.trim(),
+    escuela:document.getElementById("pvEscuela").value.trim(),
+    gradoPrincipal:document.getElementById("pvGrado").value,
+    areaMateria:document.getElementById("pvArea").value.trim(),
+    ciudad:document.getElementById("pvCiudad").value.trim(),
+    estadoPais:document.getElementById("pvEstado").value.trim(),
+    nivelTecnologico:document.getElementById("pvNivel").value
+  };
+  if(!datos.nombre||!datos.apellido)return alert("Escribe tu nombre y apellido.");
+  try{
+    const r=await apiMaestraIA(datos); if(!r.ok)throw new Error(r.error||"No se pudo guardar.");
+    Object.assign(p,{nombre:(datos.nombre+" "+datos.apellido).trim(),institucion:datos.escuela,
+      telefono:datos.telefono,gradoPrincipal:datos.gradoPrincipal,areaMateria:datos.areaMateria,
+      ciudad:datos.ciudad,estadoPais:datos.estadoPais,nivelTecnologico:datos.nivelTecnologico});
+    localStorage.setItem("maestraIAPerfil",JSON.stringify(p));
+    alert("🌷 ¡Perfil docente actualizado!"); location.reload();
+  }catch(err){alert(err.message||"No se pudo guardar el perfil.");}
+}
+
+async function cambiarContrasenaPerfilV2(){
+  const p=obtenerPerfilMaestra(); if(!p||!p.idMaestra)return;
+  const actual=document.getElementById("pvPassActual").value;
+  const nueva=document.getElementById("pvPassNueva").value;
+  const confirmar=document.getElementById("pvPassConfirmar").value;
+  if(nueva.length<8)return alert("La contraseña debe tener al menos 8 caracteres.");
+  if(nueva!==confirmar)return alert("Las nuevas contraseñas no coinciden.");
+  try{
+    const r=await apiMaestraIA({accion:"cambiarContrasena",idMaestra:p.idMaestra,contrasenaActual:actual,contrasenaNueva:nueva});
+    if(!r.ok)throw new Error(r.error||"No se pudo cambiar.");
+    p.tieneContrasena=true; localStorage.setItem("maestraIAPerfil",JSON.stringify(p));
+    alert("🔐 ¡Contraseña guardada correctamente!"); editarPerfilMaestra();
+  }catch(err){alert(err.message||"No se pudo cambiar la contraseña.");}
 }
 
 /* Añade la identificación de la maestra a Mi progreso sin alterar el cálculo existente. */
@@ -5797,6 +5879,11 @@ function personalizarPlataforma(){
   const saludo=document.querySelector("#inicio .hero h2");
   if(saludo){
     saludo.innerHTML=`Hola, <span>${escaparPerfil(nombreCortoMaestra())}</span> 👋`;
+    if(!document.querySelector(".docente-contexto")){
+      const c=document.createElement("div"); c.className="docente-contexto";
+      c.textContent=(p.gradoPrincipal?`Docente de ${p.gradoPrincipal}`:"Docente")+(p.areaMateria?` · ${p.areaMateria}`:"");
+      saludo.insertAdjacentElement("afterend",c);
+    }
   }
 
   /* Identificación permanente en el encabezado */
@@ -5863,6 +5950,10 @@ function mostrarAccesoMaestra(forzar=false){
             placeholder="Ejemplo: maria@gmail.com"
             value="${escaparPerfil(correo)}">
 
+          <label>Contraseña</label>
+          <input id="accesoContrasena" type="password" autocomplete="current-password"
+            placeholder="Si ya tienes contraseña, escríbela aquí">
+
           <label>Escuela o institución <small>(opcional)</small></label>
           <input id="accesoInstitucion" type="text"
             placeholder="Nombre de tu escuela"
@@ -5886,75 +5977,34 @@ function mostrarAccesoMaestra(forzar=false){
 async function ingresarMaestraIA(){
   const nombreCompleto=document.getElementById("accesoNombre").value.trim();
   const correo=document.getElementById("accesoCorreo").value.trim().toLowerCase();
+  const contrasena=document.getElementById("accesoContrasena").value;
   const institucion=document.getElementById("accesoInstitucion").value.trim();
-  const estado=document.getElementById("estadoAccesoMaestra");
-  const boton=document.getElementById("btnAccesoMaestra");
-
-  if(nombreCompleto.length<3){
-    alert("✏️ Escribe tu nombre y apellido.");
-    return;
-  }
-  if(!correo || !correo.includes("@") || !correo.includes(".")){
-    alert("📧 Escribe un correo electrónico válido.");
-    return;
-  }
-
-  estado.textContent="Conectando con tu perfil y recuperando tu información…";
-  estado.classList.add("visible");
-  boton.disabled=true;
-
+  const estado=document.getElementById("estadoAccesoMaestra"), boton=document.getElementById("btnAccesoMaestra");
+  if(nombreCompleto.length<3)return alert("✏️ Escribe tu nombre y apellido.");
+  if(!correo||!correo.includes("@")||!correo.includes("."))return alert("📧 Escribe un correo válido.");
+  estado.textContent="Identificando tu cuenta…"; estado.classList.add("visible"); boton.disabled=true;
   try{
-    const partes=nombreCompleto.split(/\s+/);
-    const nombre=partes.shift() || nombreCompleto;
-    const apellido=partes.join(" ");
-
-    const r=await apiMaestraIA({
-      accion:"registrarMaestra",
-      nombre,
-      apellido,
-      correo,
-      escuela:institucion
-    });
-
-    if(!r.ok || !r.idMaestra){
-      throw new Error(r.error || "No se pudo identificar a la maestra.");
-    }
-
-    const previo=obtenerPerfilMaestra();
-    const perfil={
-      nombre:nombreCompleto,
-      correo,
-      institucion,
-      idMaestra:r.idMaestra,
-      fechaRegistro:previo && previo.fechaRegistro ? previo.fechaRegistro : new Date().toISOString(),
-      ultimaActualizacion:new Date().toISOString()
-    };
-
-    localStorage.setItem("maestraIAPerfil",JSON.stringify(perfil));
-    localStorage.setItem("maestraIASesion","activa");
-
-    /*
-      Si es un navegador nuevo recuperamos la nube.
-      Si ya tiene progreso local, conservamos primero ese avance y lo respaldamos.
-    */
-    if(hayProgresoLocal()){
-      await sincronizarProgresoBackend({silencioso:true});
-      await recuperarProgresoBackend({silencioso:true});
+    const partes=nombreCompleto.split(/\s+/), nombre=partes.shift()||nombreCompleto, apellido=partes.join(" ");
+    const reg=await apiMaestraIA({accion:"registrarMaestra",nombre,apellido,correo,escuela:institucion});
+    if(!reg.ok||!reg.idMaestra)throw new Error(reg.error||"No se pudo identificar la cuenta.");
+    let ps={};
+    if(reg.requiereContrasena){
+      const rp=await apiMaestraIA({accion:"obtenerPerfil",idMaestra:reg.idMaestra}); if(rp.ok)ps=rp.perfil||{};
     }else{
-      await recuperarProgresoBackend({silencioso:true});
+      if(!contrasena)throw new Error("Esta cuenta tiene contraseña. Escríbela para ingresar.");
+      const rs=await apiMaestraIA({accion:"iniciarSesion",correo,contrasena});
+      if(!rs.ok)throw new Error(rs.error||"Correo o contraseña incorrectos."); ps=rs.perfil||{};
     }
-
-    await recuperarTrabajosBackend(true);
-    location.reload();
-
-  }catch(error){
-    console.error("MAESTRA IA · acceso:",error);
-    estado.textContent="No pudimos conectar con MAESTRA IA. Revisa tu conexión e intenta nuevamente.";
-    estado.classList.add("visible");
-    boton.disabled=false;
-  }
+    const p={nombre:[ps.nombre||nombre,ps.apellido||apellido].filter(Boolean).join(" ").trim(),
+      correo:ps.correo||correo,institucion:ps.escuela||institucion,idMaestra:reg.idMaestra,
+      telefono:ps.telefono||"",ciudad:ps.ciudad||"",estadoPais:ps.estadoPais||"",
+      gradoPrincipal:ps.gradoPrincipal||"",nivelTecnologico:ps.nivelTecnologico||"PRINCIPIANTE",
+      areaMateria:ps.areaMateria||"",tieneContrasena:!!ps.tieneContrasena};
+    localStorage.setItem("maestraIAPerfil",JSON.stringify(p)); localStorage.setItem("maestraIASesion","activa");
+    if(hayProgresoLocal()){await sincronizarProgresoBackend({silencioso:true});}
+    await recuperarProgresoBackend({silencioso:true}); await recuperarTrabajosBackend(true); location.reload();
+  }catch(err){estado.textContent=err.message||"No pudimos ingresar."; boton.disabled=false;}
 }
-
 /*
   Al cargar:
   - Si este dispositivo ya conoce a la maestra, entra directamente.
