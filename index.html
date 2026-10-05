@@ -5905,56 +5905,84 @@ function contextoDocenteMaestra(){
   };
 }
 
+function normalizarDatoDocente(v){
+  return String(v||"").toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/º|°/g,"")
+    .replace(/\bprimer\b/g,"1").replace(/\bprimero\b/g,"1")
+    .replace(/\bsegundo\b/g,"2").replace(/\btercer\b/g,"3").replace(/\btercero\b/g,"3")
+    .replace(/\bcuarto\b/g,"4").replace(/\bquinto\b/g,"5").replace(/\bsexto\b/g,"6")
+    .replace(/1\.?\s*er/g,"1").replace(/2\.?\s*o/g,"2").replace(/3\.?\s*er/g,"3")
+    .replace(/4\.?\s*o/g,"4").replace(/5\.?\s*o/g,"5").replace(/6\.?\s*o/g,"6")
+    .replace(/[^a-z0-9]+/g," ").trim();
+}
+
+function seleccionarPorPerfil(select,valor){
+  if(!select || !valor)return false;
+  const buscado=normalizarDatoDocente(valor);
+  let mejor=null;
+  for(const o of [...select.options]){
+    const a=normalizarDatoDocente(o.value);
+    const b=normalizarDatoDocente(o.textContent);
+    if(a===buscado || b===buscado){mejor=o;break;}
+  }
+  if(!mejor){
+    mejor=[...select.options].find(o=>{
+      const x=normalizarDatoDocente(o.textContent+" "+o.value);
+      return x.includes(buscado) || buscado.includes(x);
+    });
+  }
+  if(mejor){
+    select.value=mejor.value;
+    select.dispatchEvent(new Event("change",{bubbles:true}));
+    return true;
+  }
+  return false;
+}
+
 function aplicarPerfilEnHerramientas(){
   const ctx=contextoDocenteMaestra();
   if(!ctx.grado && !ctx.area)return;
 
-  /* Completa únicamente campos vacíos; la maestra siempre puede cambiarlos. */
-  const selectoresGrado=[
-    'select[id*="grado" i]','input[id*="grado" i]',
-    'select[name*="grado" i]','input[name*="grado" i]',
-    'select[id*="nivel" i]','input[id*="nivel" i]'
-  ];
-  document.querySelectorAll(selectoresGrado.join(",")).forEach(c=>{
-    if(c.closest(".perfil-card"))return;
-    if(c.tagName==="SELECT"){
-      if(!c.value && ctx.grado){
-        const opcion=[...c.options].find(o=>
-          o.value.toLowerCase()===ctx.grado.toLowerCase() ||
-          o.textContent.trim().toLowerCase()===ctx.grado.toLowerCase()
-        );
-        if(opcion)c.value=opcion.value;
-      }
-    }else if(!c.value && ctx.grado)c.value=ctx.grado;
-  });
+  /* Identificación directa por etiquetas visibles: funciona aunque el id no diga "grado". */
+  document.querySelectorAll("select").forEach(sel=>{
+    if(sel.closest(".perfil-card"))return;
+    const bloque=sel.closest("div,section,article,label") || sel.parentElement;
+    const texto=normalizarDatoDocente((bloque?.textContent||"")+" "+(sel.id||"")+" "+(sel.name||""));
+    const actual=normalizarDatoDocente(sel.options[sel.selectedIndex]?.textContent||sel.value);
+    const vacio=!sel.value || actual==="selecciona" || actual==="seleccionar";
 
-  const selectoresArea=[
-    'input[id*="materia" i]','input[name*="materia" i]',
-    'input[id*="area" i]','input[name*="area" i]',
-    'select[id*="materia" i]','select[name*="materia" i]'
-  ];
-  document.querySelectorAll(selectoresArea.join(",")).forEach(c=>{
-    if(c.closest(".perfil-card"))return;
-    if(c.tagName==="SELECT"){
-      if(!c.value && ctx.area){
-        const opcion=[...c.options].find(o=>o.textContent.trim().toLowerCase()===ctx.area.toLowerCase());
-        if(opcion)c.value=opcion.value;
-      }
-    }else if(!c.value && ctx.area)c.value=ctx.area;
-  });
-
-  document.querySelectorAll(".panel,.tool-panel,.card-form,.formulario,.content-card").forEach(panel=>{
-    if(panel.querySelector(".perfil-contexto-herramienta"))return;
-    const texto=(panel.textContent||"").toLowerCase();
-    if((texto.includes("planific")||texto.includes("evalu")||texto.includes("salón")||texto.includes("salon")) && (ctx.grado||ctx.area)){
-      const aviso=document.createElement("div");
-      aviso.className="perfil-contexto-herramienta";
-      aviso.textContent="👩‍🏫 Perfil docente: "+[ctx.grado,ctx.area].filter(Boolean).join(" · ")+" — puedes cambiar estos datos para este trabajo.";
-      panel.prepend(aviso);
+    if(vacio && ctx.grado && (texto.includes("grado") || texto.includes("nivel educativo"))){
+      seleccionarPorPerfil(sel,ctx.grado);
+    }
+    if(vacio && ctx.area && (texto.includes("area") || texto.includes("materia") || texto.includes("asignatura"))){
+      seleccionarPorPerfil(sel,ctx.area);
     }
   });
-}
 
+  /* Inputs de texto para herramientas que no usan listas. */
+  document.querySelectorAll("input").forEach(c=>{
+    if(c.closest(".perfil-card") || c.value)return;
+    const bloque=c.closest("div,section,article,label") || c.parentElement;
+    const texto=normalizarDatoDocente((bloque?.textContent||"")+" "+(c.id||"")+" "+(c.name||"")+" "+(c.placeholder||""));
+    if(ctx.grado && (texto.includes("grado") || texto.includes("nivel educativo"))) c.value=ctx.grado;
+    else if(ctx.area && (texto.includes("area") || texto.includes("materia") || texto.includes("asignatura"))) c.value=ctx.area;
+  });
+
+  /* Aviso discreto dentro de las tres herramientas docentes. */
+  const titulo=normalizarDatoDocente(document.querySelector("h1,h2")?.textContent||"");
+  const esHerramienta=titulo.includes("planificar") || titulo.includes("evaluacion") ||
+    titulo.includes("evaluar") || titulo.includes("salon");
+  if(esHerramienta && !document.querySelector(".perfil-contexto-herramienta")){
+    const destino=document.querySelector("main section, main .panel, main .card, section");
+    if(destino){
+      const aviso=document.createElement("div");
+      aviso.className="perfil-contexto-herramienta";
+      aviso.textContent="👩‍🏫 Datos tomados de tu perfil: "+[ctx.grado,ctx.area].filter(Boolean).join(" · ")+" — puedes cambiarlos para este trabajo.";
+      destino.prepend(aviso);
+    }
+  }
+}
 /* Reaplica el perfil cuando la plataforma abre una herramienta dinámica. */
 const observadorPerfilDocente=new MutationObserver(()=>{
   clearTimeout(window.__perfilDocenteTimer);
