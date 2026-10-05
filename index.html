@@ -1225,6 +1225,24 @@ body.acceso-activo{overflow-x:hidden}
   .prompt-docente-card{min-height:auto!important}
 }
 
+
+/* MIS TRABAJOS - ORGANIZACIÓN */
+.trab-resumen{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.trab-resumen>div{background:#fff;border:1px solid #eadcff;border-radius:16px;padding:15px;text-align:center}
+.trab-resumen b{display:block;font-size:25px;color:#7e22ce}
+.trab-resumen span{font-size:13px;color:#6d6472}
+.trab-herramientas{display:grid;grid-template-columns:minmax(0,1fr) 210px auto;gap:10px;align-items:center;margin:16px 0 20px}
+.trab-buscar,.trab-filtro{width:100%;padding:13px 14px;border:2px solid #e8d8ff;border-radius:14px;background:#fff;font-size:15px}
+.trab-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.trab-nube{font-size:18px}
+@media(max-width:760px){
+ .trab-resumen{grid-template-columns:1fr 1fr 1fr}
+ .trab-herramientas{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+ .trab-resumen{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 
@@ -5106,7 +5124,7 @@ function abrirBibliotecaPrompts(){
       <h2>📚 Biblioteca de Prompts</h2>
       <p>Prompts listos para docentes. Elige uno, personalízalo y cópialo para usarlo en Gemini o ChatGPT.</p>
       ${grado||area?`<div class="perfil-contexto-herramienta">👩‍🏫 Personalizada con tu perfil: ${[grado,area].filter(Boolean).join(" · ")}</div>`:""}
-      <input id="buscarPromptDocente" class="biblioteca-buscador" placeholder="🔎 Buscar: evaluación, cuento, juego, familias..." oninput="filtrarBibliotecaDocente()">
+      <input id="buscarPromptDocente" data-no-perfil="1" class="biblioteca-buscador" placeholder="🔎 Buscar: evaluación, cuento, juego, familias..." oninput="filtrarBibliotecaDocente()">
       <div id="categoriasPromptDocente" class="biblioteca-categorias">
         ${["Todos","Planificación","Actividades","Evaluación","Recursos","Lectura","Juegos","Cuentos","Explicaciones","Inclusión","Familias","Docencia","Creatividad"].map((c,i)=>`<button class="ia-chip ${i===0?"activo":""}" onclick="filtrarCategoriaPrompt('${c}',this)">${c}</button>`).join("")}
       </div>
@@ -5269,7 +5287,17 @@ function abrirMisTrabajos(){
           </div>` : ""}
       </div>
 
-      <div class="trab-bar">
+      <div class="trab-resumen" id="trabResumen"></div>
+
+      <div class="trab-herramientas">
+        <input id="buscarTrabajo" data-no-perfil="1" class="trab-buscar"
+          placeholder="🔎 Buscar por título o contenido..."
+          oninput="renderMisTrabajos()">
+        <select id="filtrarTipoTrabajo" class="trab-filtro" onchange="renderMisTrabajos()">
+          <option value="">Todos los tipos</option>
+          <option>Prompt</option><option>Planificación</option><option>Actividad</option>
+          <option>Recurso</option><option>Evaluación</option><option>Idea</option><option>Otro</option>
+        </select>
         <button class="trab-add" onclick="mostrarFormularioTrabajo()">＋ Guardar un trabajo</button>
       </div>
 
@@ -5488,38 +5516,64 @@ async function recuperarTrabajosBackend(silencioso=false){
 }
 
 function renderMisTrabajos(){
-  const lista=obtenerTrabajos();
+  const todos=obtenerTrabajos();
   const box=document.getElementById("listaTrabajos");
   if(!box)return;
 
-  if(!lista.length){
+  const q=normalizarDatoDocente(document.getElementById("buscarTrabajo")?.value||"");
+  const tipo=document.getElementById("filtrarTipoTrabajo")?.value||"";
+
+  const lista=todos.filter(t=>{
+    const coincideTipo=!tipo || String(t.tipo||"")===tipo;
+    const bolsa=normalizarDatoDocente(`${t.titulo||""} ${t.tipo||""} ${t.contenido||""}`);
+    return coincideTipo && (!q || bolsa.includes(q));
+  });
+
+  const resumen=document.getElementById("trabResumen");
+  if(resumen){
+    const nube=todos.filter(t=>t.idRemoto).length;
+    const local=todos.length-nube;
+    resumen.innerHTML=`
+      <div><b>${todos.length}</b><span>Trabajos</span></div>
+      <div><b>${nube}</b><span>☁️ Respaldados</span></div>
+      <div><b>${local}</b><span>📱 Solo dispositivo</span></div>`;
+  }
+
+  if(!todos.length){
     box.innerHTML=`
       <div class="trab-empty" style="grid-column:1/-1">
         <b>📂 Todavía no tienes trabajos guardados.</b><br><br>
-        Cuando quieras conservar un prompt, una planificación o una idea,
-        pulsa “Guardar un trabajo”.
+        Aquí podrás reunir tus prompts, planificaciones, actividades, recursos y evaluaciones.
+        Pulsa “Guardar un trabajo” cuando quieras conservar algo.
       </div>`;
+    return;
+  }
+
+  if(!lista.length){
+    box.innerHTML=`<div class="trab-empty" style="grid-column:1/-1">
+      🔎 No encontramos trabajos que coincidan con tu búsqueda o filtro.
+    </div>`;
     return;
   }
 
   box.innerHTML=lista.map(t=>`
     <article class="trab-card">
-      <span class="trab-tag">${escaparTrabajo(t.tipo)}</span>
+      <div class="trab-card-top">
+        <span class="trab-tag">${escaparTrabajo(t.tipo)}</span>
+        <span class="trab-nube">${t.idRemoto ? "☁️" : "📱"}</span>
+      </div>
       <h3>${escaparTrabajo(t.titulo)}</h3>
       <div class="trab-meta">
-        ${t.idRemoto ? "☁️ Respaldado" : "📱 En este dispositivo"}
+        ${t.idRemoto ? "Respaldado en la nube" : "Guardado en este dispositivo"}
         ${t.fecha ? " · "+escaparTrabajo(t.fecha) : ""}
       </div>
       <div class="trab-preview">${escaparTrabajo(t.contenido)}</div>
       <div class="trab-actions">
         <button class="trab-copy" onclick='copiarTrabajo(${JSON.stringify(String(t.id))})'>📋 Copiar</button>
-        ${t.idRemoto
-          ? ""
-          : `<button class="trab-delete" onclick='eliminarTrabajo(${JSON.stringify(String(t.id))})'>🗑️ Eliminar</button>`}
+        ${t.idRemoto ? "" : `<button class="trab-delete" onclick='eliminarTrabajo(${JSON.stringify(String(t.id))})'>🗑️ Eliminar</button>`}
       </div>
     </article>`).join("");
 }
-
 function escaparTrabajo(v){
   return String(v??"").replace(/[&<>"']/g,c=>({
     "&":"&amp;",
@@ -6154,7 +6208,7 @@ function aplicarPerfilEnHerramientas(){
 
   /* Inputs de texto para herramientas que no usan listas. */
   document.querySelectorAll("input").forEach(c=>{
-    if(c.closest(".perfil-card") || c.value)return;
+    if(c.closest(".perfil-card") || c.dataset.noPerfil==="1" || c.value)return;
     const bloque=c.closest("div,section,article,label") || c.parentElement;
     const texto=normalizarDatoDocente((bloque?.textContent||"")+" "+(c.id||"")+" "+(c.name||"")+" "+(c.placeholder||""));
     if(ctx.grado && (texto.includes("grado") || texto.includes("nivel educativo"))) c.value=ctx.grado;
