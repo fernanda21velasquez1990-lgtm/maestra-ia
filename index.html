@@ -4926,6 +4926,7 @@ function abrirCreadorEvaluacion(){
       </div>
 
       <section class="eval-hero">
+        <div id="evalPerfilBanner" class="perfil-contexto-herramienta" style="display:none;margin-bottom:14px"></div>
         <h2>📝 Crear una evaluación</h2>
         <p>Indica qué necesitas evaluar y MAESTRA IA preparará un prompt completo para crear un instrumento claro, apropiado para el grado y fácil de revisar.</p>
       </section>
@@ -4973,13 +4974,23 @@ function abrirCreadorEvaluacion(){
           </select>
         </section>
 
+        <section class="eval-card">
+          <h3>6. Puntaje total</h3>
+          <select id="evalPuntaje" class="eval-select">
+            <option value="10">10 puntos</option>
+            <option value="20" selected>20 puntos</option>
+            <option value="100">100 puntos</option>
+            <option value="sin puntaje">Sin puntaje numérico</option>
+          </select>
+        </section>
+
         <section class="eval-card eval-full">
-          <h3>6. ¿Qué aprendizaje quieres evaluar?</h3>
+          <h3>7. ¿Qué aprendizaje quieres evaluar?</h3>
           <textarea id="evalObjetivo" class="eval-textarea" placeholder="Ejemplo: Que identifiquen, representen y comparen fracciones sencillas."></textarea>
         </section>
 
         <section class="eval-card">
-          <h3>7. Tipos de preguntas</h3>
+          <h3>8. Tipos de preguntas</h3>
           <div class="eval-checks">
             <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="selección múltiple" checked> Selección múltiple</label>
             <label class="eval-check"><input type="checkbox" class="tipoPregunta" value="verdadero o falso"> Verdadero / falso</label>
@@ -4991,7 +5002,7 @@ function abrirCreadorEvaluacion(){
         </section>
 
         <section class="eval-card">
-          <h3>8. Nivel de dificultad</h3>
+          <h3>9. Nivel de dificultad</h3>
           <select id="evalDificultad" class="eval-select">
             <option>Sencillo</option>
             <option selected>Apropiado para el grado</option>
@@ -5008,7 +5019,7 @@ function abrirCreadorEvaluacion(){
         </section>
 
         <section class="eval-card eval-full">
-          <h3>9. Indicaciones adicionales (opcional)</h3>
+          <h3>10. Indicaciones adicionales (opcional)</h3>
           <textarea id="evalExtra" class="eval-textarea" placeholder="Ejemplo: lenguaje muy sencillo, para imprimir en una hoja, incluir una adaptación con instrucciones más breves."></textarea>
           <p class="eval-note">Evita escribir nombres, diagnósticos, calificaciones anteriores u otros datos personales de estudiantes.</p>
         </section>
@@ -5028,6 +5039,34 @@ function abrirCreadorEvaluacion(){
       </section>
     </div>
   `;
+
+  const perfil=obtenerPerfilMaestra()||{};
+  const gradoPerfil=String(perfil.gradoPrincipal||"").trim();
+  const areaPerfil=String(perfil.areaMateria||"").trim();
+  const selGrado=document.getElementById("evalGrado");
+  const selArea=document.getElementById("evalArea");
+
+  if(gradoPerfil && selGrado){
+    const g=normalizarDatoDocente(gradoPerfil);
+    const op=[...selGrado.options].find(o=>normalizarDatoDocente(o.textContent).includes(g.replace("er ","").replace("o ","")) || normalizarDatoDocente(o.textContent)===g);
+    if(op)selGrado.value=op.value;
+  }
+  if(areaPerfil && selArea){
+    const a=normalizarDatoDocente(areaPerfil);
+    const op=[...selArea.options].find(o=>{
+      const t=normalizarDatoDocente(o.textContent);
+      return t===a || t.includes(a) || a.includes(t) ||
+        (a.includes("lenguaje") && t.includes("lengua"));
+    });
+    if(op)selArea.value=op.value;
+  }
+  const banner=document.getElementById("evalPerfilBanner");
+  const datos=[selGrado?.value,selArea?.value].filter(Boolean);
+  if(banner && datos.length){
+    banner.style.display="block";
+    banner.textContent="👩‍🏫 Datos tomados de tu perfil: "+datos.join(" · ")+" — puedes cambiarlos para esta evaluación.";
+  }
+
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -5042,6 +5081,7 @@ function generarPromptEvaluacion(){
   const area=document.getElementById("evalArea").value;
   const tema=document.getElementById("evalTema").value.trim();
   const cantidad=document.getElementById("evalCantidad").value;
+  const puntaje=document.getElementById("evalPuntaje").value;
   const objetivo=document.getElementById("evalObjetivo").value.trim();
   const dificultad=document.getElementById("evalDificultad").value;
   const extra=document.getElementById("evalExtra").value.trim();
@@ -5069,6 +5109,7 @@ Crea un borrador de evaluación ${tipoEvaluacionElegido} con los siguientes dato
 - Tema: ${tema}
 - Aprendizaje que deseo evaluar: ${objetivo}
 - Cantidad total de preguntas o ítems: ${cantidad}
+- Puntaje total: ${puntaje === "sin puntaje" ? "Sin puntaje numérico; usar valoración cualitativa." : puntaje+" puntos"}
 - Tipos de preguntas: ${tipos.join(", ")}
 - Dificultad: ${dificultad}
 - Elementos adicionales: ${extras.length ? extras.join(", ") : "No se solicitaron elementos adicionales."}
@@ -5082,9 +5123,10 @@ REQUISITOS:
 5. Adapta vocabulario y dificultad al grado.
 6. Si incluyes selección múltiple, utiliza opciones plausibles y señala la respuesta correcta únicamente en la clave docente.
 7. En preguntas abiertas, indica qué elementos esenciales se esperan en una respuesta adecuada.
-8. ${extras.length ? "Incluye al final: " + extras.join("; ") + "." : "Finaliza con recomendaciones breves para la revisión docente."}
-9. No incluyas datos personales de estudiantes.
-10. Antes de finalizar, revisa internamente que preguntas y respuestas sean coherentes.
+8. ${puntaje === "sin puntaje" ? "Usa una valoración cualitativa clara." : "Distribuye exactamente "+puntaje+" puntos entre los ítems y muestra el valor de cada pregunta."}
+9. ${extras.length ? "Incluye al final: " + extras.join("; ") + "." : "Finaliza con recomendaciones breves para la revisión docente."}
+10. No incluyas datos personales de estudiantes.
+11. Antes de finalizar, revisa internamente que preguntas, puntajes y respuestas sean coherentes.
 
 La docente resolverá, verificará y adaptará la evaluación antes de aplicarla.`;
 
