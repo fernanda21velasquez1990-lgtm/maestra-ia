@@ -1168,6 +1168,13 @@ body.acceso-activo{overflow-x:hidden}
 .pass-ojo{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:#f3e8ff;color:#5b21b6;width:38px;height:38px;border-radius:11px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
 .pass-ojo:hover{background:#e9d5ff}
 
+
+.perfil-contexto-herramienta{
+  margin:0 0 16px;padding:12px 14px;border-radius:14px;
+  background:#f7f2ff;border:1px solid #eadcff;color:#5b21b6;
+  font-size:14px;font-weight:700;line-height:1.45
+}
+
 </style>
 </head>
 
@@ -5888,6 +5895,75 @@ function nombreCortoMaestra(){
   if(!p || !p.nombre)return "maestra";
   return String(p.nombre).trim().split(/\s+/)[0] || "maestra";
 }
+
+function contextoDocenteMaestra(){
+  const p=obtenerPerfilMaestra()||{};
+  return {
+    grado:String(p.gradoPrincipal||"").trim(),
+    area:String(p.areaMateria||"").trim(),
+    institucion:String(p.institucion||"").trim()
+  };
+}
+
+function aplicarPerfilEnHerramientas(){
+  const ctx=contextoDocenteMaestra();
+  if(!ctx.grado && !ctx.area)return;
+
+  /* Completa únicamente campos vacíos; la maestra siempre puede cambiarlos. */
+  const selectoresGrado=[
+    'select[id*="grado" i]','input[id*="grado" i]',
+    'select[name*="grado" i]','input[name*="grado" i]',
+    'select[id*="nivel" i]','input[id*="nivel" i]'
+  ];
+  document.querySelectorAll(selectoresGrado.join(",")).forEach(c=>{
+    if(c.closest(".perfil-card"))return;
+    if(c.tagName==="SELECT"){
+      if(!c.value && ctx.grado){
+        const opcion=[...c.options].find(o=>
+          o.value.toLowerCase()===ctx.grado.toLowerCase() ||
+          o.textContent.trim().toLowerCase()===ctx.grado.toLowerCase()
+        );
+        if(opcion)c.value=opcion.value;
+      }
+    }else if(!c.value && ctx.grado)c.value=ctx.grado;
+  });
+
+  const selectoresArea=[
+    'input[id*="materia" i]','input[name*="materia" i]',
+    'input[id*="area" i]','input[name*="area" i]',
+    'select[id*="materia" i]','select[name*="materia" i]'
+  ];
+  document.querySelectorAll(selectoresArea.join(",")).forEach(c=>{
+    if(c.closest(".perfil-card"))return;
+    if(c.tagName==="SELECT"){
+      if(!c.value && ctx.area){
+        const opcion=[...c.options].find(o=>o.textContent.trim().toLowerCase()===ctx.area.toLowerCase());
+        if(opcion)c.value=opcion.value;
+      }
+    }else if(!c.value && ctx.area)c.value=ctx.area;
+  });
+
+  document.querySelectorAll(".panel,.tool-panel,.card-form,.formulario,.content-card").forEach(panel=>{
+    if(panel.querySelector(".perfil-contexto-herramienta"))return;
+    const texto=(panel.textContent||"").toLowerCase();
+    if((texto.includes("planific")||texto.includes("evalu")||texto.includes("salón")||texto.includes("salon")) && (ctx.grado||ctx.area)){
+      const aviso=document.createElement("div");
+      aviso.className="perfil-contexto-herramienta";
+      aviso.textContent="👩‍🏫 Perfil docente: "+[ctx.grado,ctx.area].filter(Boolean).join(" · ")+" — puedes cambiar estos datos para este trabajo.";
+      panel.prepend(aviso);
+    }
+  });
+}
+
+/* Reaplica el perfil cuando la plataforma abre una herramienta dinámica. */
+const observadorPerfilDocente=new MutationObserver(()=>{
+  clearTimeout(window.__perfilDocenteTimer);
+  window.__perfilDocenteTimer=setTimeout(aplicarPerfilEnHerramientas,120);
+});
+document.addEventListener("DOMContentLoaded",()=>{
+  observadorPerfilDocente.observe(document.body,{childList:true,subtree:true});
+  setTimeout(aplicarPerfilEnHerramientas,250);
+});
 
 function personalizarPlataforma(){
   const p=obtenerPerfilMaestra();
