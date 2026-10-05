@@ -4346,48 +4346,127 @@ function elegirAsistente(tipo,valor,boton){
 }
 
 function generarPromptAsistente(){
-  const necesidad=(document.getElementById("necesidadIA").value||"").trim();
-  if(!asistenteDatos.grado){
-    alert("Selecciona primero el grado.");
-    return;
-  }
-  if(!asistenteDatos.area){
-    alert("Selecciona el área que deseas trabajar.");
-    return;
-  }
-  if(!asistenteDatos.accion){
-    alert("Selecciona qué quieres hacer.");
-    return;
-  }
-  if(!necesidad){
-    alert("Cuéntame brevemente qué necesitas.");
-    return;
-  }
+  const necesidad=(document.getElementById("necesidadIA")?.value||"").trim();
+  if(!asistenteDatos.grado)return alert("Selecciona el grado.");
+  if(!asistenteDatos.area)return alert("Selecciona el área.");
+  if(!asistenteDatos.accion)return alert("Selecciona qué quieres hacer.");
+  if(necesidad.length<8)return alert("Cuéntame un poco más sobre lo que necesitas.");
 
   const perfil=obtenerPerfilMaestra()||{};
-  const contextoPerfil=[
+  const contexto=[
     perfil.institucion ? `Institución: ${perfil.institucion}.` : "",
-    perfil.nivelTecnologico ? `Nivel de manejo tecnológico de la docente: ${perfil.nivelTecnologico}.` : ""
+    perfil.nivelTecnologico ? `Nivel tecnológico de la docente: ${perfil.nivelTecnologico}.` : ""
   ].filter(Boolean).join("\n");
 
-  const prompt=`Actúa como apoyo pedagógico para una docente.
+  const estructuras={
+    "planificación":`Organiza la propuesta con:
+1. Título de la clase.
+2. Propósito u objetivo de aprendizaje.
+3. Contenidos o aprendizajes.
+4. Inicio: motivación y saberes previos.
+5. Desarrollo: actividades paso a paso.
+6. Cierre: síntesis y reflexión.
+7. Recursos y materiales.
+8. Distribución aproximada del tiempo.
+9. Estrategia de evaluación e indicadores observables.
+10. Adaptaciones para distintos ritmos de aprendizaje.`,
 
-Necesito crear una ${asistenteDatos.accion} para estudiantes de ${asistenteDatos.grado} grado, en el área de ${asistenteDatos.area}.
-${contextoPerfil ? "\nContexto de la docente:\n"+contextoPerfil : ""}
+    "actividad":`Incluye:
+1. Nombre de la actividad.
+2. Propósito.
+3. Materiales.
+4. Preparación previa.
+5. Desarrollo paso a paso.
+6. Instrucciones sencillas para los estudiantes.
+7. Tiempo aproximado.
+8. Forma de comprobar el aprendizaje.
+9. Una variante más fácil y otra de mayor reto.`,
 
-Mi necesidad es la siguiente:
+    "recurso educativo":`Diseña el recurso indicando:
+1. Nombre y propósito.
+2. Contenido exacto.
+3. Organización visual o secciones.
+4. Texto listo para utilizar.
+5. Materiales o formato recomendado.
+6. Cómo utilizarlo en clase.
+7. Adaptación apropiada para la edad.`,
+
+    "evaluación":`Incluye:
+1. Propósito de la evaluación.
+2. Instrucciones claras.
+3. Preguntas o actividades variadas.
+4. Puntaje o criterio de valoración.
+5. Respuestas esperadas o clave.
+6. Indicadores o criterios observables.
+7. Alternativa para estudiantes que requieran apoyo.
+No evalúes contenidos que no hayan sido indicados.`,
+
+    "cuento educativo":`Incluye:
+1. Título atractivo.
+2. Personajes apropiados para la edad.
+3. Inicio, desarrollo y cierre.
+4. Integración natural del aprendizaje.
+5. Lenguaje y extensión adecuados al grado.
+6. Tres preguntas de comprensión.
+7. Una actividad breve posterior.`,
+
+    "juego educativo":`Incluye:
+1. Nombre del juego.
+2. Aprendizaje que refuerza.
+3. Materiales sencillos.
+4. Forma de participación.
+5. Reglas claras.
+6. Desarrollo paso a paso.
+7. Duración.
+8. Cómo comprobar lo aprendido.
+9. Variante sin materiales especiales.`,
+
+    "explicación":`Incluye:
+1. Explicación sencilla adaptada a la edad.
+2. Ejemplos cotidianos.
+3. Una analogía fácil de comprender.
+4. Tres preguntas de comprensión.
+5. Actividad breve de aplicación.
+6. Confusiones frecuentes que conviene aclarar.`,
+
+    "tarea educativa":`Organiza la respuesta en pasos claros e incluye objetivo, materiales si hacen falta, procedimiento, tiempo aproximado, forma de comprobar el aprendizaje y posibles adaptaciones.`
+  };
+
+  const estructura=estructuras[asistenteDatos.accion]||estructuras["tarea educativa"];
+
+  const prompt=`Actúa como especialista en educación y apoyo pedagógico para una docente.
+
+CONTEXTO EDUCATIVO
+Grado: ${asistenteDatos.grado} grado.
+Área: ${asistenteDatos.area}.
+${contexto ? contexto+"\n" : ""}
+SOLICITUD DE LA DOCENTE
 ${necesidad}
 
-Prepara una propuesta clara, práctica y apropiada para la edad. Usa lenguaje sencillo, organiza la respuesta paso a paso y considera recursos realistas para un aula de primaria. Si falta algún dato importante, indícalo claramente en lugar de inventarlo. No incluyas datos personales de estudiantes.
+TAREA
+Necesito crear una ${asistenteDatos.accion} apropiada para este grado y área.
 
-Yo revisaré y adaptaré la propuesta antes de utilizarla en el aula.`;
+ESTRUCTURA DE LA RESPUESTA
+${estructura}
 
-  document.getElementById("promptGeneradoIA").textContent=prompt;
+CRITERIOS IMPORTANTES
+- Usa lenguaje claro, sencillo, pedagógico y directamente utilizable por una docente.
+- Adapta vocabulario, dificultad y actividades a la edad.
+- Prioriza recursos realistas y accesibles para un aula.
+- Si falta un dato indispensable, indícalo claramente en lugar de inventarlo.
+- No incluyas datos personales ni sensibles de estudiantes.
+- Presenta el resultado ordenado, práctico y listo para revisar y adaptar antes de utilizarlo en clase.`;
+
+  promptIAActual=prompt;
+  const caja=document.getElementById("promptGeneradoIA");
   const resultado=document.getElementById("resultadoPromptIA");
-  resultado.classList.add("visible");
-  resultado.scrollIntoView({behavior:"smooth",block:"start"});
+  if(caja)caja.textContent=prompt;
+  if(resultado){
+    resultado.style.display="block";
+    resultado.classList.add("visible");
+    resultado.scrollIntoView({behavior:"smooth",block:"start"});
+  }
 }
-
 async function copiarPromptIA(){
   const prompt=document.getElementById("promptGeneradoIA").textContent;
   try{
