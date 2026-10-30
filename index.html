@@ -1384,6 +1384,134 @@ header{background:rgba(255,255,255,.92)!important;border-bottom:1px solid #f5d9e
 @media(max-width:900px){.acceso-art,.acceso-frase{opacity:.18}.acceso-card{margin-top:75px}.acceso-topbar{padding:10px 18px}}
 @media(max-width:650px){.acceso-art,.acceso-frase{display:none}.acceso-maestra{padding:18px 12px}.acceso-topbar{height:68px}.acceso-brand-flor{width:42px;height:42px}.acceso-brand b{font-size:18px}.acceso-brand span{font-size:11px}.acceso-pill{padding:9px 12px;font-size:11px}.acceso-card{margin-top:64px;padding:25px 19px;border-radius:27px}.acceso-marca h1{font-size:27px}.acceso-logo{width:78px;height:78px}.acceso-logo svg{width:62px;height:62px}}
 
+
+
+/* ==================================================
+   REDISEÑO MAESTRA IA · INTELIGENCIA + CALIDEZ DOCENTE
+   Capa visual añadida sin modificar la lógica del curso.
+================================================== */
+:root{
+  --ia-ink:#211747;
+  --ia-violet:#7138d4;
+  --ia-purple:#963fe8;
+  --ia-cyan:#59d9e8;
+  --ia-pink:#f18bc3;
+  --ia-paper:#fbfaff;
+}
+body{
+  background:
+    radial-gradient(ellipse at 8% 8%,rgba(244,190,222,.20),transparent 28%),
+    radial-gradient(ellipse at 92% 18%,rgba(102,214,235,.15),transparent 27%),
+    linear-gradient(145deg,#fbf8ff 0%,#f6f5ff 48%,#fff9f2 100%)!important;
+}
+header{
+  background:rgba(255,255,255,.88)!important;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(216,198,246,.72)!important;
+  box-shadow:0 8px 28px rgba(49,29,91,.07)!important;
+}
+.logo-icon{
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 7px 18px rgba(137,54,199,.22);
+}
+.logo h1{letter-spacing:-.7px}
+.modo{
+  background:linear-gradient(120deg,#f0e7ff,#e7faff)!important;
+  border:1px solid #e2d6fa;
+  box-shadow:0 4px 14px rgba(91,53,156,.07);
+}
+#inicio .hero{
+  isolation:isolate;
+  position:relative;
+  overflow:hidden;
+  max-width:1180px;
+  margin:24px auto 0;
+  padding:42px 28px 34px;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:30px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 12% 110%,rgba(241,139,195,.34),transparent 34%),
+    radial-gradient(circle at 90% 0%,rgba(89,217,232,.28),transparent 31%),
+    linear-gradient(118deg,#211747 0%,#45227f 48%,#6535b9 76%,#315b91 100%)!important;
+  box-shadow:0 22px 48px rgba(49,29,91,.18);
+}
+#inicio .hero:before{
+  content:"✿";position:absolute;z-index:-1;left:4%;bottom:-55px;
+  font-size:190px;line-height:1;color:rgba(255,255,255,.075);
+  transform:rotate(-18deg);pointer-events:none;
+}
+#inicio .hero:after{
+  content:"✧";position:absolute;z-index:-1;right:7%;top:-48px;
+  font-size:230px;line-height:1;color:rgba(119,238,247,.14);
+  text-shadow:0 0 35px rgba(89,217,232,.22);pointer-events:none;
+}
+#inicio .hero>*{position:relative;z-index:1}
+.hero-ai-etiquetas{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:17px}
+#inicio .hero .badge{margin:0;background:rgba(255,255,255,.14)!important;color:#fff!important;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);letter-spacing:.45px}
+.hero-ai-estado{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:30px;background:rgba(11,22,54,.22);border:1px solid rgba(255,255,255,.16);font-size:12px;color:#e9fbff;font-weight:700}
+.hero-ai-estado i{width:7px;height:7px;border-radius:50%;background:#7af0c3;box-shadow:0 0 12px #7af0c3}
+#inicio .hero h2{font-size:clamp(34px,4vw,49px);color:#fff;font-weight:900;letter-spacing:-1.2px;margin:9px 0 8px}
+#inicio .hero h2 span{background:linear-gradient(90deg,#ffb6dc,#8beafa);-webkit-background-clip:text;background-clip:text;color:transparent}
+#inicio .hero .hero-frase-principal{max-width:780px;margin:0 auto 8px;color:#fff!important;font-size:clamp(18px,2vw,23px);font-weight:800;line-height:1.4}
+#inicio .hero .hero-frase-secundaria{max-width:760px;margin:0 auto;color:#e9e4fa!important;font-size:15px;line-height:1.7;font-weight:400}
+.hero-ai-pistas{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:20px}
+.hero-ai-pistas span{padding:7px 13px;border:1px solid rgba(255,255,255,.19);border-radius:30px;background:rgba(255,255,255,.09);color:#f6f1ff;font-size:12px;font-weight:800}
+#inicio .contenedor{max-width:1190px;padding-top:20px}
+.ruta-maestra-visible{
+  margin:24px auto 28px!important;padding:13px!important;
+  background:rgba(255,255,255,.82)!important;border:1px solid #e8def7!important;
+  border-radius:23px!important;box-shadow:0 12px 32px rgba(49,29,91,.065)!important;
+}
+.ruta-paso{background:#fff!important;border:1px solid #e8e1f2!important;border-radius:16px!important;min-height:78px;box-shadow:0 5px 15px rgba(49,29,91,.045)!important}
+.ruta-paso b{background:linear-gradient(135deg,#7540d4,#a24ce4)!important;box-shadow:0 4px 10px rgba(117,64,212,.2)}
+.ruta-paso span{color:#30205c!important}.ruta-paso small{color:#716a80!important}
+.ruta-flecha{color:#9a79d9!important}
+.inicio-kicker{display:inline-block;margin-bottom:7px;color:#7952c6;font-size:11px;font-weight:900;letter-spacing:1.35px}
+.titulo-seccion{margin:10px 0 20px!important}
+.titulo-seccion h3{color:var(--ia-ink)!important;font-size:26px;letter-spacing:-.5px}
+.titulo-seccion p{color:#777187!important}
+#inicio .grid{gap:17px}
+#inicio .tarjeta{
+  min-height:205px;padding:23px 20px!important;
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid #e9e2f3!important;border-radius:21px!important;
+  box-shadow:0 9px 25px rgba(49,29,91,.065)!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+#inicio .tarjeta:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#8b5ce0,#62d7e5,#f19bc9);opacity:.9}
+#inicio .tarjeta:nth-child(1){border-color:#f0d8e9!important}
+#inicio .tarjeta:nth-child(2){border-color:#e3d8f7!important}
+#inicio .tarjeta:nth-child(3){border-color:#d5e9f5!important}
+#inicio .tarjeta:nth-child(4){border-color:#f0e2c9!important}
+#inicio .tarjeta:hover{transform:translateY(-5px)!important;border-color:#cbb5ef!important;box-shadow:0 17px 34px rgba(87,54,145,.13)!important}
+#inicio .icono{border-radius:16px!important;background:linear-gradient(145deg,#f4eaff,#e8faff)!important;box-shadow:0 6px 16px rgba(70,49,111,.10)!important}
+#inicio .tarjeta h4{color:#29204d!important;font-weight:900;letter-spacing:-.2px}
+#inicio .tarjeta p{color:#69647a!important;line-height:1.55}
+.guia{border:1px solid rgba(255,255,255,.25);background:linear-gradient(110deg,#33205f,#7440c7 58%,#397c9c)!important;box-shadow:0 15px 32px rgba(67,40,120,.17)!important}
+.guia button{border:1px solid rgba(255,255,255,.6);box-shadow:0 5px 14px rgba(29,15,62,.12)}
+.usuario-top{border:1px solid #e9def7!important;box-shadow:0 6px 18px rgba(49,29,91,.07)!important}
+@media(max-width:900px){
+  #inicio .hero{margin:14px 12px 0;padding:34px 20px 29px;border-radius:24px}
+  .ruta-maestra-visible{margin:18px auto 24px!important}
+}
+@media(max-width:600px){
+  #inicio .hero{padding:29px 17px 25px}
+  #inicio .hero:before{font-size:120px;left:-10px}
+  #inicio .hero:after{font-size:145px;right:-12px}
+  .hero-ai-etiquetas{gap:7px}
+  #inicio .hero .badge{font-size:10px;padding:7px 10px}
+  .hero-ai-estado{font-size:10px;padding:7px 10px}
+  #inicio .hero .hero-frase-secundaria{font-size:14px}
+  .hero-ai-pistas{gap:6px;margin-top:15px}
+  .hero-ai-pistas span{font-size:10px;padding:6px 9px}
+  .ruta-maestra-visible{grid-template-columns:1fr 1fr!important}
+  .ruta-flecha{display:none}
+  #inicio .tarjeta{min-height:unset}
+}
+@media(max-width:420px){.ruta-maestra-visible{grid-template-columns:1fr!important}}
+
 </style>
 </head>
 
@@ -1409,36 +1537,40 @@ header{background:rgba(255,255,255,.92)!important;border-bottom:1px solid #f5d9e
 
   <section class="hero">
 
-    <div class="badge">
-      🌱 APRENDEMOS DESDE CERO
+    <div class="hero-ai-etiquetas">
+      <div class="badge">✦ TU AULA CREATIVA CON INTELIGENCIA ARTIFICIAL</div>
+      <span class="hero-ai-estado"><i></i> IA al servicio de tu creatividad</span>
     </div>
 
     <h2>
       Hola, <span>maestra</span> 👋
     </h2>
 
-    <p>
-      Aprende a utilizar la inteligencia artificial desde tu celular
-      o computadora. No necesitas experiencia previa.
-      Te acompañamos paso a paso.
-    </p>
+    <p class="hero-frase-principal">Tu talento enseña. La inteligencia artificial te ayuda a crear.</p>
+    <p class="hero-frase-secundaria">Aprende desde cero, prepara tus clases y transforma tus ideas en recursos para el aula. Siempre a tu ritmo y con acompañamiento paso a paso.</p>
+
+    <div class="hero-ai-pistas">
+      <span>✦ Aprende</span><span>✧ Crea</span><span>✦ Planifica</span><span>✧ Inspira</span>
+    </div>
 
   </section>
 
   <main class="contenedor">
 
+    <div class="ruta-maestra-visible" aria-label="Tu recorrido en MAESTRA IA">
+      <div class="ruta-paso"><b>1</b><span>🌱 Aprende</span><small>Domina la IA paso a paso</small></div>
+      <div class="ruta-flecha">→</div>
+      <div class="ruta-paso"><b>2</b><span>✨ Crea</span><small>Prepara tus clases y recursos</small></div>
+      <div class="ruta-flecha">→</div>
+      <div class="ruta-paso"><b>3</b><span>📁 Guarda</span><small>Conserva tus trabajos</small></div>
+      <div class="ruta-flecha">→</div>
+      <div class="ruta-paso"><b>4</b><span>📊 Avanza</span><small>Revisa tu progreso</small></div>
+    </div>
+
     <div class="titulo-seccion">
-      <h3><div class="ruta-maestra-visible">
-  <div class="ruta-paso"><b>1</b><span>🌱 Aprende</span><small>Domina la IA paso a paso</small></div>
-  <div class="ruta-flecha">→</div>
-  <div class="ruta-paso"><b>2</b><span>✨ Crea</span><small>Prepara tus clases y recursos</small></div>
-  <div class="ruta-flecha">→</div>
-  <div class="ruta-paso"><b>3</b><span>📁 Guarda</span><small>Conserva tus trabajos</small></div>
-  <div class="ruta-flecha">→</div>
-  <div class="ruta-paso"><b>4</b><span>📊 Avanza</span><small>Revisa tu progreso</small></div>
-</div>
-¿Qué quieres hacer hoy?</h3>
-      <p>Selecciona una opción. Nosotros te acompañamos.</p>
+      <span class="inicio-kicker">TU ESPACIO DOCENTE INTELIGENTE</span>
+      <h3>¿Qué vamos a crear hoy, maestra?</h3>
+      <p>Elige una herramienta y deja que MAESTRA IA te acompañe.</p>
     </div>
 
     <div class="grid">
