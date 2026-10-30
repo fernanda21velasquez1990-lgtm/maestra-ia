@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAESTRA IA · Curso completo</title>
+<title>MAESTRA IA · Tu compañera inteligente para enseñar</title>
 
 <style>
 :root{
@@ -1513,82 +1513,215 @@ header{
 @media(max-width:420px){.ruta-maestra-visible{grid-template-columns:1fr!important}}
 
 
+
 /* ==========================================================
-   MÍA · ASISTENTE FLOTANTE PERSISTENTE
-   Integrada sobre el HTML original de MAESTRA IA.
+   MAESTRA IA · EVOLUCIÓN FUTURISTA ELEGANTE
+   Identidad: inteligencia artificial + calidez docente.
+   Capa visual adicional: no altera la lógica JavaScript.
 ========================================================== */
-#mIA-launcher{
-  position:fixed;right:24px;bottom:22px;z-index:9990;
-  display:none;align-items:center;gap:10px;
-  border:1px solid rgba(255,255,255,.75);border-radius:999px;
-  padding:9px 17px 9px 9px;color:#fff;cursor:pointer;
-  background:linear-gradient(115deg,#211c50,#7045d8 58%,#119db8);
-  box-shadow:0 13px 34px rgba(49,35,112,.30),0 0 0 5px rgba(143,117,235,.10);
-  font:700 14px Arial,sans-serif;transition:transform .2s,box-shadow .2s;
+:root{
+  --morado:#7547e8;
+  --morado2:#5932bd;
+  --rosa:#d946a2;
+  --azul-ia:#16b9d4;
+  --tinta:#171b3c;
+  --gris:#65708b;
+  --fondo:#f5f6ff;
 }
-#mIA-launcher.mia-activa{display:flex}
-#mIA-launcher:hover{transform:translateY(-3px);box-shadow:0 17px 38px rgba(49,35,112,.36)}
-.mia-launch-icon{
-  width:43px;height:43px;border-radius:50%;display:grid;place-items:center;
-  color:#e8fbff;font-size:24px;
-  background:radial-gradient(circle at 35% 25%,#d9fbff,#9c7af5 43%,#452c9c 78%);
+body{
+  color:var(--tinta)!important;
+  background:
+    radial-gradient(ellipse at 8% 10%,rgba(168,139,250,.18),transparent 30%),
+    radial-gradient(ellipse at 92% 12%,rgba(34,211,238,.14),transparent 27%),
+    radial-gradient(ellipse at 80% 85%,rgba(244,114,182,.10),transparent 26%),
+    linear-gradient(145deg,#f7f5ff 0%,#f2f8ff 48%,#fff7fc 100%)!important;
+  background-attachment:fixed;
+}
+header{
+  background:rgba(255,255,255,.86)!important;
+  border-bottom:1px solid rgba(151,132,218,.18)!important;
+  box-shadow:0 8px 30px rgba(44,37,93,.07)!important;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.logo-icon{
+  background:linear-gradient(145deg,#ec4899 0%,#8b5cf6 58%,#22c6dc 100%)!important;
+  box-shadow:0 8px 22px rgba(124,58,237,.24);
+  border:1px solid rgba(255,255,255,.7);
+}
+.logo h1{
+  background:linear-gradient(90deg,#6737d1,#a33bd0,#0e9fbd);
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;
+  letter-spacing:-.6px;
+}
+.modo{
+  background:linear-gradient(110deg,#f1eaff,#e8faff)!important;
+  border:1px solid #ddd4ff!important;
+  box-shadow:0 5px 16px rgba(93,65,176,.08);
+  transition:.2s ease;
+}
+.modo:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(93,65,176,.15)}
+#inicio .hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  padding:54px 22px 48px!important;
+  text-align:center;
+  background:
+    radial-gradient(circle at 78% 42%,rgba(34,211,238,.18),transparent 20%),
+    radial-gradient(circle at 18% 90%,rgba(217,70,162,.17),transparent 25%),
+    linear-gradient(118deg,#171b43 0%,#29205f 47%,#442b83 76%,#164b70 120%)!important;
+  border:0!important;
+  border-bottom:1px solid rgba(190,178,255,.28)!important;
+  box-shadow:inset 0 -1px 0 rgba(255,255,255,.12);
+}
+#inicio .hero:before{
+  content:"✦"!important;
+  position:absolute;z-index:-1;left:8%;top:18%;bottom:auto;
+  color:#a8f2ff;font-size:clamp(42px,7vw,82px)!important;
+  opacity:.62!important;transform:rotate(-12deg);
+  text-shadow:0 0 22px rgba(34,211,238,.85),0 0 55px rgba(167,139,250,.55);
+}
+#inicio .hero:after{
+  content:""!important;
+  position:absolute;z-index:-1;right:10%;top:12%;bottom:auto;
+  width:clamp(105px,15vw,180px);height:clamp(105px,15vw,180px);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,rgba(255,255,255,.95) 0 2%,rgba(174,244,255,.85) 5%,rgba(126,91,238,.65) 28%,rgba(33,191,218,.22) 55%,transparent 72%);
+  border:1px solid rgba(190,245,255,.42);
+  box-shadow:0 0 28px rgba(34,211,238,.45),0 0 70px rgba(139,92,246,.42),inset 0 0 25px rgba(255,255,255,.2);
+  animation:maestraOrb 7s ease-in-out infinite;
+}
+@keyframes maestraOrb{
+  0%,100%{transform:translateY(0) scale(1);filter:hue-rotate(0deg)}
+  50%{transform:translateY(-9px) scale(1.045);filter:hue-rotate(15deg)}
+}
+#inicio .hero .badge{
+  background:rgba(222,213,255,.15)!important;
+  color:#d8f8ff!important;
+  border:1px solid rgba(198,235,255,.35);
+  box-shadow:0 0 24px rgba(34,211,238,.10);
+  letter-spacing:1.1px;
+}
+#inicio .hero h2{
+  color:#fff!important;font-weight:900;letter-spacing:-1.2px;
+  text-shadow:0 5px 28px rgba(0,0,0,.18);
+}
+#inicio .hero h2 span{
+  background:linear-gradient(90deg,#f0abfc,#9cecff);
+  -webkit-background-clip:text;background-clip:text;color:transparent!important;
+}
+#inicio .hero p{
+  color:#e0e7ff!important;max-width:740px;font-size:17px;
+  text-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+#inicio .contenedor{max-width:1210px!important;padding-top:28px!important}
+.titulo-seccion h3{color:#20204e!important;letter-spacing:-.45px}
+.titulo-seccion p{color:#6c7390!important}
+.ruta-maestra-visible{
+  background:rgba(255,255,255,.78)!important;
+  border:1px solid rgba(155,139,220,.22)!important;
+  box-shadow:0 15px 38px rgba(55,47,112,.08)!important;
+  backdrop-filter:blur(14px);
+}
+.ruta-paso{
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(246,245,255,.96))!important;
+  border:1px solid rgba(145,127,216,.25)!important;
+  box-shadow:0 7px 20px rgba(50,44,105,.06)!important;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.ruta-paso:hover{transform:translateY(-3px);box-shadow:0 12px 25px rgba(91,65,173,.12)!important}
+.ruta-paso span{color:#49358e!important}
+.ruta-paso small{color:#68728d!important}
+.ruta-paso b{
+  background:linear-gradient(145deg,#7547e8,#19b8d2)!important;
+  box-shadow:0 5px 13px rgba(112,71,218,.25);
+}
+.ruta-flecha{color:#8c7be2!important}
+#inicio .grid{gap:20px!important}
+#inicio .tarjeta{
+  min-height:205px!important;
+  border:1px solid rgba(145,132,205,.20)!important;
+  border-radius:23px!important;
+  background:rgba(255,255,255,.83)!important;
+  box-shadow:0 12px 30px rgba(39,43,91,.07)!important;
+  backdrop-filter:blur(12px);
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease!important;
+}
+#inicio .tarjeta:nth-child(1){background:linear-gradient(145deg,#fff7fc,#f4eaff)!important;border-color:#e7c8f6!important}
+#inicio .tarjeta:nth-child(2){background:linear-gradient(145deg,#f9f6ff,#e9e9ff)!important;border-color:#d4ccff!important}
+#inicio .tarjeta:nth-child(3){background:linear-gradient(145deg,#f2fcff,#e2f7ff)!important;border-color:#bce9f5!important}
+#inicio .tarjeta:nth-child(4){background:linear-gradient(145deg,#fff8f0,#fff0df)!important;border-color:#f3d7b8!important}
+#inicio .tarjeta:nth-child(5){background:linear-gradient(145deg,#f3fff9,#e4fbf1)!important;border-color:#bcebd4!important}
+#inicio .tarjeta:nth-child(6){background:linear-gradient(145deg,#fbf8ff,#f0eaff)!important;border-color:#d9cdf8!important}
+#inicio .tarjeta:nth-child(7){background:linear-gradient(145deg,#f1fbff,#e5f6ff)!important;border-color:#bce5f6!important}
+#inicio .tarjeta:nth-child(8){background:linear-gradient(145deg,#fff6fb,#ffeaf5)!important;border-color:#f2c8df!important}
+#inicio .tarjeta:nth-child(9){background:linear-gradient(145deg,#f8f7ff,#eeefff)!important;border-color:#d4d5f5!important}
+#inicio .tarjeta:hover{
+  transform:translateY(-7px)!important;
+  border-color:rgba(119,85,220,.52)!important;
+  box-shadow:0 20px 42px rgba(72,57,148,.15)!important;
+}
+#inicio .tarjeta h4{color:#22204f!important;font-size:18px}
+#inicio .tarjeta p{color:#606b88!important;line-height:1.55}
+#inicio .icono{
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:0 7px 18px rgba(75,65,130,.10)!important;
+}
+.guia{
+  background:linear-gradient(110deg,#27245d 0%,#6541bc 55%,#168eaa 120%)!important;
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 16px 38px rgba(59,48,133,.20)!important;
+}
+.guia h3{color:#fff}
+.guia p{color:#e7eaff}
+.guia button{
   border:1px solid rgba(255,255,255,.65);
-  box-shadow:inset 0 0 14px rgba(255,255,255,.38),0 0 17px rgba(34,211,238,.25);
+  box-shadow:0 7px 18px rgba(0,0,0,.10);
+  transition:.2s ease;
 }
-#mIA-launcher small{display:block;font-size:10px;font-weight:500;opacity:.84;margin-top:2px}
-#mIA-panel{
-  position:fixed;right:24px;bottom:82px;z-index:9991;
-  width:min(390px,calc(100vw - 28px));height:min(590px,calc(100vh - 112px));
-  display:none;flex-direction:column;overflow:hidden;
-  border:1px solid rgba(194,183,255,.7);border-radius:24px;
-  background:rgba(250,250,255,.98);
-  box-shadow:0 24px 75px rgba(30,26,78,.28),0 0 0 1px rgba(255,255,255,.7);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  font-family:Arial,Helvetica,sans-serif;
+.guia button:hover{transform:translateY(-2px);box-shadow:0 11px 23px rgba(0,0,0,.16)}
+/* Pantallas internas: mismo lenguaje visual, legibilidad primero */
+.btn-volver{
+  background:linear-gradient(110deg,#f0eaff,#e6faff)!important;
+  border:1px solid #ddd5fb!important;
+  color:#5636a5!important;
 }
-#mIA-panel.mia-visible{display:flex;animation:miaAppear .22s ease-out}
-@keyframes miaAppear{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.mia-head{
-  padding:16px 17px;display:flex;align-items:center;gap:11px;color:white;
-  background:radial-gradient(circle at 88% 10%,rgba(44,220,240,.30),transparent 32%),
-             linear-gradient(115deg,#211c50,#5433a0 65%,#087d99);
+.btn-principal,.btn-examen,.btn-logrado{
+  background:linear-gradient(105deg,#7042df,#9b45d5 58%,#159fba)!important;
+  box-shadow:0 8px 20px rgba(105,68,203,.18);
 }
-.mia-avatar{
-  width:46px;height:46px;flex:0 0 46px;border-radius:16px;display:grid;place-items:center;
-  background:linear-gradient(145deg,#f5c5f0,#a6f2ff);color:#38266f;font-size:24px;
-  border:1px solid rgba(255,255,255,.7);box-shadow:0 5px 18px rgba(0,0,0,.15);
+.banner-curso{
+  background:
+    radial-gradient(circle at 85% 18%,rgba(58,220,238,.25),transparent 24%),
+    linear-gradient(115deg,#1c204e,#49318c 62%,#12677e)!important;
+  border:1px solid rgba(255,255,255,.20);
+  box-shadow:0 16px 38px rgba(44,38,108,.17);
 }
-.mia-head-info{flex:1;min-width:0}
-.mia-head-info strong{display:block;font-size:15px;letter-spacing:.1px}
-.mia-head-info span{display:block;font-size:11px;color:#d9f7ff;margin-top:4px}
-.mia-online{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5ff0b2;margin-right:5px;box-shadow:0 0 8px #5ff0b2}
-.mia-close{border:0;background:rgba(255,255,255,.15);color:#fff;width:31px;height:31px;border-radius:50%;font-size:20px;cursor:pointer}
-.mia-body{
-  padding:15px;overflow:auto;flex:1;
-  background:radial-gradient(circle at 100% 0%,rgba(172,153,255,.11),transparent 35%),linear-gradient(160deg,#fbfaff,#f4faff);
+.modulo,.leccion,.menu-lecciones,.modal-box,
+.paso-ia,.plan-card,.salon-card,.eval-card{
+  border:1px solid rgba(145,132,205,.17);
+  box-shadow:0 10px 28px rgba(39,43,91,.07)!important;
 }
-.mia-message{
-  max-width:94%;padding:12px 13px;border-radius:16px 16px 16px 5px;
-  background:#fff;border:1px solid #e8e4f8;color:#353653;font-size:13px;line-height:1.5;
-  box-shadow:0 5px 15px rgba(55,46,115,.05);margin:0 0 11px;
-  white-space:pre-wrap;overflow-wrap:anywhere;
+.modulo.completado{border-color:#67d7ad!important}
+.mini-badge{background:#e8faff!important;color:#087e98!important}
+.leccion-menu.activa{background:#eee8ff!important;color:#5932bd!important}
+.examen-barra div{background:linear-gradient(90deg,#7042df,#1bbbd1)!important}
+.nota-grande{color:#7042df!important}
+footer{
+  color:#7b7894!important;
+  border-top:1px solid rgba(145,132,205,.16);
+  background:rgba(255,255,255,.48);
 }
-.mia-message.user{margin-left:auto;border-radius:16px 16px 5px 16px;color:#fff;background:linear-gradient(120deg,#7046d7,#287fae);border:0}
-.mia-suggestions{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 13px}
-.mia-chip{border:1px solid #d9d1f5;background:#fff;color:#6544b4;border-radius:999px;padding:8px 10px;font-size:11px;font-weight:700;cursor:pointer}
-.mia-chip:hover{background:#f0eaff;border-color:#a995eb}
-.mia-action{display:block;width:100%;text-align:left;border:1px solid #dcd5f7;border-radius:12px;padding:10px 12px;margin-top:8px;color:#5437a0;background:linear-gradient(100deg,#f3efff,#eafaff);font-weight:700;font-size:12px;cursor:pointer}
-.mia-action:hover{border-color:#9d8ae2;transform:translateY(-1px)}
-.mia-compose{display:flex;gap:8px;padding:12px;border-top:1px solid #e9e5f5;background:#fff}
-.mia-compose input{flex:1;min-width:0;border:1px solid #ded9ef;border-radius:14px;padding:12px;font-size:13px;outline:none;color:#28264e;background:#fbfaff}
-.mia-compose input:focus{border-color:#9a83e8;box-shadow:0 0 0 3px rgba(154,131,232,.12)}
-.mia-send{border:0;border-radius:13px;width:43px;color:#fff;font-size:18px;cursor:pointer;background:linear-gradient(145deg,#7046d7,#149db8);box-shadow:0 5px 13px rgba(90,65,180,.2)}
-.mia-footnote{padding:0 13px 10px;background:#fff;color:#8b8ba4;font-size:10px;text-align:center}
-@media(max-width:520px){
-  #mIA-launcher{right:13px;bottom:13px;padding:7px 12px 7px 7px}
-  #mIA-panel{right:8px;bottom:72px;width:calc(100vw - 16px);height:min(620px,calc(100vh - 88px));border-radius:20px}
+@media(max-width:760px){
+  #inicio .hero{padding:42px 18px 38px!important}
+  #inicio .hero:before{left:4%;top:12%;font-size:42px!important}
+  #inicio .hero:after{right:4%;top:10%;width:78px;height:78px}
+  #inicio .hero p{font-size:15px}
+  #inicio .tarjeta{min-height:unset!important}
 }
-@media(prefers-reduced-motion:reduce){#mIA-panel.mia-visible{animation:none}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
 
 </style>
 </head>
@@ -6856,217 +6989,6 @@ document.addEventListener("DOMContentLoaded",function(){
     mostrarAccesoMaestra();
   }
 });
-
-
-/* ==========================================================
-   MÍA · CONVERSACIÓN REAL CON GEMINI
-   Utiliza apiMaestraIA() ya existente en el HTML.
-========================================================== */
-(function(){
-  "use strict";
-
-  let observerMia = null;
-  let historialMia = [];
-  let enviandoMia = false;
-
-  const rutasMia = [
-    {keys:["planificar","planificacion","planificación","plan","clase","secuencia","objetivo"],title:"Planificar una clase",desc:"Abre el planificador para preparar tu clase.",fn:"abrirPlanificadorIA"},
-    {keys:["ficha","cuento","juego","cartel","material","recurso","actividad","tarjeta","mapa","salon","salón"],title:"Crear para mi salón",desc:"Abre el creador de recursos educativos.",fn:"abrirCreadorSalon"},
-    {keys:["evaluacion","evaluación","prueba","examen","rubrica","rúbrica","preguntas","lista de cotejo"],title:"Crear una evaluación",desc:"Abre la herramienta de evaluaciones.",fn:"abrirCreadorEvaluacion"},
-    {keys:["asistente","prompt","instruccion","instrucción","chatgpt","gemini"],title:"Mi Asistente IA",desc:"Abre el asistente de instrucciones educativas.",fn:"abrirAsistenteIA"},
-    {keys:["curso","aprender","principiante","desde cero","leccion","lección","modulo","módulo"],title:"Aprender IA desde cero",desc:"Abre el curso para docentes.",fn:"abrirCurso"},
-    {keys:["progreso","avance","nota","calificacion","calificación"],title:"Mi progreso",desc:"Consulta tus avances de aprendizaje.",fn:"abrirMiProgreso"},
-    {keys:["trabajo","guardado","guardar","archivo"],title:"Mis trabajos",desc:"Abre tus trabajos guardados.",fn:"abrirMisTrabajos"}
-  ];
-
-  function crearInterfaz(){
-    if(document.getElementById("mIA-launcher") || !document.body) return;
-
-    const launcher = document.createElement("button");
-    launcher.id = "mIA-launcher";
-    launcher.type = "button";
-    launcher.setAttribute("aria-label","Abrir MÍA, asistente de MAESTRA IA");
-    launcher.innerHTML = '<span class="mia-launch-icon">✧</span><span>MÍA<small>Tu compañera virtual</small></span>';
-
-    const panel = document.createElement("section");
-    panel.id = "mIA-panel";
-    panel.setAttribute("aria-label","Asistente MÍA");
-    panel.innerHTML = `
-      <div class="mia-head">
-        <div class="mia-avatar">✿</div>
-        <div class="mia-head-info">
-          <strong>MÍA · Mi Inteligente Asistente</strong>
-          <span id="miaEstado"><i class="mia-online"></i>Conectando con Gemini…</span>
-        </div>
-        <button class="mia-close" type="button" aria-label="Cerrar">×</button>
-      </div>
-      <div class="mia-body" id="miaMessages" aria-live="polite">
-        <div class="mia-message">¡Hola, maestra! 💜 Soy MÍA, tu compañera inteligente de MAESTRA IA. Ahora puedo conversar contigo gracias a Gemini.\n\nCuéntame qué quieres preparar y trabajaremos juntas.</div>
-        <div class="mia-suggestions">
-          <button class="mia-chip" data-mia="Ayúdame a planificar una clase para primer grado sobre los seres vivos." type="button">📚 Planificar</button>
-          <button class="mia-chip" data-mia="Crea una ficha de actividades divertida para mis estudiantes." type="button">🎨 Crear material</button>
-          <button class="mia-chip" data-mia="Prepara una evaluación con preguntas y respuestas." type="button">📝 Evaluar</button>
-          <button class="mia-chip" data-mia="Enséñame a utilizar inteligencia artificial desde cero." type="button">🌱 Aprender IA</button>
-        </div>
-      </div>
-      <form class="mia-compose" id="miaForm">
-        <input id="miaInput" type="text" maxlength="5000" autocomplete="off" placeholder="Escribe qué necesitas…" aria-label="Escribe qué necesitas">
-        <button class="mia-send" id="miaSend" type="submit" aria-label="Enviar">➤</button>
-      </form>
-      <div class="mia-footnote">Evita incluir nombres, cédulas u otros datos personales de estudiantes.</div>`;
-
-    document.body.appendChild(launcher);
-    document.body.appendChild(panel);
-
-    launcher.addEventListener("click", alternar);
-    panel.querySelector(".mia-close").addEventListener("click", alternar);
-    panel.querySelectorAll("[data-mia]").forEach(function(b){
-      b.addEventListener("click",function(){ consultar(b.dataset.mia); });
-    });
-    panel.querySelector("#miaForm").addEventListener("submit",function(e){
-      e.preventDefault();
-      const input = panel.querySelector("#miaInput");
-      const value = input.value.trim();
-      if(!value || enviandoMia) return;
-      input.value = "";
-      consultar(value);
-    });
-  }
-
-  function alternar(){
-    const panel = document.getElementById("mIA-panel");
-    if(!panel) return;
-    panel.classList.toggle("mia-visible");
-    if(panel.classList.contains("mia-visible")){
-      const input = document.getElementById("miaInput");
-      if(input) input.focus();
-    }
-  }
-
-  function agregarMensaje(texto,tipo){
-    const box = document.getElementById("miaMessages");
-    if(!box) return null;
-    const el = document.createElement("div");
-    el.className = "mia-message" + (tipo === "user" ? " user" : "");
-    el.textContent = texto;
-    box.appendChild(el);
-    box.scrollTop = box.scrollHeight;
-    return el;
-  }
-
-  function estadoMia(texto,conectada){
-    const el = document.getElementById("miaEstado");
-    if(!el) return;
-    el.textContent = (conectada ? "● " : "○ ") + texto;
-  }
-
-  function agregarAccion(textoUsuario){
-    const normal = textoUsuario.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    const ruta = rutasMia.find(function(r){
-      return r.keys.some(function(k){
-        return normal.includes(k.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,""));
-      });
-    });
-    if(!ruta) return;
-
-    const box = document.getElementById("miaMessages");
-    if(!box) return;
-    const boton = document.createElement("button");
-    boton.type = "button";
-    boton.className = "mia-action";
-    boton.textContent = "Abrir " + ruta.title + " →";
-    boton.addEventListener("click",function(){
-      const fn = window[ruta.fn];
-      if(typeof fn !== "function"){
-        agregarMensaje("No pude localizar esa herramienta en esta versión. Puedes abrirla desde las tarjetas de la página principal.","bot");
-        return;
-      }
-      alternar();
-      fn();
-    });
-    box.appendChild(boton);
-    box.scrollTop = box.scrollHeight;
-  }
-
-  async function consultar(texto){
-    if(enviandoMia) return;
-    if(typeof window.apiMaestraIA !== "function"){
-      agregarMensaje("No encuentro la conexión con Google Apps Script en esta página. Comprueba que instalaste el HTML de MAESTRA IA actualizado.","bot");
-      return;
-    }
-
-    enviandoMia = true;
-    const input = document.getElementById("miaInput");
-    const send = document.getElementById("miaSend");
-    if(input) input.disabled = true;
-    if(send) send.disabled = true;
-
-    agregarMensaje(texto,"user");
-    const cargando = agregarMensaje("MÍA está pensando… ✨","bot");
-
-    try{
-      const respuesta = await window.apiMaestraIA({
-        accion: "consultarMIA",
-        mensaje: texto,
-        historial: historialMia.slice(-10)
-      });
-
-      if(!respuesta || respuesta.ok !== true || !respuesta.respuesta){
-        throw new Error(respuesta && respuesta.error ? respuesta.error : "El servidor no devolvió una respuesta de MÍA.");
-      }
-
-      if(cargando) cargando.remove();
-      agregarMensaje(respuesta.respuesta,"bot");
-
-      historialMia.push({role:"user",text:texto});
-      historialMia.push({role:"model",text:respuesta.respuesta});
-      historialMia = historialMia.slice(-10);
-
-      estadoMia("Conectada a Gemini",true);
-      agregarAccion(texto);
-    }catch(error){
-      if(cargando) cargando.remove();
-      const detalle = error && error.message ? error.message : String(error);
-      agregarMensaje("No pude conectarme en este momento. " + detalle + "\n\nSi acabas de actualizar Apps Script, verifica que hayas publicado una nueva versión de la implementación web.","bot");
-      estadoMia("Conexión pendiente",false);
-      console.error("Error de MÍA:",error);
-    }finally{
-      enviandoMia = false;
-      if(input){input.disabled=false;input.focus();}
-      if(send)send.disabled=false;
-    }
-  }
-
-  function sincronizarVisibilidad(){
-    const launcher = document.getElementById("mIA-launcher");
-    const panel = document.getElementById("mIA-panel");
-    const acceso = document.body.classList.contains("acceso-activo");
-    let autenticada = false;
-    try{
-      autenticada = typeof window.perfilValidoMaestra === "function" && window.perfilValidoMaestra();
-    }catch(e){}
-
-    if(acceso || !autenticada){
-      if(launcher) launcher.remove();
-      if(panel) panel.remove();
-      return;
-    }
-    crearInterfaz();
-    const nuevo = document.getElementById("mIA-launcher");
-    if(nuevo) nuevo.classList.add("mia-activa");
-  }
-
-  function iniciar(){
-    sincronizarVisibilidad();
-    if(!observerMia && document.body){
-      observerMia = new MutationObserver(function(){ sincronizarVisibilidad(); });
-      observerMia.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
-    }
-  }
-
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded",iniciar);
-  else iniciar();
-})();
 
 </script>
 
