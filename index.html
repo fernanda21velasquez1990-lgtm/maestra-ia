@@ -1512,6 +1512,84 @@ header{
 }
 @media(max-width:420px){.ruta-maestra-visible{grid-template-columns:1fr!important}}
 
+
+/* ==========================================================
+   MÍA · ASISTENTE FLOTANTE PERSISTENTE
+   Integrada sobre el HTML original de MAESTRA IA.
+========================================================== */
+#mIA-launcher{
+  position:fixed;right:24px;bottom:22px;z-index:9990;
+  display:none;align-items:center;gap:10px;
+  border:1px solid rgba(255,255,255,.75);border-radius:999px;
+  padding:9px 17px 9px 9px;color:#fff;cursor:pointer;
+  background:linear-gradient(115deg,#211c50,#7045d8 58%,#119db8);
+  box-shadow:0 13px 34px rgba(49,35,112,.30),0 0 0 5px rgba(143,117,235,.10);
+  font:700 14px Arial,sans-serif;transition:transform .2s,box-shadow .2s;
+}
+#mIA-launcher.mia-activa{display:flex}
+#mIA-launcher:hover{transform:translateY(-3px);box-shadow:0 17px 38px rgba(49,35,112,.36)}
+.mia-launch-icon{
+  width:43px;height:43px;border-radius:50%;display:grid;place-items:center;
+  color:#e8fbff;font-size:24px;
+  background:radial-gradient(circle at 35% 25%,#d9fbff,#9c7af5 43%,#452c9c 78%);
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:inset 0 0 14px rgba(255,255,255,.38),0 0 17px rgba(34,211,238,.25);
+}
+#mIA-launcher small{display:block;font-size:10px;font-weight:500;opacity:.84;margin-top:2px}
+#mIA-panel{
+  position:fixed;right:24px;bottom:82px;z-index:9991;
+  width:min(390px,calc(100vw - 28px));height:min(590px,calc(100vh - 112px));
+  display:none;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(194,183,255,.7);border-radius:24px;
+  background:rgba(250,250,255,.98);
+  box-shadow:0 24px 75px rgba(30,26,78,.28),0 0 0 1px rgba(255,255,255,.7);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  font-family:Arial,Helvetica,sans-serif;
+}
+#mIA-panel.mia-visible{display:flex;animation:miaAppear .22s ease-out}
+@keyframes miaAppear{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mia-head{
+  padding:16px 17px;display:flex;align-items:center;gap:11px;color:white;
+  background:radial-gradient(circle at 88% 10%,rgba(44,220,240,.30),transparent 32%),
+             linear-gradient(115deg,#211c50,#5433a0 65%,#087d99);
+}
+.mia-avatar{
+  width:46px;height:46px;flex:0 0 46px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#f5c5f0,#a6f2ff);color:#38266f;font-size:24px;
+  border:1px solid rgba(255,255,255,.7);box-shadow:0 5px 18px rgba(0,0,0,.15);
+}
+.mia-head-info{flex:1;min-width:0}
+.mia-head-info strong{display:block;font-size:15px;letter-spacing:.1px}
+.mia-head-info span{display:block;font-size:11px;color:#d9f7ff;margin-top:4px}
+.mia-online{display:inline-block;width:7px;height:7px;border-radius:50%;background:#5ff0b2;margin-right:5px;box-shadow:0 0 8px #5ff0b2}
+.mia-close{border:0;background:rgba(255,255,255,.15);color:#fff;width:31px;height:31px;border-radius:50%;font-size:20px;cursor:pointer}
+.mia-body{
+  padding:15px;overflow:auto;flex:1;
+  background:radial-gradient(circle at 100% 0%,rgba(172,153,255,.11),transparent 35%),linear-gradient(160deg,#fbfaff,#f4faff);
+}
+.mia-message{
+  max-width:94%;padding:12px 13px;border-radius:16px 16px 16px 5px;
+  background:#fff;border:1px solid #e8e4f8;color:#353653;font-size:13px;line-height:1.5;
+  box-shadow:0 5px 15px rgba(55,46,115,.05);margin:0 0 11px;
+  white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.mia-message.user{margin-left:auto;border-radius:16px 16px 5px 16px;color:#fff;background:linear-gradient(120deg,#7046d7,#287fae);border:0}
+.mia-suggestions{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 13px}
+.mia-chip{border:1px solid #d9d1f5;background:#fff;color:#6544b4;border-radius:999px;padding:8px 10px;font-size:11px;font-weight:700;cursor:pointer}
+.mia-chip:hover{background:#f0eaff;border-color:#a995eb}
+.mia-action{display:block;width:100%;text-align:left;border:1px solid #dcd5f7;border-radius:12px;padding:10px 12px;margin-top:8px;color:#5437a0;background:linear-gradient(100deg,#f3efff,#eafaff);font-weight:700;font-size:12px;cursor:pointer}
+.mia-action:hover{border-color:#9d8ae2;transform:translateY(-1px)}
+.mia-compose{display:flex;gap:8px;padding:12px;border-top:1px solid #e9e5f5;background:#fff}
+.mia-compose input{flex:1;min-width:0;border:1px solid #ded9ef;border-radius:14px;padding:12px;font-size:13px;outline:none;color:#28264e;background:#fbfaff}
+.mia-compose input:focus{border-color:#9a83e8;box-shadow:0 0 0 3px rgba(154,131,232,.12)}
+.mia-send{border:0;border-radius:13px;width:43px;color:#fff;font-size:18px;cursor:pointer;background:linear-gradient(145deg,#7046d7,#149db8);box-shadow:0 5px 13px rgba(90,65,180,.2)}
+.mia-footnote{padding:0 13px 10px;background:#fff;color:#8b8ba4;font-size:10px;text-align:center}
+@media(max-width:520px){
+  #mIA-launcher{right:13px;bottom:13px;padding:7px 12px 7px 7px}
+  #mIA-panel{right:8px;bottom:72px;width:calc(100vw - 16px);height:min(620px,calc(100vh - 88px));border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){#mIA-panel.mia-visible{animation:none}}
+
 </style>
 </head>
 
@@ -6778,6 +6856,145 @@ document.addEventListener("DOMContentLoaded",function(){
     mostrarAccesoMaestra();
   }
 });
+
+
+/* ==========================================================
+   MÍA · ASISTENTE INTEGRADA AL HTML ORIGINAL
+   Se vuelve a montar si una pantalla reemplaza document.body.innerHTML.
+========================================================== */
+(function(){
+  "use strict";
+  let observerMia=null;
+
+  const rutasMia=[
+    {keys:["planificar","planificacion","planificación","plan","clase","secuencia","objetivo"],title:"Planificar una clase",desc:"Completa grado, área, tema y duración para organizar tu clase.",fn:"abrirPlanificadorIA"},
+    {keys:["ficha","cuento","juego","cartel","material","recurso","actividad","tarjeta","mapa","salon","salón"],title:"Crear para mi salón",desc:"Prepara fichas, cuentos, juegos y actividades para tus estudiantes.",fn:"abrirCreadorSalon"},
+    {keys:["evaluacion","evaluación","prueba","examen","rubrica","rúbrica","preguntas","lista de cotejo"],title:"Crear una evaluación",desc:"Diseña preguntas, rúbricas y listas de cotejo.",fn:"abrirCreadorEvaluacion"},
+    {keys:["asistente","prompt","instruccion","instrucción","chatgpt","gemini"],title:"Mi Asistente IA",desc:"Construye una instrucción clara para trabajar con inteligencia artificial.",fn:"abrirAsistenteIA"},
+    {keys:["curso","aprender","principiante","desde cero","leccion","lección","modulo","módulo"],title:"Aprender IA desde cero",desc:"Continúa el curso y practica las lecciones a tu ritmo.",fn:"abrirCurso"},
+    {keys:["progreso","avance","nota","calificacion","calificación"],title:"Mi progreso",desc:"Consulta tus avances y resultados de aprendizaje.",fn:"abrirMiProgreso"},
+    {keys:["trabajo","guardado","guardar","archivo"],title:"Mis trabajos",desc:"Revisa los recursos que has guardado.",fn:"abrirMisTrabajos"},
+    {keys:["perfil","datos"],title:"Mi perfil",desc:"Consulta o actualiza tu información docente.",fn:"editarPerfilMaestra"}
+  ];
+
+  function crearInterfaz(){
+    if(document.getElementById("mIA-launcher")||!document.body)return;
+    const launcher=document.createElement("button");
+    launcher.id="mIA-launcher";launcher.type="button";
+    launcher.setAttribute("aria-label","Abrir MÍA, asistente de MAESTRA IA");
+    launcher.innerHTML='<span class="mia-launch-icon">✧</span><span>MÍA<small>Tu compañera virtual</small></span>';
+
+    const panel=document.createElement("section");
+    panel.id="mIA-panel";panel.setAttribute("aria-label","Asistente MÍA");
+    panel.innerHTML=`
+      <div class="mia-head">
+        <div class="mia-avatar">✿</div>
+        <div class="mia-head-info"><strong>MÍA · Mi Inteligente Asistente</strong><span><i class="mia-online"></i>Lista para orientarte</span></div>
+        <button class="mia-close" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <div class="mia-body" id="miaMessages" aria-live="polite">
+        <div class="mia-message">¡Hola, maestra! 💜 Soy MÍA, tu compañera dentro de MAESTRA IA.\n\nCuéntame qué quieres preparar y te indicaré qué herramienta utilizar. También puedes elegir una opción:</div>
+        <div class="mia-suggestions">
+          <button class="mia-chip" data-mia="Quiero planificar una clase" type="button">📚 Planificar</button>
+          <button class="mia-chip" data-mia="Necesito crear una ficha o actividad" type="button">🎨 Crear material</button>
+          <button class="mia-chip" data-mia="Quiero preparar una evaluación" type="button">📝 Evaluar</button>
+          <button class="mia-chip" data-mia="Quiero aprender inteligencia artificial" type="button">🌱 Aprender IA</button>
+        </div>
+      </div>
+      <form class="mia-compose" id="miaForm">
+        <input id="miaInput" type="text" maxlength="500" autocomplete="off" placeholder="Escribe qué necesitas..." aria-label="Escribe qué necesitas">
+        <button class="mia-send" type="submit" aria-label="Enviar">➤</button>
+      </form>
+      <div class="mia-footnote">MÍA te orienta dentro de la plataforma. Revisa los materiales antes de usarlos.</div>`;
+
+    document.body.appendChild(launcher);
+    document.body.appendChild(panel);
+    launcher.addEventListener("click",alternar);
+    panel.querySelector(".mia-close").addEventListener("click",alternar);
+    panel.querySelectorAll("[data-mia]").forEach(b=>b.addEventListener("click",()=>consultar(b.dataset.mia)));
+    panel.querySelector("#miaForm").addEventListener("submit",e=>{
+      e.preventDefault();
+      const input=panel.querySelector("#miaInput");
+      const value=input.value.trim();
+      if(!value)return;
+      input.value="";
+      consultar(value);
+    });
+  }
+
+  function alternar(){
+    const panel=document.getElementById("mIA-panel");
+    if(!panel)return;
+    panel.classList.toggle("mia-visible");
+    if(panel.classList.contains("mia-visible")){
+      const input=document.getElementById("miaInput");
+      if(input)input.focus();
+    }
+  }
+
+  function mensaje(texto,tipo){
+    const box=document.getElementById("miaMessages");
+    if(!box)return;
+    const el=document.createElement("div");
+    el.className="mia-message"+(tipo==="user"?" user":"");
+    el.textContent=texto;
+    box.appendChild(el);
+    box.scrollTop=box.scrollHeight;
+  }
+
+  function consultar(texto){
+    mensaje(texto,"user");
+    const limpio=texto.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    const ruta=rutasMia.find(r=>r.keys.some(k=>limpio.includes(k.toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,""))));
+    if(!ruta){
+      mensaje("¡Vamos a encontrar la herramienta adecuada! ¿Quieres planificar una clase, crear un material, preparar una evaluación o aprender IA? Puedes decirme también el grado y el tema. Evita compartir datos personales de tus estudiantes.","bot");
+      return;
+    }
+    mensaje("¡Claro! 💜 Te recomiendo "+ruta.title+". "+ruta.desc,"bot");
+    const box=document.getElementById("miaMessages");
+    const boton=document.createElement("button");
+    boton.type="button";boton.className="mia-action";
+    boton.textContent="Abrir "+ruta.title+" →";
+    boton.addEventListener("click",()=>{
+      const accion=window[ruta.fn];
+      if(typeof accion==="function"){
+        alternar();
+        accion();
+      }else{
+        mensaje("No encuentro esa herramienta en esta pantalla. Regresa al inicio e inténtalo nuevamente.","bot");
+      }
+    });
+    box.appendChild(boton);
+    box.scrollTop=box.scrollHeight;
+  }
+
+  function sincronizarVisibilidad(){
+    const launcher=document.getElementById("mIA-launcher");
+    const panel=document.getElementById("mIA-panel");
+    const acceso=document.body.classList.contains("acceso-activo");
+    let autenticada=false;
+    try{autenticada=typeof window.perfilValidoMaestra==="function"&&window.perfilValidoMaestra();}catch(e){}
+    if(acceso||!autenticada){
+      if(launcher)launcher.remove();
+      if(panel)panel.remove();
+      return;
+    }
+    crearInterfaz();
+    const nuevo=document.getElementById("mIA-launcher");
+    if(nuevo)nuevo.classList.add("mia-activa");
+  }
+
+  function iniciar(){
+    sincronizarVisibilidad();
+    if(!observerMia){
+      observerMia=new MutationObserver(()=>sincronizarVisibilidad());
+      observerMia.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+    }
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",iniciar);
+  else iniciar();
+})();
 
 </script>
 
